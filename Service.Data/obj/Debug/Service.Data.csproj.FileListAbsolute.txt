@@ -1,0 +1,91 @@
+D:\Working\Nippon\nippon.git\trunk\Sourecode\Nippon.Angualar\Service.Data\bin\Service.Data.dll
+D:\Working\Nippon\nippon.git\trunk\Sourecode\Nippon.Angualar\Service.Data\bin\Service.Data.pdb
+D:\Working\Nippon\nippon.git\trunk\Sourecode\Nippon.Angualar\Service.Data\bin\Datalayer.DataObject.dll
+D:\Working\Nippon\nippon.git\trunk\Sourecode\Nippon.Angualar\Service.Data\bin\Newtonsoft.Json.Net20.dll
+D:\Working\Nippon\nippon.git\trunk\Sourecode\Nippon.Angualar\Service.Data\bin\Datalayer.DataObject.pdb
+D:\Working\Nippon\nippon.git\trunk\Sourecode\Nippon.Angualar\Service.Data\obj\Debug\Service.Data.csprojResolveAssemblyReference.cache
+D:\Working\Nippon\nippon.git\trunk\Sourecode\Nippon.Angualar\Service.Data\obj\Debug\Service.Data.dll
+D:\Working\Nippon\nippon.git\trunk\Sourecode\Nippon.Angualar\Service.Data\obj\Debug\Service.Data.pdb
+D:\Working\Nippon\nippon.git\trunk\Sourecode\Nippon.Angualar\Service.Data\bin\EPPlus.dll
+C:\Users\Ly\Dropbox\Websites\Du an website\Nippon.Angualar\Service.Data\bin\Service.Data.dll.config
+C:\Users\Ly\Dropbox\Websites\Du an website\Nippon.Angualar\Service.Data\bin\Service.Data.dll
+C:\Users\Ly\Dropbox\Websites\Du an website\Nippon.Angualar\Service.Data\bin\Service.Data.pdb
+C:\Users\Ly\Dropbox\Websites\Du an website\Nippon.Angualar\Service.Data\bin\Datalayer.DataObject.dll
+C:\Users\Ly\Dropbox\Websites\Du an website\Nippon.Angualar\Service.Data\bin\EPPlus.dll
+C:\Users\Ly\Dropbox\Websites\Du an website\Nippon.Angualar\Service.Data\bin\Newtonsoft.Json.Net20.dll
+C:\Users\Ly\Dropbox\Websites\Du an website\Nippon.Angualar\Service.Data\bin\Datalayer.DataObject.pdb
+C:\Users\Ly\Dropbox\Websites\Du an website\Nippon.Angualar\Service.Data\obj\Debug\Service.Data.csprojResolveAssemblyReference.cache
+C:\Users\Ly\Dropbox\Websites\Du an website\Nippon.Angualar\Service.Data\obj\Debug\Service.Data.dll
+C:\Users\Ly\Dropbox\Websites\Du an website\Nippon.Angualar\Service.Data\obj\Debug\Service.Data.pdb
+C:\Users\Ly\Dropbox\Websites\Du an website\officeSaigon\Service.Data\bin\Service.Data.dll.config
+C:\Users\Ly\Dropbox\Websites\Du an website\officeSaigon\Service.Data\bin\Service.Data.dll
+C:\Users\Ly\Dropbox\Websites\Du an website\officeSaigon\Service.Data\bin\Service.Data.pdb
+C:\Users\Ly\Dropbox\Websites\Du an website\officeSaigon\Service.Data\bin\Datalayer.DataObject.dll
+C:\Users\Ly\Dropbox\Websites\Du an website\officeSaigon\Service.Data\bin\EPPlus.dll
+C:\Users\Ly\Dropbox\Websites\Du an website\officeSaigon\Service.Data\bin\Newtonsoft.Json.Net20.dll
+C:\Users\Ly\Dropbox\Websites\Du an website\officeSaigon\Service.Data\bin\Datalayer.DataObject.pdb
+C:\Users\Ly\Dropbox\Websites\Du an website\officeSaigon\Service.Data\obj\Debug\Service.Data.csprojResolveAssemblyReference.cache
+C:\Users\Ly\Dropbox\Websites\Du an website\officeSaigon\Service.Data\obj\Debug\Service.Data.dll
+C:\Users\Ly\Dropbox\Websites\Du an website\officeSaigon\Service.Data\obj\Debug\Service.Data.pdb
+C:\Users\Ly\Dropbox\Websites\Du an website\officeSaigon\trunk\Service.Data\bin\Service.Data.dll.config
+C:\Users\Ly\Dropbox\Websites\Du an website\officeSaigon\trunk\Service.Data\bin\Service.Data.dll
+C:\Users\Ly\Dropbox\Websites\Du an website\officeSaigon\trunk\Service.Data\bin\Service.Data.pdb
+C:\Users\Ly\Dropbox\Websites\Du an website\officeSaigon\trunk\Service.Data\bin\Datalayer.DataObject.dll
+C:\Users\Ly\Dropbox\Websites\Du an website\officeSaigon\trunk\Service.Data\bin\EPPlus.dll
+C:\Users\Ly\Dropbox\Websites\Du an website\officeSaigon\trunk\Service.Data\bin\Newtonsoft.Json.Net20.dll
+C:\Users\Ly\Dropbox\Websites\Du an website\officeSaigon\trunk\Service.Data\bin\Datalayer.DataObject.pdb
+C:\Users\Ly\Dropbox\Websites\Du an website\officeSaigon\trunk\Service.Data\obj\Debug\Service.Data.csprojResolveAssemblyReference.cache
+C:\Users\Ly\Dropbox\Websites\Du an website\officeSaigon\trunk\Service.Data\obj\Debug\Service.Data.dll
+C:\Users\Ly\Dropbox\Websites\Du an website\officeSaigon\trunk\Service.Data\obj\Debug\Service.Data.pdb
+C:\Users\Ly\Dropbox\Websites\officeSaigon\trunk\Service.Data\obj\Debug\Service.Data.csprojResolveAssemblyReference.cache
+C:\Users\Ly\Dropbox\Websites\officeSaigon\trunk\Service.Data\obj\Debug\Service.Data.dll
+C:\Users\Ly\Dropbox\Websites\officeSaigon\trunk\Service.Data\obj\Debug\Service.Data.pdb
+C:\Users\Ly\Dropbox\Websites\officeSaigon\trunk\Service.Data\bin\Service.Data.dll.config
+C:\Users\Ly\Dropbox\Websites\officeSaigon\trunk\Service.Data\bin\Service.Data.dll
+C:\Users\Ly\Dropbox\Websites\officeSaigon\trunk\Service.Data\bin\Service.Data.pdb
+C:\Users\Ly\Dropbox\Websites\officeSaigon\trunk\Service.Data\bin\Datalayer.DataObject.dll
+C:\Users\Ly\Dropbox\Websites\officeSaigon\trunk\Service.Data\bin\EPPlus.dll
+C:\Users\Ly\Dropbox\Websites\officeSaigon\trunk\Service.Data\bin\Excel.dll
+C:\Users\Ly\Dropbox\Websites\officeSaigon\trunk\Service.Data\bin\Google.GData.Client.dll
+C:\Users\Ly\Dropbox\Websites\officeSaigon\trunk\Service.Data\bin\HttpCompress.dll
+C:\Users\Ly\Dropbox\Websites\officeSaigon\trunk\Service.Data\bin\Newtonsoft.Json.Net20.dll
+C:\Users\Ly\Dropbox\Websites\officeSaigon\trunk\Service.Data\bin\NPOI.dll
+C:\Users\Ly\Dropbox\Websites\officeSaigon\trunk\Service.Data\bin\PMSA.Framework.Log.dll
+C:\Users\Ly\Dropbox\Websites\officeSaigon\trunk\Service.Data\bin\PMSA.Framework.Utils.dll
+C:\Users\Ly\Dropbox\Websites\officeSaigon\trunk\Service.Data\bin\ICSharpCode.SharpZipLib.dll
+C:\Users\Ly\Dropbox\Websites\officeSaigon\trunk\Service.Data\bin\Datalayer.DataObject.pdb
+D:\Working\officesaigon\trunk\Service.Data\bin\Service.Data.dll.config
+D:\Working\officesaigon\trunk\Service.Data\bin\Service.Data.dll
+D:\Working\officesaigon\trunk\Service.Data\bin\Service.Data.pdb
+D:\Working\officesaigon\trunk\Service.Data\bin\Datalayer.DataObject.dll
+D:\Working\officesaigon\trunk\Service.Data\bin\EPPlus.dll
+D:\Working\officesaigon\trunk\Service.Data\bin\Excel.dll
+D:\Working\officesaigon\trunk\Service.Data\bin\Google.GData.Client.dll
+D:\Working\officesaigon\trunk\Service.Data\bin\HttpCompress.dll
+D:\Working\officesaigon\trunk\Service.Data\bin\Newtonsoft.Json.Net20.dll
+D:\Working\officesaigon\trunk\Service.Data\bin\NPOI.dll
+D:\Working\officesaigon\trunk\Service.Data\bin\PMSA.Framework.Log.dll
+D:\Working\officesaigon\trunk\Service.Data\bin\PMSA.Framework.Utils.dll
+D:\Working\officesaigon\trunk\Service.Data\bin\ICSharpCode.SharpZipLib.dll
+D:\Working\officesaigon\trunk\Service.Data\bin\Datalayer.DataObject.pdb
+D:\Working\officesaigon\trunk\Service.Data\obj\Debug\Service.Data.csprojResolveAssemblyReference.cache
+D:\Working\officesaigon\trunk\Service.Data\obj\Debug\Service.Data.dll
+D:\Working\officesaigon\trunk\Service.Data\obj\Debug\Service.Data.pdb
+D:\Working\Projects\KimQuang\Service.Data\obj\Debug\Service.Data.csprojResolveAssemblyReference.cache
+D:\Working\Projects\KimQuang\Service.Data\obj\Debug\Service.Data.dll
+D:\Working\Projects\KimQuang\Service.Data\obj\Debug\Service.Data.pdb
+D:\Working\Projects\KimQuang\Service.Data\bin\Service.Data.dll.config
+D:\Working\Projects\KimQuang\Service.Data\bin\Service.Data.dll
+D:\Working\Projects\KimQuang\Service.Data\bin\Service.Data.pdb
+D:\Working\Projects\KimQuang\Service.Data\bin\Datalayer.DataObject.dll
+D:\Working\Projects\KimQuang\Service.Data\bin\EPPlus.dll
+D:\Working\Projects\KimQuang\Service.Data\bin\Newtonsoft.Json.Net20.dll
+D:\Working\Projects\KimQuang\Service.Data\bin\NPOI.dll
+D:\Working\Projects\KimQuang\Service.Data\bin\Datalayer.DataObject.pdb
+D:\Working\Projects\KimQuang\Service.Data\bin\Excel.dll
+D:\Working\Projects\KimQuang\Service.Data\bin\Google.GData.Client.dll
+D:\Working\Projects\KimQuang\Service.Data\bin\HttpCompress.dll
+D:\Working\Projects\KimQuang\Service.Data\bin\PMSA.Framework.Log.dll
+D:\Working\Projects\KimQuang\Service.Data\bin\PMSA.Framework.Utils.dll
+D:\Working\Projects\KimQuang\Service.Data\bin\ICSharpCode.SharpZipLib.dll
+D:\Working\Projects\KimQuang\Service.Data\bin\Interop.Microsoft.Office.Interop.Excel.dll
