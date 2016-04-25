@@ -1,0 +1,23 @@
+﻿<form class="form-inline row" style="margin-right:-40px">
+    <div class="form-group col-md-12">
+        <div class="col-md-2">
+            <label for="exampleInputEmail1"></label>
+        </div>
+
+        <div class="input-group col-md-7">
+            <input type="text" class="form-control ng-pristine ng-untouched ng-valid" placeholder="Nhập từ cần tìm" ng-model="gridInfo.searchQuery" ng-change="searchTable()"><span class="input-group-btn">
+                <button type="button" class="btn  col-xs-12 btn-primary" ng-class="themeButton" ng-click="search();">
+                    <span class="glyphicon glyphicon-search"></span>
+                    Tìm kiếm
+                </button>
+            </span>
+        </div>
+        <div class="col-md-3 pull-right padding-right-10">
+            <button class="btn col-xs-12 btn-primary" ng-class="themeButton">
+                <span class="glyphicon glyphicon-print"></span>
+                In
+            </button>
+        </div>
+    </div>
+
+</form>

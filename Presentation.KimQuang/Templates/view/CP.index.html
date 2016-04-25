@@ -1,0 +1,50 @@
+﻿
+
+<body class="skin-blue sidebar-mini" ng-controller="BodyController">
+    <div class="wrapper">
+        <header class="main-header">
+            <!-- Logo -->
+            <a href="#" class="logo"><b>CDN</b></a>
+            <!-- Header Navbar: style can be found in header.less -->
+            <nav class="navbar navbar-static-top" role="navigation">
+                <!-- Sidebar toggle button-->
+                <a href="#" class="sidebar-toggle" data-toggle="offcanvas" role="button">
+                    <span class="sr-only">Toggle navigation</span>
+                </a>
+                <div class="navbar-custom-menu">
+                    <!--Directive headerNavbarMenu & headerNavbarDropdown-->
+                    <header-navbar-menu navigation="navigation" current-user="currentUser"></header-navbar-menu>
+                    <!--/Directive headerNavbarMenu & headerNavbarDropdown-->
+                </div>
+            </nav>
+        </header>
+        <!-- Left side column. contains the logo and sidebar -->
+        <aside class="main-sidebar">
+            <!-- sidebar: style can be found in sidebar.less -->
+            <section class="sidebar">
+                <!--navigation Menu directive-->
+                <sidebar-navigation navigation-source="sidebarNavigation"></sidebar-navigation>
+                <!--/navigation Menu directive-->
+            </section>
+            <!-- /.sidebar -->
+        </aside>
+
+        <!-- Content Wrapper. Contains page content -->
+        <div class="content-wrapper">
+            <toaster-container toaster-options="{'close-button': true, 'position-class': 'toast-bottom-right'}"></toaster-container>
+            <!--<ng-view></ng-view>-->
+            <div ui-view class="slide"></div>
+        </div>
+
+        <!-- /.content-wrapper -->
+        <footer class="main-footer">
+            <div class="pull-right hidden-xs">
+                <b>Version</b> 2.0
+            </div>
+            <strong>Copyright &copy; 2014-2015 <a href="http://almsaeedstudio.com">Almsaeed Studio</a>.</strong> All rights reserved.
+        </footer>
+    </div><!-- ./wrapper -->
+
+
+</body>
+

@@ -1,0 +1,35 @@
+﻿<section class="content-header">
+    <ol class="breadcrumb">
+        <li><a href="#"><i class="fa fa-dashboard"></i> Homepage</a></li>
+        <li><a href="#"><i class="fa fa-dashboard"></i> Files</a></li>
+        <li class="active">List Files</li>
+    </ol>
+</section>
+<!-- Main content -->
+<section class="content" ng-controller="ListFilesController">
+    <h1>List file</h1>
+    <div class="row">
+        <form id="UploadForm" name="UploadForm" class="form-horizontal">
+            <div class="col-xs-4">
+                <div class="form-group">
+                    <label for="server" class="col-sm-2 control-label">Server </label>
+                    <div class="col-sm-10">
+                        <select ng-options="server.id as server.name for server in servers" name="server" class="form-control" ng-model="serverId">
+                            <option value="">Please choose a Server</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+    <hr />
+    <!--ListFile TreeView-->
+    <div class="css-treeview">
+        <folder-tree-view-parent navigation-source="server" server="serverId"></folder-tree-view-parent>
+    </div>
+</section><!-- /.content -->
+
+
+<script>
+
+</script>

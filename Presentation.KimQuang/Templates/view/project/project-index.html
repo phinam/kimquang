@@ -1,0 +1,100 @@
+﻿<content-header title-name="Project Management"></content-header>
+
+<!-- Main content -->
+<section class="content">
+    <div class="row ng-scope" ng-controller="ProjectCtrl" ng-init="init()">
+        <div ng-class="{true: 'col-md-12', false: 'col-md-8 '}[layout.isFull]">
+            <!---Directive left-action-->
+            <div class="form-group col-md-12">
+
+    <div class="pull-right" style="width: 50px">
+        <button class="btn col-sm-12 pull-right " ng-class="themeButton" ng-click="setFullSreen()">
+            <span class="" ng-hide="layout.isFull">
+                <i class="fa fa-chevron-right fa-lg"></i>
+            </span>
+
+            <span class="" ng-hide="!layout.isFull"><i class="fa fa-chevron-left fa-lg"></i></span>
+        </button>
+    </div>
+    <div class="pull-right" style="width: 121px; margin-right: 1px;">
+        <button class="btn col-xs-12" ng-class="themeButton" ng-click="exportReport()">
+            <span class="glyphicon glyphicon-print"></span>
+            Report</button>
+    </div>
+    <div class="input-group pull-right" style="width: 340px">
+        <input type="text" class="form-control ng-pristine ng-untouched ng-valid" placeholder="Enter words to search" ng-model="gridInfo.searchQuery" ng-change="searchTable()"><span class="input-group-btn">
+            <button type="button" class="btn  col-xs-12" ng-class="themeButton" ng-click="searchCustom();">
+                <span class="glyphicon glyphicon-search"></span>
+                Search
+            </button>
+        </span>
+    </div>
+    <div class="input-group pull-right" style="width: 520px; margin-right:20px;"  ng-hide="!layout.isFull">
+        <div class="col-sm-4 nonePadding">
+            <select class="form-control pull-right " ng-change="fillDateTimeSearch()" ng-model="search.code"
+            ng-options="state.code as state.description for state in listSearchKey"></select>
+        </div>
+        <div class="col-sm-4 nonePadding">
+            <i class="input-group hackyhack">
+                <input type="text" class="form-control text-center" datepicker-popup="{{'dd-MM-yyyy'}}" ng-model="dt1" is-open="openedDD1" close-text="Close" id="txtOpenedDD1" ng-click="openedDD1=true" />
+                <span class="input-group-btn">
+                    <button type="button" class="btn btn-default" ng-click="openedDD1=true"><i class="glyphicon glyphicon-calendar"></i></button>
+                </span>
+            </i>
+        </div>
+        <div class="col-sm-4 nonePadding">
+            <i class="input-group hackyhack">
+                <input type="text" class="form-control text-center" datepicker-popup="{{format}}" ng-model="dt2" is-open="status.openedD2" close-text="Close" id="CompleteDate" ng-click="status.openedD2=true" />
+                <span class="input-group-btn">
+                    <button type="button" class="btn btn-default" ng-click="status.openedD2=true"><i class="glyphicon glyphicon-calendar"></i></button>
+                </span>
+            </i>
+        </div>
+    </div>
+</div>
+
+
+            <div class="row">
+                <!---Directive left-action-->
+                <!--    <angular-grid-table grid-info="gridInfo" root-scope="this"></angular-grid-table>-->
+                <div class="form-group">
+                    <div vmis-table="gridInfo"></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4 " ng-show="!layout.isFull">
+            <!---Directive right-->
+            <form class="form-inline row" ng-include="'/Templates/view/project/project-top-right.html'"></form>
+
+            <form class=" row">
+                <div class="box-body row">
+                    <div class="form-group  col-md-12" style="margin-top:-3px;">
+                        <accordion close-others="true">
+                        <accordion-group heading="" ng-repeat="group in steps"   is-open="group.isOpen">
+                             <accordion-heading>
+          {{group.StepName}}
+                                 
+                                 <button type="button" class="btn pull-right" ng-class="themeButton" style="margin-top: -8px;" ng-if="group.Status=='0' || group.Status=='2'" ng-click="stepDone($event,group)"> Done</button>
+                                 <span ng-if="group.Status=='2'" class="pull-right label-danger">Rejected</span>
+                                 <span ng-if="group.Status=='1'" class=" pull-right">{{ group.CompleteDate | date : 'dd-MM-yyyy' }}</span>
+                                
+        </accordion-heading>
+
+                         <project-step>
+
+                         </project-step>
+                        </accordion-group>
+                       </accordion>
+                    </div>
+
+                </div>
+            </form>
+        </div>
+
+    </div>
+
+
+
+
+</section>

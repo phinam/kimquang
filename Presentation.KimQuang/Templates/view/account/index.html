@@ -1,0 +1,130 @@
+﻿<content-header title-name="User Management"></content-header>
+
+<!-- Main content -->
+<section class="content">
+    <div class="row ng-scope" ng-controller="UserCtrl" ng-init="init()">
+        <div class="col-md-7 col-sm-8">
+            <!---Directive left-action-->
+            <left-action theme-button="themeButton"></left-action>
+
+            <div class="row">
+                <!---Directive left-action-->
+
+                <div class="box box-default box-solid">
+                    <div class="box-body">
+                        <grid-table grid-info="gridInfo"></grid-table>
+                    </div>
+                </div>
+            </div>
+            <!-- Navigator part -->
+
+
+        </div>
+
+        <div class="col-md-5 col-sm-4">
+            <!---Directive right-->
+            <right-action theme-button="themeButton" full-action="false"></right-action>
+
+            <form class="form-horizontal row">
+                <div class="box-body">
+                    <div class="form-group">
+                        <label for="inputEmail3" class="col-sm-3 control-label">Login Name</label>
+                        <div class="col-sm-9 padding-right-19">
+                            <input type="email" class="form-control" id="inputEmail3" placeholder="Email">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="inputPassword3" class="col-sm-3 control-label">Password</label>
+                        <div class="col-sm-9 padding-right-19 ">
+                            <input type="password" class="form-control" id="inputPassword3" placeholder="Password">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="inputEmail3" class="col-sm-3 control-label">Email</label>
+                        <div class="col-sm-9 padding-right-19">
+                            <input type="email" class="form-control" id="Email1" placeholder="Email">
+                        </div>
+                    </div>
+
+                </div>
+
+            </form>
+            <div class="box panel panel-default">
+                <div class="box-header panel-heading ng-binding">
+                    <h3 class="box-title"><strong>Role</strong></h3>
+                </div>
+                <!-- /.box-header -->
+                <div class="box-body no-padding">
+                    <table class="table table-condensed">
+                        <tbody>
+                            <tr>
+                                <th style="width: 35%">Function</th>
+                                <th style="width: 13%" class="text-center">View</th>
+                                <th style="width: 13%" class="text-center">Add</th>
+                                <th style="width: 13%" class="text-center">Edit</th>
+                                <th style="width: 13%" class="text-center">Delete</th>
+                                <th style="width: 13%" class="text-center">Orther</th>
+                            </tr>
+                            <tr>
+                                <td>User Mangager</td>
+                                <td class="text-center">
+                                    <label>
+                                        <input type="checkbox" class="minimal" checked />
+                                    </label>
+                                </td>
+                                <td class="text-center">
+                                    <label>
+                                        <input type="checkbox" class="minimal" checked />
+                                    </label>
+                                </td>
+                                <td class="text-center">
+                                    <label>
+                                        <input type="checkbox" class="minimal" checked />
+                                    </label>
+                                </td>
+                                <td class="text-center">
+                                    <label>
+                                        <input type="checkbox" class="minimal" checked />
+                                    </label>
+                                </td>
+                                <td class="text-center">
+                                    <label>
+                                        <input type="checkbox" class="minimal" checked />
+                                    </label>
+                                </td>
+                            </tr>
+
+                        </tbody>
+                    </table>
+                </div>
+                <!-- /.box-body -->
+
+            </div>
+
+
+
+            <div class="mt-10 pull-right">
+                <!-- <button type="button" class="btn ng-binding" ng-show="user.id==0" ng-click="addUser();">
+                    <span class="glyphicon glyphicon-plus"></span>Add
+                </button>-->
+                <button type="button" class="btn ng-binding" ng-class="themeButton" ng-show="user.id==0" ng-click="resetUser();">
+                    <span class="glyphicon glyphicon-ban-circle"></span>
+                    Reset Password
+                </button>
+                <!--<button type="button" class="btn btn-primary ng-binding ng-hide" ng-show="user.id>0" ng-click="updateUser();">
+                    <span class="glyphicon glyphicon-ok"></span>Save
+                </button>
+                <button type="button" class="btn btn-danger ng-binding ng-hide" ng-show="user.id>0" ng-click="showConfirm('account.lock.confirm',disableUser);">
+                    <span class="glyphicon glyphicon-lock"></span>Lock
+                </button>
+
+                <button type="button" class="btn btn-default ng-hide" ng-click="resetUser();">
+                    <span class="glyphicon glyphicon-arrow-left"></span>
+                </button>-->
+            </div>
+        </div>
+
+
+    </div>
+
+</section>

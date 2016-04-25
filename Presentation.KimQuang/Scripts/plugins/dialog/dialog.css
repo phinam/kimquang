@@ -1,0 +1,34 @@
+﻿/**************MODEL CONFIRM***************/
+/* Custom dialog/modal headers */
+
+.dialog-header-error {
+    background-color: #d2322d;
+}
+
+.dialog-header-wait {
+    background-color: #428bca;
+}
+
+.dialog-header-notify {
+    /*background-color: #00a65a;*/
+    background-color: #428bca;
+}
+
+.dialog-header-confirm {
+    /*background-color: #00a65a;*/
+    background-color: #428bca;
+}
+
+    .dialog-header-error span, .dialog-header-error h4,
+    .dialog-header-wait span, .dialog-header-wait h4,
+    .dialog-header-confirm span, .dialog-header-confirm h4 {
+        color: #ffffff;
+    }
+
+.my-class .modal-body {
+    background-color: #eee;
+}
+
+.my-class .modal-footer {
+    margin-top: 0;
+}

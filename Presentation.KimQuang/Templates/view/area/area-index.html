@@ -1,0 +1,92 @@
+﻿<content-header title-name="Area Management"></content-header>
+
+<!-- Main content -->
+<section class="content">
+    <div class="row ng-scope" ng-controller="AreaCtrl" ng-init="init()">
+        <div class="col-md-7 col-sm-8">
+            <!---Directive left-action-->
+            <left-action theme-button="themeButton" root-scope="this"></left-action>
+
+            <div class="row">
+                <!---Directive left-action gridTable-->
+                <grid-table grid-info="gridInfo" root-scope="this"></grid-table>
+            </div>
+            <!-- Navigator part -->
+
+
+        </div>
+
+        <div class="col-md-5 col-sm-4">
+            <!---Directive right-->
+            <right-action theme-button="themeButton" full-action="false"></right-action>
+
+            <form class="form-horizontal row">
+                <div class="box-body">
+                    <div class="form-group">
+                        <label for="Name" class="col-sm-3 control-label">Name</label>
+                        <div class="col-sm-9 padding-right-19">
+                            <input type="text" class="form-control" id="txtName" name="Code" placeholder="Code" ng-model="dataSeleted.Code" ng-change="changeText()" />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="description" class="col-sm-3 control-label">Description</label>
+                        <div class="col-sm-9 padding-right-19 ">
+                            <textarea name="description" class="form-control" rows="5" placeholder="Enter ..." ng-model="dataSeleted.Name" ng-change="changeText()"></textarea>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="manager" class="col-sm-3 control-label">Manager</label>
+                        <div class="col-sm-9 padding-right-19">
+                            <ui-select ng-model="dataSeleted.ManagerEmployeeID" theme="selectize" ng-disabled="disabled" title="Choose a manager">
+                                <ui-select-match placeholder="Select or search a manager in the list...">{{$select.selected.Name}}</ui-select-match>
+                                <ui-select-choices repeat="item.ID as item in managers | filter: $select.search">
+                                  <span ng-bind-html="item.Name | highlight: $select.search"></span>
+                                  <small ng-bind-html="item.Code | highlight: $select.search"></small>
+                                </ui-select-choices>
+                              </ui-select>
+                            </ui-select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="parentarea" class="col-sm-3 control-label">Parent</label>
+                        <div class="col-sm-9 padding-right-19">
+                            <ui-select ng-model="dataSeleted.ParentID" theme="selectize" ng-disabled="disabled" title="Choose a manager">
+                                <ui-select-match placeholder="">{{$select.selected.Name}}</ui-select-match>
+                                <ui-select-choices repeat="item.ID as item in parentareas | filter: $select.search">
+                                  <span ng-bind-html="item.Name | highlight: $select.search"></span>
+                                  <small ng-bind-html="item.Code | highlight: $select.search"></small>
+                                </ui-select-choices>
+                              </ui-select>
+                            </ui-select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="backcolor" class="col-sm-3 control-label">Color</label>
+                        <div class="col-sm-9 padding-right-19">
+                            <!-- <input type="text" class="form-control" id="backcolor" name="backcolor" placeholder="Code" ng-model="dataSeleted.BackColor" ng-change="changeText()"/>
+                       -->
+                            <input
+                                minicolors="customSettings"
+                                id="color-input"
+                                class="form-control"
+                                type="text"
+                                ng-model="dataSeleted.BackColor" >
+                        </div>
+                    </div>
+                    <div class="form-group" ng-hide="true">
+                        <label for="description" class="col-sm-3 control-label">Status</label>
+                        <div class="col-sm-9 padding-right-19 ">
+                            <select ng-model="dataSeleted.Status" class="form-control" ng-options="option.value as option.name for option in statusOptions"></select>
+                        </div>
+                    </div>
+
+                </div>
+
+            </form>
+
+        </div>
+
+
+    </div>
+
+</section>

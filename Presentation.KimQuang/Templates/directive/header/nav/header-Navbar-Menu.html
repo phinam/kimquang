@@ -1,0 +1,16 @@
+﻿<ul class="nav navbar-nav">
+    <li class="{{nav.dropdownClass}}" ng-repeat="nav in navigation.headerNav">
+        <a href="{{nav.url}}" class="dropdown-toggle" data-toggle="dropdown">
+            <i class="{{nav.cssIcon}}"></i>
+            <img ng-src="{{nav.imgIcon}}" alt="{{nav.userName}}" class="user-image" />
+            <span class="label label-{{nav.labelType}}" ng-if="nav.name == 'email'">{{currentUser.email.length}}</span>
+            <span class="label label-{{nav.labelType}}" ng-if="nav.name == 'notification'">{{currentUser.notification.length}}</span>
+            <span class="label label-{{nav.labelType}}" ng-if="nav.name == 'task'">{{currentUser.task.length}}</span>
+
+            <span class="hidden-xs" style="text-transform: capitalize" ng-if="nav.name != 'user'">{{nav.name}}</span>
+            <span class="hidden-xs" style="text-transform:capitalize" ng-if="nav.name == 'user'">{{currentUser.profile.fullName}}</span>
+        </a>
+    <header-navbar-dropdown></header-navbar-dropdown>
+    </li>
+</ul>
+    

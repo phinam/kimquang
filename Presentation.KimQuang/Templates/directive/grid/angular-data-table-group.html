@@ -1,0 +1,37 @@
+﻿<div class="form-group col-md-12">
+    <div class="col-xs-12 pull-right ">
+        <!-- /.box-header -->
+        <form class="form-horizontal row ng-pristine ng-valid">
+            <div class="box-body" ng-controller="dataGridCtrl as vm" ng-init="vm.init(gridInfo, rootScope)">
+                <table datatable="ng" class="table table-bordered table-striped box hover" dt-options="vm.dtOptions" dt-column-defs="vm.dtColumnDefs" dt-instance="vm.dtInstanceCallback" id="AreaGrid">
+                    <thead>
+                        <th data-ng-repeat="(i, c) in vm.gridInfo.cols" width="{{c.width}}" ng-hide="vm.gridInfo.cols[i].isHidden">{{ c.heading }}
+                        </th>
+                    </thead>
+                    <tbody>
+                        <tr data-ng-repeat="item in  vm.gridInfo.data">
+
+                            <td data-ng-repeat="(i, col) in vm.gridInfo.cols" width="{{c.width}}" ng-hide="vm.gridInfo.cols[i].isHidden" class="Pointer " ng-click="vm.setData(item,col)">
+
+                                <div ng-if="vm.gridInfo.cols[i].backColor">
+                                    <div style="width: 13%; float: left" ng-if="item.ParentID=='0'">{{item.RowNumber}}</div>
+                                    <div style="width: 87%; float: left" ng-style="{'background-color':(vm.gridInfo.cols[i].backColor?item.BackColor:'')}"  ng-if="item.ParentID=='0'">{{ item[col.name] }}</div>
+
+                                    <div style="width: 20%; float: left" ng-if="item.ParentID!='0'">{{item.RowNumber}}</div>
+                                    <div style="width: 80%; float: left" ng-style="{'background-color':(vm.gridInfo.cols[i].backColor?item.BackColor:'')}"  ng-if="item.ParentID!='0'">{{ item[col.name] }}</div>
+                                </div>
+                                <div ng-if="!vm.gridInfo.cols[i].backColor">
+                                    {{ item[col.name] }}
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                
+            </div>
+        </form>
+        <!-- /.box-body -->
+    </div>
+    <!-- /.box -->
+
+</div>

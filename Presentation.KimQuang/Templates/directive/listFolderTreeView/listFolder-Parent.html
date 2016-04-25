@@ -1,0 +1,9 @@
+﻿<div>
+    <h2>{{navigationSource.name}}</h2>
+    <ul>
+        <li ng-repeat="nav in navigationSource.folderTree">
+            <input type="checkbox" id="item-0" /><label for="item-0">{{nav.name}}</label>
+            <folder-tree-view-childs menu="nav.childs" ng-if="nav.childs && nav.childs.length > 0"></folder-tree-view-childs>
+        </li>
+    </ul>
+</div>

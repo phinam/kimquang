@@ -1,0 +1,12 @@
+﻿<ul>
+    <li ng-repeat="item in menu">
+        <input type="checkbox" id="item-0-0" ng-if="item.childs && item.childs.length > 0" />
+        <label for="item-0-0" ng-if="item.childs && item.childs.length > 0">{{item.name}}</label>
+        <a href="./" ng-if="!item.childs || item.childs.length <= 0">
+            <i class="glyphicon glyphicon-pencil"></i>&nbsp;&nbsp;{{item.name}}
+        </a>
+
+        <folder-tree-view-childs menu="item.childs" ng-if="item.childs && item.childs.length > 0"></folder-tree-view-childs>
+    </li>
+</ul>
+

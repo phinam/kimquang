@@ -1,0 +1,155 @@
+﻿<content-header title-name="Quản Lý Tài Khoản"></content-header>
+
+<!-- Main content -->
+<section class="content">
+    <div class="row ng-scope" ng-controller="UserCtrl" ng-init="init()">
+        <div class="col-md-7 col-sm-8">
+            <!---Directive left-action-->
+          
+            <left-action theme-button="themeButton"></left-action>
+
+            <div class="row" style="margin-top:10px">
+
+                <!---Directive left-action-->
+                <div class="box box-default box-solid">
+                    <div class="box-body">
+                       
+                        <angular-grid-table grid-info="gridInfo" root-scope="this"></angular-grid-table>
+                    </div>
+                </div>
+            </div>
+            <!-- Navigator part -->
+
+
+        </div>
+
+        <div class="col-md-5 col-sm-4">
+            <!---Directive right-->
+            <right-action theme-button="themeButton" full-action="false"></right-action>
+            <form class="form-horizontal row">
+                <div class="box-body">
+
+                    <div class="form-group">
+                        <label for="inputEmail3" class="col-sm-3 control-label">Tên đăng nhập</label>
+                        <div class="col-sm-9 padding-right-19">
+                            <input ng-model="dataSeleted.UserName" type="text" class="form-control" id="inputEmail3" placeholder="Tên đăng nhập" ng-change="changeText()"></input>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="inputEmail3" class="col-sm-3 control-label">Họ tên</label>
+                        <div class="col-sm-9 padding-right-19">
+                            <input ng-model="dataSeleted.FullName" type="text" class="form-control" id="inputEmail3" placeholder="Họ tên" ng-change="changeText()"></input>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="inputPassword3" class="col-sm-3 control-label">Mậu khẩu</label>
+                        <div class="col-sm-9 padding-right-19 " ng-hide="dataSeleted.ID!=0">
+                            <input ng-model="dataSeleted.Password" type="password" class="form-control" id="inputPassword3" placeholder="Password">
+                        </div>
+
+                        <div class="col-sm-7" ng-hide="dataSeleted.ID==0">
+                            <input ng-model="dataSeleted.Password" type="text" class="form-control" id="Password1" placeholder="Password">
+                        </div>
+                        <div class="col-sm-2 padding-right-19 pull-right" ng-hide="dataSeleted.ID==0">
+                            <button class="btn pull-right" ng-class="themeButton" ng-click="resetPassword()">
+                                <span>Reset  </span>
+
+                            </button>
+                        </div>
+
+                    </div>
+                    <div class="form-group">
+                        <label for="employee" class="col-sm-3 control-label">Tình trạng</label>
+                        <div class="col-sm-9 padding-right-19">
+                            <ui-select ng-model="dataSeleted.Status" theme="selectize" ng-disabled="disabled" title="Choose a employee">
+                                <ui-select-match placeholder="Chọn trạng thái cho tài khoản...">{{$select.selected.Name}}</ui-select-match>
+                                <ui-select-choices repeat="item.ID as item in employeelist | filter: $select.search">
+                                    <span ng-bind-html="item.Name | highlight: $select.search"></span>
+                                </ui-select-choices>
+                            </ui-select>
+                            </ui-select>
+                        </div>
+                    </div>
+
+                </div>
+
+            </form>
+            <div class="box panel panel-default">
+                <div class="box-header panel-heading ng-binding">
+                    <h3 class="box-title"><strong>Phân quyền</strong></h3>
+                </div>
+                <!-- /.box-header -->
+                <div class="box-body no-padding">
+                    <table class="table table-condensed">
+                        <tbody>
+                            <tr>
+                                <th style="width: 35%">Chức năng</th>
+                                <th style="width: 13%" class="text-center" ng-click="checkRoleAll('IsView')">Xem</th>
+                                <th style="width: 13%" class="text-center" ng-click="checkRoleAll('IsInsert')">Thêm</th>
+                                <th style="width: 13%" class="text-center" ng-click="checkRoleAll('IsUpdate')">Sửa </th>
+                                <th style="width: 13%" class="text-center" ng-click="checkRoleAll('IsDelete')">Xóa</th>
+                                <th style="width: 13%" class="text-center" ng-click="checkRoleAll('IsSpecial')">Khác</th>
+                            </tr>
+                            <tr ng-repeat="role in roles">
+                                <td>{{role.Name}}</td>
+                                <td class="text-center">
+                                    <label>
+                                        <input type="checkbox" class="minimal" ng-model="role.IsView" ng-true-value="'True'" ng-false-value="'False'" />
+                                    </label>
+                                </td>
+                                <td class="text-center">
+                                    <label>
+                                        <input type="checkbox" class="minimal" ng-model="role.IsInsert" ng-true-value="'True'" ng-false-value="'False'" />
+                                    </label>
+                                </td>
+                                <td class="text-center">
+                                    <label>
+                                        <input type="checkbox" class="minimal" ng-model="role.IsUpdate" ng-true-value="'True'" ng-false-value="'False'" />
+                                    </label>
+                                </td>
+                                <td class="text-center">
+                                    <label>
+                                        <input type="checkbox" class="minimal" ng-model="role.IsDelete" ng-true-value="'True'" ng-false-value="'False'" />
+                                    </label>
+                                </td>
+                                <td class="text-center">
+                                    <label>
+                                        <input type="checkbox" class="minimal" ng-model="role.IsSpecial" ng-true-value="'True'" ng-false-value="'False'" />
+                                    </label>
+                                </td>
+                            </tr>
+
+                        </tbody>
+                    </table>
+                </div>
+                <!-- /.box-body -->
+
+            </div>
+
+
+
+            <div class="mt-10 pull-right">
+                <!-- <button type="button" class="btn ng-binding" ng-show="user.id==0" ng-click="addUser();">
+                    <span class="glyphicon glyphicon-plus"></span>Add
+                </button>-->
+                <button type="button" class="btn ng-binding" ng-class="themeButton" ng-show="user.id==0" ng-click="resetUser();">
+                    <span class="glyphicon glyphicon-ban-circle"></span>
+                    Reset Password
+                </button>
+                <!--<button type="button" class="btn btn-primary ng-binding ng-hide" ng-show="user.id>0" ng-click="updateUser();">
+                    <span class="glyphicon glyphicon-ok"></span>Save
+                </button>
+                <button type="button" class="btn btn-danger ng-binding ng-hide" ng-show="user.id>0" ng-click="showConfirm('account.lock.confirm',disableUser);">
+                    <span class="glyphicon glyphicon-lock"></span>Lock
+                </button>
+
+                <button type="button" class="btn btn-default ng-hide" ng-click="resetUser();">
+                    <span class="glyphicon glyphicon-arrow-left"></span>
+                </button>-->
+            </div>
+        </div>
+
+
+    </div>
+
+</section>

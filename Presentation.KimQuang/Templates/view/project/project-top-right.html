@@ -1,0 +1,22 @@
+﻿ <div class="form-group col-md-12 actionRight ">
+        <div class="col-md-3 pull-right">
+            <button class="btn col-xs-12 " ng-click="reset()" ng-class="{'{{themeButton}}':layout.enableClear, 'disabled':!layout.enableClear}">
+                <span class="glyphicon glyphicon-flash"></span>
+                 Clear</button>
+        </div>
+        <div class="col-md-3 pull-right" ng-hide="dataSeleted.ID==0">
+            <button class="btn col-xs-12" ng-class="{'{{themeButton}}':layout.enableButtonOrther, 'disabled':!layout.enableButtonOrther}" ng-click="actionConfirm('DELETE')">
+                <span class="glyphicon glyphicon-minus"></span>
+                Delete</button>
+        </div>
+        <div class="col-md-3 pull-right" ng-hide="dataSeleted.ID==0">
+            <button class="btn col-xs-12" ng-class="{'{{themeButton}}':layout.enableButtonOrther, 'disabled':!layout.enableButtonOrther}"  ng-click="actionConfirm('UPDATE')">
+                <span class="glyphicon glyphicon-save"></span>
+                Save</button>
+        </div>
+        <div class="col-md-3 pull-right" ng-show="dataSeleted.ID==0">
+            <button class="btn col-xs-12" ng-class="themeButton" ng-click="openDialog('INSERT')">
+                <span class="glyphicon glyphicon-plus"></span>
+              Add</button>
+        </div>
+    </div>

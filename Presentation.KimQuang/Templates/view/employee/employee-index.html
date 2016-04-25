@@ -1,0 +1,84 @@
+﻿<content-header title-name="Employee Management"></content-header>
+
+<!-- Main content -->
+<section class="content">
+    <div class="row ng-scope" ng-controller="EmployeeCtrl" ng-init="init()">
+        <div class="col-md-7 col-sm-8">
+            <!---Directive left-action-->
+            <left-action theme-button="themeButton"></left-action>
+
+            <!-- Navigator part -->
+            <div class="row">
+                <!---Directive left-action-->
+                <angular-grid-table grid-info="gridInfo" root-scope="this"></angular-grid-table>
+            </div>
+
+        </div>
+
+        <div class="col-md-5 col-sm-4">
+            <!---Directive right-->
+            <right-action theme-button="themeButton" full-action="false"></right-action>
+            <form class="form-horizontal row">
+                <div class="box-body">
+                    <div class="form-group">
+                        <label for="txtName" class="col-sm-3 control-label">Name</label>
+                        <div class="col-sm-9 padding-right-19">
+                            <input ng-model="dataSeleted.Name" type="text" class="form-control" id="txtName" placeholder="Name" ng-change="changeText()">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="txtAddress" class="col-sm-3 control-label">Address</label>
+                        <div class="col-sm-9 padding-right-19 ">
+                            <input ng-model="dataSeleted.Address" type="text" class="form-control" id="txtAddress" placeholder="Address">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="Email1" class="col-sm-3 control-label">Email</label>
+                        <div class="col-sm-9 padding-right-19">
+                            <input ng-model="dataSeleted.Email" type="email" class="form-control" id="Email1" placeholder="Email">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="txtPhone" class="col-sm-3 control-label">Phone</label>
+                        <div class="col-sm-9 padding-right-19">
+                             <input ng-model="dataSeleted.Phone" type="tel" class="form-control" id="txtPhone" placeholder="Phone">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="inputEmail3" class="col-sm-3 control-label">Position</label>
+                        <div class="col-sm-9 padding-right-19">
+                            <ui-select ng-model="dataSeleted.PositionID" theme="selectize" ng-disabled="disabled"  title="Choose a position">
+                                <ui-select-match placeholder="Select or search a position in the list...">{{$select.selected.Name}}</ui-select-match>
+                                <ui-select-choices repeat="position.ID as position in positions | filter: $select.search">
+                                  <span ng-bind-html="position.Name | highlight: $select.search"></span>
+                                  <small ng-bind-html="position.Code | highlight: $select.search"></small>
+                                </ui-select-choices>
+                              </ui-select>
+                            </ui-select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="inputEmail3" class="col-sm-3 control-label">Department</label>
+                        <div class="col-sm-9 padding-right-19">
+                            <ui-select ng-model="department.DepartmentID" theme="selectize" ng-disabled="disabled"  title="Choose a department">
+                                <ui-select-match placeholder="Select or search a department in the list...">{{$select.selected.Name}}</ui-select-match>
+                                <ui-select-choices repeat="department.ID as department in departments | filter: $select.search">
+                                  <span ng-bind-html="department.Name | highlight: $select.search"></span>
+                                  <small ng-bind-html="department.Code | highlight: $select.search"></small>
+                                </ui-select-choices>
+                              </ui-select>
+                            </ui-select>
+                        </div>
+                    </div>
+
+
+                </div>
+
+            </form>
+
+        </div>
+
+
+    </div>
+
+</section>

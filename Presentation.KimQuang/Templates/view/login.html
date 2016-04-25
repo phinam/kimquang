@@ -1,0 +1,25 @@
+﻿<link href="../../Style/css/loginPage.css" rel="stylesheet" />
+    <!-----start-main---->
+    <div class="main" ng-controller="loginController">
+        <div class="login-form">
+            <h1>Địa ốc Kim Quang</h1>
+            <div class="head">
+                <img src="images/user.png" alt="" />
+            </div>
+            <form>
+                <input type="text" class="text"  ng-model="userInfo.userName" value="USERNAME" placeholder="Tên đăng nhập">
+                <input type="password" value="Password"  ng-model="userInfo.password" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = 'Mật khẩu';}">
+                <div class="submit">
+                    <input type="button" ng-click="signIn()" value="Đăng nhập">
+                </div>
+                <p><a href="#">Quên mật khẩu ?</a></p>
+            </form>
+        </div>
+        <!--//End-login-form-->
+        <!-----start-copyright---->
+
+        <!-----//end-copyright---->
+    </div>
+    <!-----//end-main---->
+
+

@@ -1,0 +1,14 @@
+﻿<ul class="sidebar-menu">
+    <li class="header">Thanh điều khiển</li>
+    <li ng-repeat="nav in navigationSource" 
+        ng-class="{'treeview': nav.childs && nav.childs.length > 0}">
+        <a ui-sref="{{nav.url}}">
+            <i class="{{nav.cssIcon}}"></i> <span>{{nav.name}}</span>
+            <i class="{{nav.labelCss}} pull-right"></i>
+        </a>
+        <navigation-multiple-menu menu="nav.childs" ng-if="nav.childs && nav.childs.length > 0"></navigation-multiple-menu>
+    </li>
+</ul>
+
+
+

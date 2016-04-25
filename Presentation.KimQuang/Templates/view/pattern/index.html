@@ -1,0 +1,49 @@
+﻿<content-header title-name="User Management"></content-header>
+
+<!-- Main content -->
+<section class="content">
+    <div class="row ng-scope" ng-controller="UserCtrl">
+        <div class="col-md-7 col-sm-8">
+            <!---Directive left-action-->
+            <left-action theme-button="themeButton"></left-action>
+
+          
+
+            <!-- Navigator part -->
+
+
+            <div class="row">
+
+                <div class="mt-10 visible-sm visible-xs"></div>
+                <div class="col-md-6 pull-right">
+                    <div class="input-group">
+                        <span class="input-group-addon ng-binding">(0-0)&nbsp;
+
+                        </span>
+                        <select class="form-control ng-pristine ng-untouched ng-valid" ng-model="navigator.page" ng-options="p for p in navigatorPages" ng-change="changePage();">
+                            <option value="?" selected="selected" label=""></option>
+                        </select>
+                        <span class="input-group-btn">
+                            <button type="button" class="btn btn-default" ng-click="previousPage();">
+                                <span class="glyphicon glyphicon-chevron-left"></span>
+                            </button>
+                            <button type="button" class="btn btn-default" ng-click="nextPage();">
+                                <span class="glyphicon glyphicon-chevron-right"></span>
+                            </button>
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-5 col-sm-4">
+            <!---Directive right-->
+            <right-action theme-button="themeButton" full-action="false"></right-action>
+
+           
+        </div>
+
+
+    </div>
+
+</section>

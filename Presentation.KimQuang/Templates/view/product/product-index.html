@@ -1,0 +1,215 @@
+﻿<content-header title-name="Danh sách sản phẩm"></content-header>
+
+<!-- Main content -->
+<section class="content overflow-x-scroll">
+    <div class="row ng-scope" ng-controller="ProductCtrl" ng-init="init()">
+        <div class="col-md-12 col-sm-12">
+
+            <!--search-->
+            <div class="row">
+                <div class="col-xs-12">
+                    <div class="box box-default box-solid">
+                        <div class="box-header with-border">
+                            <i class="fa fa-search"></i>
+                            <h3 class="box-title text-uppercase">
+                                Thông tin tìm kiếm
+                            </h3>
+                            <!-- tools box -->
+                            <div class="pull-right box-tools">
+                                <button class="btn btn-default btn-sm" data-widget="collapse" title="Rút gọn"><i class="fa fa-minus"></i></button>
+                            </div><!-- /. tools -->
+                        </div>
+                        <div class="box-body">
+                            <!--row 1-->
+                            <div class="row">
+                                <form name="searchProductForm" class="form-horizontal" novalidate="">
+                                    <div class="col-md-12">
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label for="Name" class="col-sm-4 control-label text-left-important">Tên sản phẩm:</label>
+                                                <div class="col-sm-8">
+                                                    <input type="text" class="form-control" id="Name" name="Name" ng-model="searchEntry.Name" placeholder="">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label for="Address" class="col-sm-4 control-label text-left-important">Địa chỉ:</label>
+                                                <div class="col-sm-8">
+                                                    <input type="text" class="form-control" id="Address" name="Address" ng-model="searchEntry.Address" placeholder="">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                            <!--row 2-->
+                            <div class="row">
+                                <div class="col-md-12 form-horizontal">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="DistrictID" class="col-sm-4 control-label text-left-important">Quận/Huyện</label>
+                                            <div class="col-sm-8">
+                                                <select class="form-control" ng-model="searchEntry.DistrictID"
+                                                        ng-options="item.ID as item.Name for item in districtSelectList"
+                                                        ng-change="changeDistrict(searchEntry.DistrictID)">
+                                                    <option value="">-- Chọn Quận/Huyện</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="WardID" class="col-sm-4 control-label text-left-important">Phường/Xã</label>
+                                            <div class="col-sm-8">
+                                                <select class="form-control" ng-model="searchEntry.WardID"
+                                                        ng-options="item.ID as item.Name for item in wardSelectList | filterDistrictID:searchEntry.DistrictID"
+                                                        ng-disabled="searchEntry.DistrictID == null || searchEntry.DistrictID == ''">
+                                                    <option value="">
+                                                        -- Tất cả
+                                                    </option>
+                                                </select>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!--row 3-->
+                            <div class="row">
+                                <div class="col-md-12 form-horizontal">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="AvailableAreaFrom" class="col-sm-4 control-label text-left-important">Diện tích trống từ:</label>
+                                            <div class="col-sm-8">
+                                                <input type="text" class="form-control" id="AvailableAreaFrom" name="AvailableAreaFrom" ng-model="searchEntry.AvailableAreaFrom" placeholder="">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="AvailableAreaTo" class="col-sm-4 control-label text-left-important">Diện tích trống tới:</label>
+                                            <div class="col-sm-8">
+                                                <input type="text" class="form-control" id="AvailableAreaTo" name="AvailableAreaTo" ng-model="searchEntry.AvailableAreaTo" placeholder="">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!--row 4-->
+                            <div class="row">
+                                <div class="col-md-12 form-horizontal">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="PriceFrom" class="col-sm-4 control-label text-left-important">Giá từ:</label>
+                                            <div class="col-sm-8">
+                                                <input type="text" class="form-control" id="PriceFrom" name="PriceFrom" ng-model="searchEntry.PriceFrom" placeholder="">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="PriceTo" class="col-sm-4 control-label text-left-important">Giá tới:</label>
+                                            <div class="col-sm-8">
+                                                <input type="text" class="form-control" id="PriceTo" name="PriceTo" ng-model="searchEntry.PriceTo" placeholder="">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!--row 5-->
+                            <div class="row">
+                                <div class="col-md-12 form-horizontal">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="IsHiredWholeBuilding" class="col-sm-4 control-label text-left-important">Cho thuê nguyên căn?</label>
+                                            <div class="col-sm-8">
+                                                <input type="checkbox" id="IsHiredWholeBuilding" name="IsHiredWholeBuilding" ng-model="searchEntry.IsHiredWholeBuilding">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="IsGroundFloor" class="col-sm-4 control-label text-left-important">Tầng trệt?</label>
+                                            <div class="col-sm-8">
+                                                <input type="checkbox" id="IsGroundFloor" name="IsGroundFloor" ng-model="searchEntry.IsGroundFloor">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!--row 6-->
+                            <div class="row">
+                                <div class="col-md-12 form-horizontal">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="BuildingDirectionID" class="col-sm-4 control-label text-left-important">Hướng nhà</label>
+                                            <div class="col-sm-8">
+                                                <select ng-model="searchEntry.BuildingDirectionID" name="BuildingDirectionID" id="BuildingDirectionID" class="form-control"
+                                                        ng-options="option.Value as option.Name for option in buildingDirectionIDSelectList">
+                                                    <option value="">-- Chọn hướng nhà</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="Status" class="col-sm-4 control-label text-left-important">Tình trạng</label>
+                                            <div class="col-sm-8">
+                                                <select ng-model="searchEntry.Status" name="Status" id="Status" class="form-control"
+                                                        ng-options="option.value as option.name for option in statusOptions">
+                                                    <option value="">
+                                                        -- Chọn Tình trạng
+                                                    </option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="box-footer clearfix">
+                                <div class="row">
+                                    <div class="col-md-12 form-horizontal">
+                                        <div class="col-md-4  col-md-offset-4">
+                                            <div class="form-group">
+                                                <input type="button" class="form-control btn-primary" ng-click="search(searchEntry)" value="TÌM KIẾM">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+                <!-- Navigator part -->
+            </div>
+
+            <div class="box box-default box-solid">
+                <div class="box-header with-border box-info">
+                    <i class="fa fa-list-ol"></i>
+                    <h3 class="box-title text-uppercase">
+                        Kết quả
+                    </h3>
+                    <!-- tools box -->
+
+                </div>
+                <div class="box box-default">
+                    <div class="box-body">
+                        <angular-grid-table grid-info="gridInfo" root-scope="this" list-right="listRight"></angular-grid-table>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+</section>
+<script>
+
+    //Toggle button
+    var o = $.AdminLTE.options;
+    if (o.enableBoxWidget) {
+        $.AdminLTE.boxWidget.activate();
+    }
+</script>

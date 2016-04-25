@@ -1,0 +1,35 @@
+﻿<form class="form-inline row">
+    <div class="form-group col-md-12 actionRight ">
+        <div class="col-md-3 pull-right">
+            <button class="btn col-xs-12 " ng-click="reset()" ng-class="{'{{themeButton}}':layout.enableClear, 'disabled':!layout.enableClear}">
+                <span class="glyphicon glyphicon-flash"></span>
+                 Xóa trắng</button>
+        </div>
+        <div class="col-md-3 pull-right" ng-hide="dataSeleted.ID==0"  ng-if="listRight.IsDelete=='True'">
+            <button class="btn col-xs-12" ng-class="{'{{themeButton}}':layout.enableButtonOrther, 'disabled':!layout.enableButtonOrther}" ng-click="actionConfirm('DELETE')">
+                <span class="glyphicon glyphicon-minus"></span>
+                Xóa</button>
+        </div>
+        <div class="col-md-3 pull-right" ng-hide="dataSeleted.ID==0"  ng-if="listRight.IsUpdate=='True'">
+            <button class="btn col-xs-12" ng-class="{'{{themeButton}}':layout.enableButtonOrther, 'disabled':!layout.enableButtonOrther}"  ng-click="actionConfirm('UPDATE')">
+                <span class="glyphicon glyphicon-save"></span>
+                Lưu lại</button>
+        </div>
+        <div class="col-md-3 pull-right first" ng-hide="!fullAction">
+            <button class="btn col-xs-12" ng-class="themeButton">
+                <span class="glyphicon glyphicon-ok"></span>
+                Kích hoạt</button>
+        </div>
+        <div class="col-md-3 pull-right first hidden" ng-hide="!fullAction">
+            <button class="btn col-xs-12" ng-class="themeButton">
+                <span class="glyphicon glyphicon-lock"></span>
+                Deactive</button>
+        </div>
+        <div class="col-md-3 pull-right" ng-show="dataSeleted.ID==0" ng-if="listRight.IsInsert=='True'">
+            <button class="btn col-xs-12" ng-class="{'{{themeButton}}':layout.enableButtonOrther, 'disabled':!layout.enableButtonOrther}" ng-click="actionConfirm('INSERT')">
+                <span class="glyphicon glyphicon-plus"></span>
+              Thêm mới</button>
+        </div>
+    </div>
+
+</form>

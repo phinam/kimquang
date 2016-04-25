@@ -1,0 +1,84 @@
+﻿<ul class="dropdown-menu">
+    <!--Email type=1-->
+    <li class="header" ng-if="nav.type == 1">You have {{currentUser.email.length}} messages</li>
+    <li ng-if="nav.type == 1">
+        <ul class="menu">
+            <li ng-repeat="dropdown in currentUser.email">
+                <a ng-href="{{dropdown.url}}">
+                    <div class="pull-left">
+                        <img ng-src="{{dropdown.image}}" class="img-circle" alt="{{dropdown.title}}"/>
+                    </div>
+                    <h4>
+                        {{dropdown.title}}
+                        <small>
+                            <i class="{{dropdown.cssIcon}}"></i>
+                            <span am-time-ago="dropdown.receivedAt"></span>
+                        </small>
+                    </h4>
+                    <p>{{dropdown.message}}</p>
+                </a>
+            </li>
+        </ul>
+    </li>
+    <li class="footer" ng-if="nav.type == 1"><a ng-href="{{nav.footerMessage.url}}">{{nav.footerMessage.text}}</a></li>
+
+    <!--Notifications type=2-->
+    <li class="header" ng-if="nav.type == 2">You have {{currentUser.notification.length}} notifications</li>
+    <li ng-if="nav.type == 2">
+        <ul class="menu">
+            <li ng-repeat="dropdown in currentUser.notification">
+                <a ng-href="{{dropdown.url}}">
+                    <i class="{{dropdown.cssIcon}}"></i> {{dropdown.message}}
+                </a>
+            </li>
+        </ul>
+    </li>
+    <li class="footer" ng-if="nav.type == 2"><a ng-href="{{nav.footerMessage.url}}">{{nav.footerMessage.text}}</a></li>
+
+    <!--Tasks type=3-->
+    <li class="header" ng-if="nav.type == 3">You have {{currentUser.task.length}} tasks</li>
+    <li ng-if="nav.type == 3">
+        <ul class="menu">
+            <li ng-repeat="dropdown in currentUser.task">
+                <a ng-href="{{dropdown.url}}">
+                    <h3>
+                        {{dropdown.title}}
+                        <small class="pull-right">{{dropdown.completePercent}}%</small>
+                    </h3>
+                    <div class="progress xs">
+                        <div ng-class="{'progress-bar progress-bar-aqua': dropdown.completePercent <= 20,
+                                    'progress-bar progress-bar-green': dropdown.completePercent > 20 && dropdown.completePercent <=40,
+                                    'progress-bar progress-bar-red': dropdown.completePercent >40 && dropdown.completePercent <=60,
+                                    'progress-bar progress-bar-yellow': dropdown.completePercent > 60 && dropdown.completePercent <= 100}"
+                             style="width: {{dropdown.completePercent}}% " role="progressbar" aria-valuenow="{{dropdown.completePercent}}" aria-valuemin="0" aria-valuemax="100">
+                            <span class="sr-only">{{dropdown.completePercent}}% Complete</span>
+                        </div>
+                    </div>
+                </a>
+            </li>
+        </ul>
+    </li>
+    <li class="footer" ng-if="nav.type == 3"><a ng-href="{{nav.footerMessage.url}}">{{nav.footerMessage.text}}</a></li>
+
+    <!--User type=4-->
+    <li class="user-header" ng-if="nav.type == 4">
+        <img ng-src="{{nav.imgIcon}}" class="img-circle" alt="{{nav.userName}}"/>
+        <p>
+            {{currentUser.profile.title}}
+            <small>Member since {{currentUser.profile.beMemberSince}}</small>
+        </p>
+    </li>
+   <!-- <li class="user-body" ng-if="nav.type == 4">
+        <div ng-repeat="menu in currentUser.profile.userBody" class="col-xs-{{12 / currentUser.profile.userBody.length}} text-center">
+            <a ng-href="{{menu.url}}">{{menu.text}}</a>
+        </div>
+    </li>-->
+    <li class="user-footer" ng-if="nav.type == 4">
+        <div class="pull-left">
+            <a ng-click="changePassword()" class="btn btn-default btn-flat">Change Password</a>
+        </div>
+        <div class="pull-right">
+            <a ng-click="signOut()" class="btn btn-default btn-flat">Sign out</a>
+        </div>
+    </li>
+</ul>
