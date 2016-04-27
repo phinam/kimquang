@@ -285,7 +285,7 @@
 
                 </div>
 
-              
+
             </div>
         </div>
     </div>
@@ -329,17 +329,112 @@
         <div class="col-md-6">
             <div class="form-group">
                 <label for="Status" class="col-sm-4 control-label text-left-important">Hình ảnh</label>
-            </div>
-        </div>
-
-
-        <div class="row">
-            <div class="col-md-12">
-                <div class="col-md-8">
-
+                <div class="col-sm-8 ">
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <button class="dropzone " ng-click="ChooseImage('image1')">
+                                <span class="dz-message" ng-if="!currentBanner.image1">
+                                    Chọn ảnh hình ảnh 1 &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+                                </span>
+                                <div class="dz-image " ng-if="currentBanner.image1">
+                                    <img class="image100" alt="{{currentBanner.image1}}" ng-src="{{currentBanner.image1}}" />
+                                </div>
+                            </button><i class="fa fa-times  text-danger">&nbsp;</i>
+                            <span for="zOrder">Hinh ảnh 1  </span>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <button class="dropzone " ng-click="ChooseImage('image1')">
+                                <span class="dz-message" ng-if="!currentBanner.image1">
+                                    Chọn ảnh layout &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+                                </span>
+                                <div class="dz-image " ng-if="currentBanner.image1">
+                                    <img class="image100" alt="{{currentBanner.image1}}" ng-src="{{currentBanner.image1}}" />
+                                </div>
+                            </button><i class="fa fa-times  text-danger">&nbsp;</i>
+                            <span for="zOrder">Layout</span>
+                        </div>
+                    </div>
+                    <div class=" col-md-4">
+                        <div class="form-group pull-left">
+                            <button class="dropzone " ng-click="ChooseImage('image1')">
+                                <span class="dz-message" ng-if="!currentBanner.image1">
+                                    Chọn hợp đồng môi giới &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+                                </span>
+                                <div class="dz-image " ng-if="currentBanner.image1">
+                                    <img class="image100" alt="{{currentBanner.image1}}" ng-src="{{currentBanner.image1}}" />
+                                </div>
+                            </button><i class="fa fa-times  text-danger">&nbsp;</i>
+                            <span for="zOrder">HĐ môi giới </span>
+                        </div>
+                    </div>
+                    <div class=" col-md-4">
+                        <div class="form-group pull-left">
+                            <button class="dropzone " ng-click="ChooseImage('image1')">
+                                <span class="dz-message" ng-if="!currentBanner.image1">
+                                    Chọn  hợp đồng cho thuê&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+                                </span>
+                                <div class="dz-image " ng-if="currentBanner.image1">
+                                    <img class="image100" alt="{{currentBanner.image1}}" ng-src="{{currentBanner.image1}}" />
+                                </div>
+                            </button><i class="fa fa-times  text-danger">&nbsp;</i>
+                            <span for="zOrder">HĐ cho thuê </span>
+                        </div>
+                    </div>
+                    <div class=" col-md-4">
+                        <div class="form-group pull-left ">
+                            <button class="dropzone " ng-click="ChooseImage('image1')">
+                                <span class="dz-message" ng-if="!currentBanner.image1">
+                                    Chọn thư chào giá&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+                                </span>
+                                <div class="dz-image " ng-if="currentBanner.image1">
+                                    <img class="image100" alt="{{currentBanner.image1}}" ng-src="{{currentBanner.image1}}" />
+                                </div>
+                            </button><i class="fa fa-times  text-danger">&nbsp;</i>
+                            <span for="zOrder">Thư chào giá </span>
+                        </div>
+                    </div>
+                    <div class=" col-md-4">
+                        <div class="form-group pull-left ">
+                            <button class="dropzone " ng-click="ChooseImage('image1')">
+                                <span class="dz-message" ng-if="!currentBanner.image1">
+                                    Chọn Proposal&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+                                </span>
+                                <div class="dz-image " ng-if="currentBanner.image1">
+                                    <img class="image100" alt="{{currentBanner.image1}}" ng-src="{{currentBanner.image1}}" />
+                                </div>
+                            </button><i class="fa fa-times  text-danger">&nbsp;</i>
+                            <span for="zOrder">Proposal </span>
+                        </div>
+                    </div>
+                    <div class=" col-md-4">
+                        <div class="form-group  ">
+                            <button class="dropzone " ng-click="ChooseImage('image1')">
+                                <span class="dz-message" ng-if="!currentBanner.image1">
+                                    Chọn giấy tờ khác&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+                                </span>
+                                <div class="dz-image " ng-if="currentBanner.image1">
+                                    <img class="image100" alt="{{currentBanner.image1}}" ng-src="{{currentBanner.image1}}" />
+                                </div>
+                            </button><i class="fa fa-times  text-danger">&nbsp;</i>
+                            <span for="zOrder">Giấy tờ khác </span>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
+
+    </div>
+
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="col-md-8">
+
+            </div>
+        </div>
+    </div>
     </div>
 
     </form>

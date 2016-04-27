@@ -451,6 +451,10 @@
         slug = slug.replace(/\@\-|\-\@|\@/gi, "");
         return slug;
     }
+    $scope.files = [];
+    $scope.upload = function () {
+        alert($scope.files.length + " files selected ... Write your Upload Code");
 
+    };
 
 })

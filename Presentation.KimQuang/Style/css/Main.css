@@ -246,22 +246,71 @@ table#AreaGrid tbody td {
 .div.dataTables_info {
     padding-left: 18px;
 }
+
 div.dataTables_paginate {
     padding-right: 16px;
 }
-#DataTables_Table_0_info, .dataTables_info{
+
+#DataTables_Table_0_info, .dataTables_info {
     padding-left: 18px;
-
-}
-table.dataTable thead tr th.MultiSelect{
-    padding-right:0px;
 }
 
-table.dataTable tr th.MultiSelect{
-    padding-right:0px;
+table.dataTable thead tr th.MultiSelect {
+    padding-right: 0px;
+}
+
+table.dataTable tr th.MultiSelect {
+    padding-right: 0px;
 }
 
 table.dataTable thead > tr > th {
-      padding-right: 0px!important;
+    padding-right: 0px !important;
 }
 
+/******UPload file*/
+@charset "UTF-8";
+/*
+ * jQuery File Upload Plugin CSS
+ * https://github.com/blueimp/jQuery-File-Upload
+ *
+ * Copyright 2013, Sebastian Tschan
+ * https://blueimp.net
+ *
+ * Licensed under the MIT license:
+ * http://www.opensource.org/licenses/MIT
+ */
+
+.fileinput-button {
+    position: relative;
+    overflow: hidden;
+    display: inline-block;
+}
+
+    .fileinput-button input {
+        position: absolute;
+        top: 0;
+        right: 0;
+        margin: 0;
+        opacity: 0;
+        -ms-filter: 'alpha(opacity=0)';
+        font-size: 200px !important;
+        direction: ltr;
+        cursor: pointer;
+    }
+
+/* Fixes for IE < 8 */
+@media screen\9 {
+    .fileinput-button input {
+        filter: alpha(opacity=0);
+        font-size: 100%;
+        height: 100%;
+    }
+}
+
+.dropzone {
+    min-height: 106px;
+    border: 2px solid rgba(0,0,0,0.3);
+    background: white;
+    padding: 20px 20px;
+    margin-right: 4px;
+}

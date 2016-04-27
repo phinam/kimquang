@@ -896,6 +896,7 @@
     <Content Include="Style\css\AdminLTE.css" />
     <Content Include="Style\css\AdminLTE.min.css" />
     <Content Include="Style\css\build.css" />
+    <Content Include="Style\css\dropzone.min.css" />
     <Content Include="Style\css\Main.css" />
     <Content Include="Style\css\skins\skin-black-light.css" />
     <Content Include="Style\css\skins\skin-black-light.min.css" />
