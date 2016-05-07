@@ -9,14 +9,24 @@
             { name: 'RowIndex', heading: 'RowIndex', isHidden: true },
             { name: 'ID', heading: 'ID', isHidden: true },
             { name: 'MultiSelect', heading: titleHtml, width: '50px', className: 'text-center pd-0 break-word', type: controls.CHECKBOX, listAction: [{ classIcon: 'form-control', action: 'multiSelect' }] },
-            { name: 'LastUpdatedDateTime', heading: 'Ngày chỉnh sửa', width: '90px', className: 'text-center pd-0 break-word' },
+            { name: 'LastUpdatedDateTime', heading: 'Ngày cập nhật', width: '90px', className: 'text-center pd-0 break-word' },
+             { name: 'PriorityLevel', heading: 'UT', className: 'text-center pd-0 break-word' },
             { name: 'Name', heading: 'Tên', className: 'text-center pd-0 break-word' },
-            { name: 'Address', heading: 'Địa chỉ', className: 'text-center pd-0 break-word' },
-            { name: 'ManagerName', heading: 'Tên quản lý', className: 'text-center pd-0 break-word' },
-            { name: 'ManagerMobilePhone', heading: 'SĐT quản lý', className: 'text-center pd-0 break-word' },
-            { name: 'Struture', heading: 'Kết cấu', className: 'text-center pd-0 break-word' },
-            { name: 'AreaDescription', heading: 'Diện tích trống', width: '150px', className: 'text-center pd-0 break-word' },
-            { name: 'PriceDescription', heading: 'Giá', className: 'text-center pd-0 break-word' },
+             { name: 'AvailableAreaSummary', heading: 'Diện tích trống', className: 'text-center pd-0 break-word' },
+                { name: 'PriceDescription', heading: 'Lưu ý giá', className: 'text-center pd-0 break-word' },
+             { name: 'HirePrice', heading: 'Giá thuê', className: 'text-center pd-0 break-word' },
+             { name: 'HireManagermentFee', heading: 'PQL', className: 'text-center pd-0 break-word' },
+             { name: 'TotalPrice', heading: 'Giá tổng(M2)', className: 'text-center pd-0 break-word' },
+             { name: 'HireTotalAmount', heading: 'Giá tổng(DT)', className: 'text-center pd-0 break-word' },
+             { name: 'HireFinalPrice', heading: 'Giá chốt', className: 'text-center pd-0 break-word' },
+             { name: 'BasicInfo', heading: 'Thông tin cơ bản', className: 'text-center pd-0 break-word' },
+             { name: 'Liên hệ', heading: 'Contact', className: 'text-center pd-0 break-word' },
+            { name: 'HomeNumber', heading: 'Số nhà', className: 'text-center pd-0 break-word' },
+            { name: 'StreetName', heading: 'Đường', className: 'text-center pd-0 break-word' },
+              { name: 'WardName', heading: 'Phường', className: 'text-center pd-0 break-word' },
+            { name: 'DistrictName', heading: 'Quận', className: 'text-center pd-0 break-word' },
+          
+        
             { name: 'Action1', heading: 'Sửa', width: '50px', className: 'text-center pd-0 break-word', type: controls.LIST_ICON, listAction: [{ classIcon: 'fa-pencil-square-o', action: 'view' }] },
             { name: 'Action2', heading: 'Xóa', width: '50px', className: 'text-center pd-0 break-word', type: controls.LIST_ICON, listAction: [{ classIcon: 'fa-times  text-danger', action: 'delete' }] }
         ],
@@ -369,7 +379,7 @@
     }
 
 
-    $scope.exportExcels = function () {
+    $scope.exportFile = function (exportType, sysViewId) {
         var selectedId = [];
         var selectedItems = $rootScope.selectedItems;
         for (var id in selectedItems) {
@@ -379,9 +389,11 @@
                 }
             }
         }
-
+        //exportType = "Excel";//"Excel|Pdf
+        //sysViewId = "26";// "26|27"
+        var languageId = "129";//"Excel|Pdf
         var hiddenIframeId = "#hiddenDownloader";
-        coreApp.CallFunctionFromiFrame(hiddenIframeId, "RunExport", selectedId.toString(), function () { }, 100);
+        coreApp.CallFunctionFromiFrame(hiddenIframeId, "RunExport", { listId: selectedId.toString(), exportType: exportType, sysViewId: sysViewId, languageId: languageId }, function () { }, 100);
         //   thisObj._win.RunExport(_data);
 
         console.log('selectedId', selectedId.toString());
@@ -492,7 +504,7 @@
         };
         finder.popup();
     });
-   
+
     $("#uploadleasescontract").click(function () {
         var finder = new CKFinder();
         finder.resourceType = 'Images';
@@ -538,7 +550,7 @@
         finder.popup();
     });
     $scope.ChooseImage = function (objUpload) {
-      
+
         switch (objUpload) {
             case 'layout':
                 $("#uploadLayout").click();
