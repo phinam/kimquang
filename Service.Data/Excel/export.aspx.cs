@@ -15,10 +15,19 @@ namespace Service.Data.Excel
         protected void Page_Load(object sender, EventArgs e)
         {
             string sData = Context.Request.Form["data"];
+            string exportType = "";//"Excel|Pdf
+            string sysViewID = "13";// "26|27"
+            string languageId = "129";//"Excel|Pdf
+            if (Context.Request.Form["exportType"] != null)
+                exportType = Context.Request.Form["exportType"];
+            if (Context.Request.Form["sysViewID"] != null)
+                sysViewID = Context.Request.Form["sysViewID"];
+            if (Context.Request.Form["languageId"] != null)
+                languageId = Context.Request.Form["languageId"];
             if (String.IsNullOrEmpty(sData)) { return; }
             try
             {
-                string inputValue =string.Format( "<InputValue UserID=\"2\" /><RequestParams ListProductId=\"{0}\"  start=\"0\"  length=\"1\"  Sys_ViewID=\"23\" />",sData);
+                string inputValue = string.Format("<InputValue UserID=\"2\" /><RequestParams ListID=\"{0}\" LanguageID=\"{1}\" ExportType=\"{2}\" start=\"0\"  length=\"1\"  Sys_ViewID=\"{3}\" />", sData, languageId, exportType, sysViewID);
                 DataSet data = new CCoreService().GetContextDataSet("", inputValue);
 
                 ExcelPlusExport(data.Tables[0], Context);
