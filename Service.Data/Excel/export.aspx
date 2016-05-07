@@ -8,9 +8,12 @@
     <script type="text/javascript">
         function RunExport(data) {
            
-            //data = JSON.stringify(data);
+            var pData = JSON.stringify(data);
             //alert(f);
-            $('#data').val(data);
+            $('#listId').val(pData.listId);
+            $('#languageId').val(pData.languageId);// listId, languageId, exportType, sysViewId
+            $('#exportType').val(pData.exportType);
+            $('#sysViewId').val(pData.sysViewId);
             $('form').submit();
         }
       
@@ -19,7 +22,10 @@
 <body>
     <form id="form1" runat="server">
     <div>
-     <input type="hidden" id="data" name="data" />
+     <input type="hidden" id="listId" name="listId" />
+         <input type="hidden" id="data" name="data" />
+         <input type="hidden" id="data" name="data" />
+         <input type="hidden" id="data" name="data" />
     </div>
     </form>
 </body>
