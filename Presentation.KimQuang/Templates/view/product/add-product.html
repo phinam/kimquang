@@ -31,7 +31,8 @@
                                 <option value="">-- Chọn Quận/Huyện</option>
                             </select>
                         </div>
-                    </div><div class="form-group">
+                    </div>
+                    <div class="form-group">
                         <label for="WardID" class="col-sm-3 control-label text-left-important">Phường/Xã</label>
                         <div class="col-sm-9" ">
                                             <select class=" form-control" ng-model="dataSelected.WardID" tabindex="3"
@@ -42,7 +43,8 @@
                             </option>
                             </select>
                         </div>
-                    </div><div class="form-group">
+                    </div>
+                    <div class="form-group">
                         <label for="inputPassword3" class="col-sm-3 control-label">Tên đường</label>
                         <div class="col-sm-9">
                             <input type="text" class="form-control" ng-model="dataSelected.StreetName" tabindex="4">
@@ -217,13 +219,13 @@
                     <div class="form-group">
                         <label for="PriceDescription" class="col-sm-3 control-label text-left-important">Độ cao trần</label>
                         <div class="col-sm-9 ">
-                            <input type=" text" class="form-control" id="OtherFee" name="OtherFee" tabindex="30" ng-model="dataSelected.OtherFee" ng-change="changeText()" />
+                            <input type=" text" class="form-control" id="CeilingHeight" name="CeilingHeight" tabindex="30" ng-model="dataSelected.CeilingHeight" ng-change="changeText()" />
                         </div>
                     </div>
                     <div class="form-group">
                         <label for="PriceDescription" class="col-sm-3 control-label text-left-important">Năm hoàn thành</label>
                         <div class="col-sm-9 ">
-                            <input type=" text" class="form-control" id="OtherFee" name="OtherFee" tabindex="30" ng-model="dataSelected.OtherFee" ng-change="changeText()" />
+                            <input type=" text" class="form-control" id="CompleteTime" name="CompleteTime" tabindex="30" ng-model="dataSelected.CompleteTime" ng-change="changeText()" />
                         </div>
                     </div>
                     <div class="form-group">
@@ -292,11 +294,11 @@
                             <div class="col-sm-4 ">
                                 <div class="form-group">
                                     <button class="dropzone " ng-click="ChooseImage('image1')">
-                                        <span class="dz-message" ng-if="!currentBanner.image1">
+                                        <span class="dz-message" ng-if="!dataSelected.Image1">
                                             Chọn ảnh hình ảnh 1
                                         </span>
-                                        <div class="dz-image " ng-if="currentBanner.image1">
-                                            <img class="image100" alt="{{currentBanner.image1}}" ng-src="{{currentBanner.image1}}" />
+                                        <div class="dz-image " ng-if="dataSelected.Image1">
+                                            <img class="image100" alt="{{dataSelected.Image1}}" ng-src="{{dataSelected.Image1}}" />
                                         </div>
                                     </button><i class="fa fa-times  text-danger">&nbsp;</i>
                                     <span for="zOrder">Hinh ảnh 1  </span>
@@ -305,11 +307,11 @@
                             <div class="col-md-4">
                                 <div class="form-group">
                                     <button class="dropzone " ng-click="ChooseImage('layout')">
-                                        <span class="dz-message" ng-if="!currentBanner.layout">
-                                            Chọn ảnh layout 
+                                        <span class="dz-message" ng-if="!dataSelected.Layout">
+                                            Chọn ảnh layout
                                         </span>
-                                        <div class="dz-image " ng-if="currentBanner.layout">
-                                            <img class="image100" alt="{{currentBanner.layout}}" ng-src="{{currentBanner.layout}}" />
+                                        <div class="dz-image " ng-if="dataSelected.Layout">
+                                            <img class="image100" alt="{{dataSelected.Layout}}" ng-src="{{dataSelected.Layout}}" />
                                         </div>
                                     </button><i class="fa fa-times  text-danger">&nbsp;</i>
                                     <span for="zOrder">Layout</span>
@@ -318,11 +320,11 @@
                             <div class=" col-md-4">
                                 <div class="form-group pull-left">
                                     <button class="dropzone " ng-click="ChooseImage('brokeragecontract')">
-                                        <span class="dz-message" ng-if="!currentBanner.brokeragecontract">
+                                        <span class="dz-message" ng-if="!dataSelected.Brokeragecontract">
                                             Chọn hợp đồng môi giới
                                         </span>
-                                        <div class="dz-image " ng-if="currentBanner.brokeragecontract">
-                                            <img class="image100" alt="{{currentBanner.brokeragecontract}}" src="../../../Images/icons/brokeragecontract.png" />
+                                        <div class="dz-image " ng-if="dataSelected.Brokeragecontract">
+                                            <img class="image100" alt="{{dataSelected.Brokeragecontract}}" src="../../../Images/icons/brokeragecontract.png" />
                                         </div>
                                     </button><i class="fa fa-times  text-danger">&nbsp;</i>
                                     <span for="zOrder">HĐ môi giới </span>
@@ -331,11 +333,11 @@
                             <div class=" col-md-4">
                                 <div class="form-group pull-left">
                                     <button class="dropzone " ng-click="ChooseImage('leasescontract')">
-                                        <span class="dz-message" ng-if="!currentBanner.leasescontract">
+                                        <span class="dz-message" ng-if="!dataSelected.LeasesContract">
                                             Chọn  hợp đồng cho thuê
                                         </span>
-                                        <div class="dz-image " ng-if="currentBanner.leasescontract">
-                                            <img class="image100" alt="{{currentBanner.leasescontract}}" src="../../../Images/icons/brokeragecontract.png" />
+                                        <div class="dz-image " ng-if="dataSelected.LeasesContract">
+                                            <img class="image100" alt="{{dataSelected.LeasesContract}}" src="../../../Images/icons/brokeragecontract.png" />
                                         </div>
                                     </button><i class="fa fa-times  text-danger">&nbsp;</i>
                                     <span for="zOrder">HĐ cho thuê </span>
@@ -344,11 +346,11 @@
                             <div class=" col-md-4">
                                 <div class="form-group pull-left ">
                                     <button class="dropzone " ng-click="ChooseImage('bidcontracts')">
-                                        <span class="dz-message" ng-if="!currentBanner.bidcontracts">
+                                        <span class="dz-message" ng-if="!dataSelected.BidContracts">
                                             Chọn thư chào giá
                                         </span>
-                                        <div class="dz-image " ng-if="currentBanner.bidcontracts">
-                                            <img class="image100" alt="{{currentBanner.bidcontracts}}" src="../../../Images/icons/brokeragecontract.png" />
+                                        <div class="dz-image " ng-if="dataSelected.BidContracts">
+                                            <img class="image100" alt="{{dataSelected.BidContracts}}" src="../../../Images/icons/brokeragecontract.png" />
                                         </div>
                                     </button><i class="fa fa-times  text-danger">&nbsp;</i>
                                     <span for="zOrder">Thư chào giá </span>
@@ -357,11 +359,11 @@
                             <div class=" col-md-4">
                                 <div class="form-group pull-left ">
                                     <button class="dropzone " ng-click="ChooseImage('proposal')">
-                                        <span class="dz-message" ng-if="!currentBanner.proposal">
+                                        <span class="dz-message" ng-if="!dataSelected.Proposal">
                                             Chọn Proposal
                                         </span>
-                                        <div class="dz-image " ng-if="currentBanner.proposal">
-                                            <img class="image100" alt="{{currentBanner.proposal}}" src="../../../Images/icons/brokeragecontract.png" />
+                                        <div class="dz-image " ng-if="dataSelected.Proposal">
+                                            <img class="image100" alt="{{dataSelected.Proposal}}" src="../../../Images/icons/brokeragecontract.png" />
                                         </div>
                                     </button><i class="fa fa-times  text-danger">&nbsp;</i>
                                     <span for="zOrder">Proposal </span>
@@ -370,11 +372,11 @@
                             <div class=" col-md-4">
                                 <div class="form-group  ">
                                     <button class="dropzone " ng-click="ChooseImage('ortherpapers')">
-                                        <span class="dz-message" ng-if="!currentBanner.ortherpapers">
+                                        <span class="dz-message" ng-if="!dataSelected.Ortherpapers">
                                             Chọn giấy tờ khác
                                         </span>
-                                        <div class="dz-image " ng-if="currentBanner.ortherpapers">
-                                            <img class="image100" alt="{{currentBanner.ortherpapers}}" src="../../../Images/icons/brokeragecontract.png" />
+                                        <div class="dz-image " ng-if="dataSelected.Ortherpapers">
+                                            <img class="image100" alt="{{dataSelected.Ortherpapers}}" src="../../../Images/icons/brokeragecontract.png" />
                                         </div>
                                     </button><i class="fa fa-times  text-danger">&nbsp;</i>
                                     <span for="zOrder">Giấy tờ khác </span>
@@ -385,65 +387,65 @@
                 </div>
 
             </div>
-           
-    <div class="col-sm-12 col-md-8 col-md-offset-2">
-        <div class="row">
-            <div class="col-md-4 col-md-offset-1 pull-left" ng-show="dataSelected.ID==0">
-                <button class="btn col-xs-12 btn-primary" tabindex="30"
-                        ng-disabled="addProductForm.Name.$error.required"
-                        ng-click="actionConfirm('INSERT')">
-                    <span class="glyphicon glyphicon-plus"></span>
-                    Thêm
-                </button>
+
+            <div class="col-sm-12 col-md-8 col-md-offset-2">
+                <div class="row">
+                    <div class="col-md-4 col-md-offset-2 pull-left" ng-show="dataSelected.ID==0">
+                        <button class="btn col-xs-12 btn-primary" tabindex="30"
+                                ng-disabled="addProductForm.Name.$error.required"
+                                ng-click="actionConfirm('INSERT')">
+                            <span class="glyphicon glyphicon-plus"></span>
+                            Thêm
+                        </button>
+                    </div>
+                    <div class="col-md-4 col-md-offset-2 pull-left" ng-show="dataSelected.ID!=0">
+                        <button class="btn col-xs-12 btn-danger" tabindex="31"
+                                ng-click="actionConfirm('UPDATE')">
+                            <span class="glyphicon glyphicon-plus"></span>
+                            Lưu thay đổi
+                        </button>
+                    </div>
+                    <div class="col-md-4 pull-left">
+                        <button class="btn col-xs-12" tabindex="32"
+                                ui-sref="productlist">
+                            <span class="glyphicon glyphicon-plus"></span>
+                            Trở về
+                        </button>
+                    </div>
+                </div>
+
             </div>
-            <div class="col-md-4 col-md-offset-1 pull-left" ng-show="dataSelected.ID!=0">
-                <button class="btn col-xs-12 btn-danger" tabindex="31"
-                        ng-click="actionConfirm('UPDATE')">
-                    <span class="glyphicon glyphicon-plus"></span>
-                    Lưu thay đổi
-                </button>
+            <!--<div class="col-sm-12 col-md-8 col-md-offset-2">
+                <right-action theme-button="themeButton" full-action="false"></right-action>
+            </div>-->
+
+
+            <div ng-hide="true">
+
+                <input type="text" ng-hide="true" ng-model="dataSelected.Image1" />
+                <button id="uploadImage1" ng-hide="true"></button>
+                <input type="text" ng-hide="true" ng-model="dataSelected.Layout" />
+                <button id="uploadLayout" ng-hide="true"></button>
+
+                <input type="text" ng-hide="true" ng-model="dataSelected.Brokeragecontract" />
+                <button id="uploadbrokeragecontract" ng-hide="true"></button>
+
+
+
+                <input type="text" ng-hide="true" ng-model="dataSelected.LeasesContract" />
+                <button id="uploadleasescontract" ng-hide="true"></button>
+
+                <input type="text" ng-hide="true" ng-model="dataSelected.BidContracts" />
+                <button id="uploadbidcontracts" ng-hide="true"></button>
+
+                <input type="text" ng-hide="true" ng-model="dataSelected.Proposal" />
+                <button id="uploadproposal" ng-hide="true"></button>
+
+
+                <input type="text" ng-hide="true" ng-model="dataSelected.Ortherpapers" />
+                <button id="uploadortherpapers" ng-hide="true"></button>
             </div>
-            <div class="col-md-4 pull-left">
-                <button class="btn col-xs-12" tabindex="32"
-                        ui-sref="productlist">
-                    <span class="glyphicon glyphicon-plus"></span>
-                    Trở về
-                </button>
-            </div>
-        </div>
-
-    </div>
-    <!--<div class="col-sm-12 col-md-8 col-md-offset-2">
-        <right-action theme-button="themeButton" full-action="false"></right-action>
-    </div>-->
-
-
-    <div ng-hide="true">
-
-        <input type="text" ng-hide="true" ng-model="currentBanner.image1" />
-        <button id="uploadImage1" ng-hide="true"></button>
-        <input type="text" ng-hide="true" ng-model="currentBanner.layout" />
-        <button id="uploadLayout" ng-hide="true"></button>
-
-        <input type="text" ng-hide="true" ng-model="currentBanner.brokeragecontract" />
-        <button id="uploadbrokeragecontract" ng-hide="true"></button>
-
-
-
-        <input type="text" ng-hide="true" ng-model="currentBanner.leasescontract" />
-        <button id="uploadleasescontract" ng-hide="true"></button>
-
-        <input type="text" ng-hide="true" ng-model="currentBanner.bidcontracts" />
-        <button id="uploadbidcontracts" ng-hide="true"></button>
-
-        <input type="text" ng-hide="true" ng-model="currentBanner.proposal" />
-        <button id="uploadproposal" ng-hide="true"></button>
-
-
-        <input type="text" ng-hide="true" ng-model="currentBanner.ortherpapers" />
-        <button id="uploadortherpapers" ng-hide="true"></button>
-    </div>
-    </form>
+        </form>
     </div>
 </section>
 <script>
