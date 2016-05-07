@@ -20,7 +20,7 @@
              { name: 'HireTotalAmount', heading: 'Giá tổng(DT)', className: 'text-center pd-0 break-word' },
              { name: 'HireFinalPrice', heading: 'Giá chốt', className: 'text-center pd-0 break-word' },
              { name: 'BasicInfo', heading: 'Thông tin cơ bản', className: 'text-center pd-0 break-word' },
-             { name: 'Liên hệ', heading: 'Contact', className: 'text-center pd-0 break-word' },
+             { name: 'Contact', heading: 'Liên hệ', className: 'text-center pd-0 break-word' },
             { name: 'HomeNumber', heading: 'Số nhà', className: 'text-center pd-0 break-word' },
             { name: 'StreetName', heading: 'Đường', className: 'text-center pd-0 break-word' },
               { name: 'WardName', heading: 'Phường', className: 'text-center pd-0 break-word' },
@@ -229,7 +229,11 @@
         if (typeof act != 'undefined') {
             var entry = angular.copy($scope.dataSelected);
             entry.UnAssignedName = tiengvietkhongdau(entry.Name); //coreService.toASCi(entry.Name);
-            entry.UnAssignedAddress = tiengvietkhongdau(entry.Address); //coreService.toASCi(entry.Address);
+            entry.UnAssignedAddress = tiengvietkhongdau(entry.HomeNumber+" "+ entry.Street); //coreService.toASCi(entry.Address);
+            if (entry.AvailableFrom!='')
+                entry.AvailableFrom=  $filter('date')(entry.AvailableFrom, "yyyy-MM-dd");
+
+
             entry.Action = act;
             entry.Sys_ViewID = 19; //$scope.gridInfo.sysViewID;
 
@@ -495,8 +499,8 @@
     });
     $("#uploadbrokeragecontract").click(function () {
         var finder = new CKFinder();
-        finder.resourceType = 'Images';
-        finder.startupPath = "Images:/Product/Thumbnail/";
+        finder.resourceType = 'Office';
+        finder.startupPath = "Images:/Product/Office/";
         finder.startupFolderExpanded = true;
         finder.selectActionFunction = function (fileUrl) {
             $scope.currentBanner.brokeragecontract = fileUrl;
@@ -507,8 +511,8 @@
 
     $("#uploadleasescontract").click(function () {
         var finder = new CKFinder();
-        finder.resourceType = 'Images';
-        finder.startupPath = "Images:/Product/Image/";
+        finder.resourceType = 'Office';
+        finder.startupPath = "Images:/Product/Office/";
         finder.startupFolderExpanded = true;
         finder.selectActionFunction = function (fileUrl) {
             $scope.currentBanner.leasescontract = fileUrl;
@@ -541,7 +545,7 @@
     $("#uploadortherpapers").click(function () {
         var finder = new CKFinder();
         finder.resourceType = 'Office';
-        finder.startupPath = "Images:/Product/Image/";
+        finder.startupPath = "Images:/Product/Office/";
         finder.startupFolderExpanded = true;
         finder.selectActionFunction = function (fileUrl) {
             $scope.currentBanner.ortherpapers = fileUrl;
