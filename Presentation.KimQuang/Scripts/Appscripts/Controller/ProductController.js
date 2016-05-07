@@ -82,11 +82,11 @@
 
     $scope.listRight = authoritiesService.get($scope.gridInfo.sysViewID);
     $scope.statusOptions = statusOptions;
-    $scope.layout = {
+    $scope.Layout = {
         enableClear: false,
         enableButtonOrther: false
     }
-    $scope.dataSelected = { ID: 0, Name: "", Code: '', Description: "", Status: "0", Sys_ViewID: $scope.gridInfo.sysViewID };
+    $scope.dataSelected = { ID: 0, Name: "", Code: '', Description: "", Status: "0", Sys_ViewID: $scope.gridInfo.sysViewID, layout: '', brokeragecontract: '', image1: '', bidcontracts: '', proposal: '', ortherpapers: '' };
     $scope.init = function () {
         window.setTimeout(function () {
             $(window).trigger("resize")
@@ -95,8 +95,8 @@
     $scope.setData = function (data) {
         if (typeof data != 'undefined') {
             $scope.dataSelected = data;
-            $scope.layout.enableClear = true;
-            $scope.layout.enableButtonOrther = true;
+            $scope.Layout.enableClear = true;
+            $scope.Layout.enableButtonOrther = true;
         }
     }
     $scope.actionConfirm = function (act) {
@@ -111,7 +111,7 @@
 
     $scope.reset = function (data) {
         $scope.dataSelected = { ID: 0, Name: '', Code: '', Description: "", Status: "0", Sys_ViewID: $scope.gridInfo.sysViewID };
-        $scope.layout = {
+        $scope.Layout = {
             enableClear: false,
             enableButtonOrther: false
         }
@@ -124,14 +124,14 @@
     };
     $scope.changeText = function () {
         if ($scope.dataSelected.Name == '')
-            $scope.layout.enableClear = false;
+            $scope.Layout.enableClear = false;
         else
-            $scope.layout.enableClear = true;
+            $scope.Layout.enableClear = true;
 
         if ($scope.dataSelected.Name == '')
-            $scope.layout.enableButtonOrther = false;
+            $scope.Layout.enableButtonOrther = false;
         else
-            $scope.layout.enableButtonOrther = true;
+            $scope.Layout.enableButtonOrther = true;
 
         // $scope.$apply();
     }
@@ -203,7 +203,7 @@
     $scope.$watch('productId', function (newVal, oldVal) {
         if (typeof newVal != 'undefined') {
             $rootScope.showModal = true;
-            coreService.getListEx({ ProductID: $scope.productId, Sys_ViewID: 19 }, function (data) {
+            coreService.getListEx({ ProductID: $scope.productId, Sys_ViewID: 20 }, function (data) {
                 console.log('ProductID', data);
                 convertStringtoNumber(data[1], 'DistrictID');
                 convertStringtoNumber(data[1], 'WardID');
@@ -229,7 +229,8 @@
         if (typeof act != 'undefined') {
             var entry = angular.copy($scope.dataSelected);
             entry.UnAssignedName = tiengvietkhongdau(entry.Name); //coreService.toASCi(entry.Name);
-            entry.UnAssignedAddress = tiengvietkhongdau(entry.HomeNumber+" "+ entry.Street); //coreService.toASCi(entry.Address);
+            entry.UnAssignedStreet = tiengvietkhongdau(entry.UnAssignedStreet); //coreService.toASCi(entry.Address);
+            if (typeof entry.AvailableFrom!='undefined')
             if (entry.AvailableFrom!='')
                 entry.AvailableFrom=  $filter('date')(entry.AvailableFrom, "yyyy-MM-dd");
 
@@ -337,7 +338,8 @@
         //    Status: $scope.Status,
         //    Sys_ViewID: 20
         //};
-
+        searchEntry.UnAssignedName = tiengvietkhongdau(searchEntry.Name);
+        searchEntry.UnAssignedAddress = tiengvietkhongdau(searchEntry.Address);
         for (var property in searchEntry) {
             if (searchEntry.hasOwnProperty(property)) {
                 if (searchEntry[property] == '' || searchEntry[property] == false || searchEntry[property] == null) {
@@ -345,8 +347,6 @@
                 }
             }
         }
-        searchEntry.UnAssignedName = tiengvietkhongdau(searchEntry.Name);
-        searchEntry.UnAssignedAddress = tiengvietkhongdau(searchEntry.Address);
 
         if ($rootScope.searchEntryFilter != null)
             searchEntry = $rootScope.searchEntryFilter;
@@ -479,7 +479,7 @@
         finder.startupPath = "Images:/Images/";
         finder.startupFolderExpanded = true;
         finder.selectActionFunction = function (fileUrl) {
-            $scope.currentBanner.image1 = fileUrl;
+            $scope.dataSelected.Image1 = fileUrl;
             $scope.$apply();
         };
         finder.popup();
@@ -492,7 +492,7 @@
         finder.startupPath = "Images:/Product/Thumbnail/";
         finder.startupFolderExpanded = true;
         finder.selectActionFunction = function (fileUrl) {
-            $scope.currentBanner.layout = fileUrl;
+            $scope.dataSelected.Layout = fileUrl;
             $scope.$apply();
         };
         finder.popup();
@@ -503,7 +503,7 @@
         finder.startupPath = "Images:/Product/Office/";
         finder.startupFolderExpanded = true;
         finder.selectActionFunction = function (fileUrl) {
-            $scope.currentBanner.brokeragecontract = fileUrl;
+            $scope.dataSelected.Brokeragecontract = fileUrl;
             $scope.$apply();
         };
         finder.popup();
@@ -515,7 +515,7 @@
         finder.startupPath = "Images:/Product/Office/";
         finder.startupFolderExpanded = true;
         finder.selectActionFunction = function (fileUrl) {
-            $scope.currentBanner.leasescontract = fileUrl;
+            $scope.dataSelected.LeasesContract = fileUrl;
             $scope.$apply();
         };
         finder.popup();
@@ -526,7 +526,7 @@
         finder.startupPath = "Images:/Product/Image/";
         finder.startupFolderExpanded = true;
         finder.selectActionFunction = function (fileUrl) {
-            $scope.currentBanner.bidcontracts = fileUrl;
+            $scope.dataSelected.BidContracts = fileUrl;
             $scope.$apply();
         };
         finder.popup();
@@ -537,7 +537,7 @@
         finder.startupPath = "Images:/Product/Image/";
         finder.startupFolderExpanded = true;
         finder.selectActionFunction = function (fileUrl) {
-            $scope.currentBanner.proposal = fileUrl;
+            $scope.dataSelected.Proposal = fileUrl;
             $scope.$apply();
         };
         finder.popup();
@@ -548,7 +548,7 @@
         finder.startupPath = "Images:/Product/Office/";
         finder.startupFolderExpanded = true;
         finder.selectActionFunction = function (fileUrl) {
-            $scope.currentBanner.ortherpapers = fileUrl;
+            $scope.dataSelected.Ortherpapers = fileUrl;
             $scope.$apply();
         };
         finder.popup();
@@ -579,6 +579,5 @@
                 break;
         }
     }
-    $scope.currentBanner = { status: true, name: '', zOrder: 12, layout: '', brokeragecontract: '', image1: '', bidcontracts: '', proposal: '', ortherpapers: '' };
-
+ 
 })
