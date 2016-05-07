@@ -129,5 +129,10 @@ namespace Service.Data.Core.Class
             //return "";
         }
 
+        public string ExportReport(string ClientKey,string InputValue,string templatePath)
+        {
+            DataSet ds = new CCoreDao().GetContextData(ClientKey, InputValue);
+            return new CExcelTemplateUtils().ExportTemplate(templatePath, ds.Tables[0]);
+        }
     }
 }

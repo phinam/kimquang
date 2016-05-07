@@ -29,5 +29,19 @@ namespace Service.Data.Core
         {
             return new CExcelReport().Export4SSDataToExcel(ClientKey, InputValue);
         }
+
+        [WebMethod]
+        public string OfferLetterBase(string ClientKey, string InputValue)
+        {
+            string template = "";
+            return new CExcelReport().ExportReport(ClientKey, InputValue, template);
+        }
+
+        [WebMethod]
+        public string OfferLetterDetail(string ClientKey, string InputValue)
+        {
+            string template = "";
+            return new CExcelReport().ExportReport(ClientKey, InputValue, template);
+        }
     }
 }
