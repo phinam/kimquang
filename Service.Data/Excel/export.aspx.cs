@@ -30,11 +30,28 @@ namespace Service.Data.Excel
                
                 try
                 {
-                    string inputValue = string.Format("<InputValue UserID=\"2\" /><RequestParams ListID=\"{0}\" ListProductId=\"{0}\" LanguageID=\"{1}\" ExportType=\"{2}\" start=\"0\"  length=\"1\"  Sys_ViewID=\"{3}\" />", listId, languageId, exportType, sysViewId);
-                    DataSet data = new CCoreService().GetContextDataSet("", inputValue);
+                    if (sysViewId.Equals( "13"))
+                    {
+                        string inputValue = string.Format("<InputValue UserID=\"2\" /><RequestParams ListID=\"{0}\" ListProductId=\"{0}\" LanguageID=\"{1}\" ExportType=\"{2}\" start=\"0\"  length=\"1\"  Sys_ViewID=\"{3}\" />", listId, languageId, exportType, sysViewId);
+                        DataSet data = new CCoreService().GetContextDataSet("", inputValue);
 
-                    ExcelPlusExport(data.Tables[0], Context);
-                    Response.Cookies["iscompleteexport"].Value = "true";
+                        ExcelPlusExport(data.Tables[0], Context);
+                        Response.Cookies["iscompleteexport"].Value = "true";
+                    }
+                    else if(sysViewId.Equals("26"))
+                    {
+                        string inputValue = string.Format("<InputValue UserID=\"2\" /><RequestParams ListID=\"{0}\" ListProductId=\"{0}\" LanguageID=\"{1}\" ExportType=\"{2}\" start=\"0\"  length=\"1\"  Sys_ViewID=\"{3}\" />", listId, languageId, exportType, sysViewId);
+                        string template = AppDomain.CurrentDomain.BaseDirectory + "\\_Template\\Excel\\Template_BaoGiaCoBan.xlsx";
+                        string result = new CExcelReport().ExportReport("", inputValue, template);
+                        WriteResponse(result);
+                    }
+                    else if (sysViewId.Equals("27"))
+                    {
+                        string inputValue = string.Format("<InputValue UserID=\"2\" /><RequestParams ListID=\"{0}\" ListProductId=\"{0}\" LanguageID=\"{1}\" ExportType=\"{2}\" start=\"0\"  length=\"1\"  Sys_ViewID=\"{3}\" />", listId, languageId, exportType, sysViewId);
+                        string template = AppDomain.CurrentDomain.BaseDirectory + "\\_Template\\Excel\\Template_BaoGiaCoBan.xlsx";
+                        string result = new CExcelReport().ExportReport("", inputValue, template);
+                        WriteResponse(result);
+                    }
                     //Export(sData);
 
                 }
@@ -105,6 +122,38 @@ namespace Service.Data.Excel
             {
                 //    CLogManager.WritePL("ExcelPlusExport", ex.ToString());
                 throw ex;
+            }
+        }
+
+        private void WriteResponse(string dataInBase64)
+        {
+            if(dataInBase64.StartsWith("00-"))
+            {
+                dataInBase64 = dataInBase64.Remove(0, 3);
+            }
+            if (!string.IsNullOrEmpty(dataInBase64))
+            {
+                byte[] buffer = PMSA.Framework.Utils.CBinaryUtils.Base64ToBinary(dataInBase64);
+                string fileName = string.Format("ExportData_{0}.xlsx", DateTime.Now.ToString("yyyyMMddHHmmss"));
+                Response.Clear();
+                Response.ClearHeaders();
+                Response.ClearContent();
+                Response.AddHeader("content-disposition", "attachment; filename=" + fileName);
+                Response.AddHeader("Content-Type", "application/Excel");
+                Response.ContentType = "application/vnd.xls";
+                Response.AddHeader("Content-Length", buffer.Length.ToString());
+                byte[] bufferwriter = new byte[1024];
+                int srcOffset = 0;
+                int block = 1024;
+                while (srcOffset < buffer.Length)
+                {
+                    if (srcOffset + 1024 > buffer.Length) block = buffer.Length - srcOffset;
+                    System.Buffer.BlockCopy(buffer, srcOffset, bufferwriter, 0, block);
+                    srcOffset += 1024;
+                    Response.BinaryWrite(bufferwriter);
+                }
+                //Response.End();
+                //File.Delete(filePath);
             }
         }
     }

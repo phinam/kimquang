@@ -148,6 +148,8 @@
       <DependentUpon>Web.config</DependentUpon>
     </None>
     <Content Include="_Template\Excel\Template_InterfaceOrder.xlsx" />
+    <Content Include="_Template\Excel\Template_BaoGiaChiTiet.xlsx" />
+    <Content Include="_Template\Excel\Template_BaoGiaCoBan.xlsx" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="_Template\Export\" />

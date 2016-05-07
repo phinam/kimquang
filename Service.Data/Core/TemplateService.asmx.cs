@@ -33,14 +33,14 @@ namespace Service.Data.Core
         [WebMethod]
         public string OfferLetterBase(string ClientKey, string InputValue)
         {
-            string template = "";
+            string template = AppDomain.CurrentDomain.BaseDirectory + "\\_Template\\Excel\\Template_BaoGiaCoBan.xlsx";
             return new CExcelReport().ExportReport(ClientKey, InputValue, template);
         }
 
         [WebMethod]
         public string OfferLetterDetail(string ClientKey, string InputValue)
         {
-            string template = "";
+            string template = AppDomain.CurrentDomain.BaseDirectory + "\\_Template\\Excel\\Template_BaoGiaChiTiet.xlsx";
             return new CExcelReport().ExportReport(ClientKey, InputValue, template);
         }
     }

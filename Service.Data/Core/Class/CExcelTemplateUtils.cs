@@ -93,7 +93,7 @@ namespace Service.Data.Core.Class
         public string ExportTemplate(string templatePath, System.Data.DataTable dt, int sheetNumber =1)
         {
             FileInfo info = new FileInfo(templatePath);
-            string newFile = Guid.NewGuid().ToString()+ info.Name;
+            string newFile = info.DirectoryName +"\\" + Guid.NewGuid().ToString()+ info.Name;
             if(info.Exists)
             {
                 File.Copy(templatePath, newFile);
@@ -116,14 +116,14 @@ namespace Service.Data.Core.Class
                 }
             }
 
-
-            pck.Save();
+            string newFile2 = AppDomain.CurrentDomain.BaseDirectory + "\\_Template\\Excel\\SaveAs" + Guid.NewGuid().ToString() + ".xlsx";
+            pck.SaveAs(new FileInfo(newFile2));
             mixExcel.CloseStream();
 
             //pck.Stream.Flush();
             //pck.Stream.Close();
 
-            FileStream fs = new FileStream(newFile, FileMode.OpenOrCreate);
+            FileStream fs = new FileStream(newFile2, FileMode.OpenOrCreate);
             if (fs != null)
             {
                 byte[] binaryData = new byte[fs.Length];
@@ -143,11 +143,14 @@ namespace Service.Data.Core.Class
             ExcelRange rowTemplate = ws.Cells[templateRange];
 
             
-            int pasteRow = row.Table.Rows.IndexOf(row)+ def.loopDataRowIndex;
+            int pasteRow = row.Table.Rows.IndexOf(row)+ def.loopDataRowIndex+1;
             string pasteAddress = "A"+ pasteRow;
+            ws.InsertRow(pasteRow, 1);
             rowTemplate.Copy(ws.Cells[pasteAddress]);
+            
             for(int i = 0;i < def.definedColumnField.Count;i++)
             {
+
                 ws.Cells[def.definedColumnField[i].address + pasteRow].Value = row[def.definedColumnField[i].value];
             }
 
@@ -185,12 +188,12 @@ namespace Service.Data.Core.Class
             def.definedColumnField = new List<CExcelCellValue>();
             //duyet qua cac o tren dong [Row] de tim column
             //for tu A-Z
-            for (int i = 65; i<=90; i ++)
+            for (int i = 66; i<=90; i ++)
             {
                 ExcelRange cell = worksheet.Cells[""+(char)i + def.definedRowIndex];
                 if(cell.Value != null && cell.Value.ToString().Length>0)
                 {
-                    CExcelCellValue c = new CExcelCellValue("" + (char)i + def.definedRowIndex, cell.Value.ToString());
+                    CExcelCellValue c = new CExcelCellValue("" + (char)i, cell.Value.ToString());
                     def.definedColumnField.Add(c);
                 }
             }

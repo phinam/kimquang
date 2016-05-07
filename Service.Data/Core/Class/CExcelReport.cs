@@ -56,8 +56,7 @@ namespace Service.Data.Core.Class
             tbl.Rows.Add(row);
             return tbl;
         }
-
-       
+        
         private DataTable GetSummaryResult(string ClientKey, string InputValue)
         {
             string MarketColumnName = "MarketName";
@@ -120,8 +119,6 @@ namespace Service.Data.Core.Class
             //return "";
         }
         
-
-
         public string Export4SSDataToExcel(string ClientKey, string InputValue)
         {
             DataTable dt = GetSummaryResult(ClientKey, InputValue);
