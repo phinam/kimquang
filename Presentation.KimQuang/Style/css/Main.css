@@ -314,3 +314,7 @@ table.dataTable thead > tr > th {
     padding: 20px 20px;
     margin-right: 4px;
 }
+.image100 {
+    width: 50%;
+    height: 50%;
+}
