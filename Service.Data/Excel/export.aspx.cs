@@ -30,7 +30,7 @@ namespace Service.Data.Excel
                
                 try
                 {
-                    string inputValue = string.Format("<InputValue UserID=\"2\" /><RequestParams ListID=\"{0}\" LanguageID=\"{1}\" ExportType=\"{2}\" start=\"0\"  length=\"1\"  Sys_ViewID=\"{3}\" />", listId, languageId, exportType, sysViewId);
+                    string inputValue = string.Format("<InputValue UserID=\"2\" /><RequestParams ListID=\"{0}\" ListProductId=\"{0}\" LanguageID=\"{1}\" ExportType=\"{2}\" start=\"0\"  length=\"1\"  Sys_ViewID=\"{3}\" />", listId, languageId, exportType, sysViewId);
                     DataSet data = new CCoreService().GetContextDataSet("", inputValue);
 
                     ExcelPlusExport(data.Tables[0], Context);

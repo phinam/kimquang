@@ -6,9 +6,10 @@
 <head runat="server">
     <script src="js/jquery-2.2.2.min.js"></script>
     <script type="text/javascript">
-        function RunExport(data) {
-           
-            var pData = JSON.stringify(data);
+        function RunExport(pData) {
+            console.log(pData);
+            //debugger;
+           // var pData = JSON.stringify(data);
             //alert(f);
             $('#listId').val(pData.listId);
             $('#languageId').val(pData.languageId);// listId, languageId, exportType, sysViewId
@@ -23,9 +24,9 @@
     <form id="form1" runat="server">
     <div>
      <input type="hidden" id="listId" name="listId" />
-         <input type="hidden" id="data" name="data" />
-         <input type="hidden" id="data" name="data" />
-         <input type="hidden" id="data" name="data" />
+         <input type="hidden" id="languageId" name="languageId" />
+         <input type="hidden" id="exportType" name="exportType" />
+         <input type="hidden" id="sysViewId" name="sysViewId" />
     </div>
     </form>
 </body>
