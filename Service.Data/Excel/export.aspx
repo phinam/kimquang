@@ -8,7 +8,7 @@
     <script type="text/javascript">
         function RunExport(pData) {
             console.log(pData);
-            //debugger;
+            debugger;
            // var pData = JSON.stringify(data);
             //alert(f);
             $('#listId').val(pData.listId);
