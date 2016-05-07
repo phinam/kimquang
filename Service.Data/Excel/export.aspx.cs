@@ -16,12 +16,12 @@ namespace Service.Data.Excel
         {
             string sData = Context.Request.Form["data"];
             string exportType = "";//"Excel|Pdf
-            string sysViewID = "13";// "26|27"
+            string sysViewId = "13";// "26|27"
             string languageId = "129";//"Excel|Pdf
             if (Context.Request.Form["exportType"] != null)
                 exportType = Context.Request.Form["exportType"];
             if (Context.Request.Form["sysViewID"] != null)
-                sysViewID = Context.Request.Form["sysViewID"];
+                sysViewId = Context.Request.Form["sysViewId"];
             if (Context.Request.Form["languageId"] != null)
                 languageId = Context.Request.Form["languageId"];
             if (String.IsNullOrEmpty(sData)) { return; }
