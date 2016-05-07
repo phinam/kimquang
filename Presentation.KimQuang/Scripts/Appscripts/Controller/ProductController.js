@@ -457,4 +457,112 @@
 
     };
 
+    $("#uploadImage1").click(function () {
+        var finder = new CKFinder();
+        finder.resourceType = 'Images';
+        finder.startupPath = "Images:/Images/";
+        finder.startupFolderExpanded = true;
+        finder.selectActionFunction = function (fileUrl) {
+            $scope.currentBanner.image1 = fileUrl;
+            $scope.$apply();
+        };
+        finder.popup();
+    });
+    $("#uploadLayout").click(function () {
+        var finder = new CKFinder();
+        //finder.resourceType = 'Office';
+        //finder.startupPath = "Office:/Layout";
+        finder.resourceType = 'Images';
+        finder.startupPath = "Images:/Product/Thumbnail/";
+        finder.startupFolderExpanded = true;
+        finder.selectActionFunction = function (fileUrl) {
+            $scope.currentBanner.layout = fileUrl;
+            $scope.$apply();
+        };
+        finder.popup();
+    });
+    $("#uploadbrokeragecontract").click(function () {
+        var finder = new CKFinder();
+        finder.resourceType = 'Images';
+        finder.startupPath = "Images:/Product/Thumbnail/";
+        finder.startupFolderExpanded = true;
+        finder.selectActionFunction = function (fileUrl) {
+            $scope.currentBanner.brokeragecontract = fileUrl;
+            $scope.$apply();
+        };
+        finder.popup();
+    });
+   
+    $("#uploadleasescontract").click(function () {
+        var finder = new CKFinder();
+        finder.resourceType = 'Images';
+        finder.startupPath = "Images:/Product/Image/";
+        finder.startupFolderExpanded = true;
+        finder.selectActionFunction = function (fileUrl) {
+            $scope.currentBanner.leasescontract = fileUrl;
+            $scope.$apply();
+        };
+        finder.popup();
+    });
+    $("#uploadbidcontracts").click(function () {
+        var finder = new CKFinder();
+        finder.resourceType = 'Images';
+        finder.startupPath = "Images:/Product/Image/";
+        finder.startupFolderExpanded = true;
+        finder.selectActionFunction = function (fileUrl) {
+            $scope.currentBanner.bidcontracts = fileUrl;
+            $scope.$apply();
+        };
+        finder.popup();
+    });
+    $("#uploadproposal").click(function () {
+        var finder = new CKFinder();
+        finder.resourceType = 'Office';
+        finder.startupPath = "Images:/Product/Image/";
+        finder.startupFolderExpanded = true;
+        finder.selectActionFunction = function (fileUrl) {
+            $scope.currentBanner.proposal = fileUrl;
+            $scope.$apply();
+        };
+        finder.popup();
+    });
+    $("#uploadortherpapers").click(function () {
+        var finder = new CKFinder();
+        finder.resourceType = 'Office';
+        finder.startupPath = "Images:/Product/Image/";
+        finder.startupFolderExpanded = true;
+        finder.selectActionFunction = function (fileUrl) {
+            $scope.currentBanner.ortherpapers = fileUrl;
+            $scope.$apply();
+        };
+        finder.popup();
+    });
+    $scope.ChooseImage = function (objUpload) {
+      
+        switch (objUpload) {
+            case 'layout':
+                $("#uploadLayout").click();
+                break;
+            case 'brokeragecontract':
+                $("#uploadbrokeragecontract").click();
+                break;
+            case 'image1':
+                $("#uploadImage1").click();
+                break;
+            case 'leasescontract':
+                $("#uploadleasescontract").click();
+                break;
+            case 'bidcontracts':
+                $("#uploadbidcontracts").click();
+                break;
+            case 'proposal':
+                $("#uploadproposal").click();
+                break;
+            case 'ortherpapers':
+                $("#uploadortherpapers").click();
+                break;
+        }
+    }
+    $scope.currentBanner = { status: true, name: '', zOrder: 12, layout: '', brokeragecontract: '', image1: '', bidcontracts: '', proposal: '', ortherpapers: '' };
+
 })
