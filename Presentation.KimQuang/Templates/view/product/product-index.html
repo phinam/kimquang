@@ -39,7 +39,7 @@
                                 <label for="WardID" class="col-sm-4 control-label text-left-important">Phường/Xã</label>
                                 <div class="col-sm-8">
                                     <select class="form-control" ng-model="searchEntry.WardID"
-                                            ng-options="item.ID as item.Name for item in wardSelectList | filterDistrictIDsearchEntry.DistrictID"
+                                            ng-options="item.ID as item.Name for item in wardSelectList | filterDistrictID:searchEntry.DistrictID"
                                             ng-disabled="searchEntry.DistrictID == null || searchEntry.DistrictID == ''">
                                         <option value="">
                                             -- Tất cả
