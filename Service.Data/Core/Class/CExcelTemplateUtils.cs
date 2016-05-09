@@ -122,8 +122,11 @@ namespace Service.Data.Core.Class
                     int rowindex = 0;
                     if(int.TryParse(def.definedDataRowIndex[i].value,out rowindex))
                     {
-                        DataRow row = dt.Rows[rowindex];
-                        ApplyDataIndexRow(worksheet, def, def.definedDataRowIndex[i], row);
+                        if (dt.Rows.Count > rowindex)
+                        {
+                            DataRow row = dt.Rows[rowindex];
+                            ApplyDataIndexRow(worksheet, def, def.definedDataRowIndex[i], row);
+                        }
                     }
                     
                 }
@@ -135,8 +138,11 @@ namespace Service.Data.Core.Class
                     int rowindex = 0;
                     if (int.TryParse(def.definedColumnField[i].value, out rowindex))
                     {
-                        DataRow row = dt.Rows[rowindex];
-                        ApplyDataIndexColumn(worksheet, def, def.definedColumnField[i], row);
+                        if (dt.Rows.Count > rowindex)
+                        {
+                            DataRow row = dt.Rows[rowindex];
+                            ApplyDataIndexColumn(worksheet, def, def.definedColumnField[i], row);
+                        }
                     }
 
                 }
@@ -146,6 +152,9 @@ namespace Service.Data.Core.Class
             pck.SaveAs(new FileInfo(newFile2));
             mixExcel.CloseStream();
 
+            //delete tempfile
+            File.Delete(newFile);
+            
             //pck.Stream.Flush();
             //pck.Stream.Close();
 
@@ -155,8 +164,10 @@ namespace Service.Data.Core.Class
                 byte[] binaryData = new byte[fs.Length];
                 long bytesRead = fs.Read(binaryData, 0, (int)fs.Length);
                 fs.Close();
+                File.Delete(newFile2);
                 string base64Data = Convert.ToBase64String(binaryData);
                 string result = String.Format("00-{0}", base64Data);
+
                 return result;
             }
             return "";
@@ -198,7 +209,7 @@ namespace Service.Data.Core.Class
 
             for (int i = 0; i < def.definedColumnField.Count; i++)
             {
-                ws.Cells[ def.definedColumnField[i].address + rowIndex.address].Value = row[def.definedColumnField[i].value];
+                ws.Cells[def.definedColumnField[i].address + rowIndex.address].Value = row[def.definedColumnField[i].value];
             }
 
         }

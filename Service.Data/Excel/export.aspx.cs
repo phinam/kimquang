@@ -48,7 +48,7 @@ namespace Service.Data.Excel
                     else if (sysViewId.Equals("27"))
                     {
                         string inputValue = string.Format("<InputValue UserID=\"2\" /><RequestParams ListID=\"{0}\" ListProductId=\"{0}\" LanguageID=\"{1}\" ExportType=\"{2}\" start=\"0\"  length=\"1\"  Sys_ViewID=\"{3}\" />", listId, languageId, exportType, sysViewId);
-                        string template = AppDomain.CurrentDomain.BaseDirectory + "\\_Template\\Excel\\Template_BaoGiaCoBan.xlsx";
+                        string template = AppDomain.CurrentDomain.BaseDirectory + "\\_Template\\Excel\\Template_BaoGiaChiTiet.xlsx";
                         string result = new CExcelReport().ExportReport("", inputValue, template);
                         WriteResponse(result);
                     }
