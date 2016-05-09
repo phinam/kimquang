@@ -333,7 +333,8 @@
                                             <img class="image100" alt="{{dataSelected.Brokeragecontract}}" src="../../../Images/icons/brokeragecontract.png" />
                                         </div>
                                     </button><i class="fa fa-times  text-danger">&nbsp;</i>
-                                    <span for="zOrder">HĐ môi giới </span>
+                                    <span for="zOrder" ng-if="dataSelected.Brokeragecontract!=''"><a href="..{{dataSelected.Brokeragecontract}}" download="kimquang_Proposal">HĐ môi giới </a></span>
+                                    <span for="zOrder" ng-if="dataSelected.Brokeragecontract=''">HĐ môi giới </span>
                                 </div>
                             </div>
                             <div class=" col-md-4">
@@ -346,7 +347,8 @@
                                             <img class="image100" alt="{{dataSelected.LeasesContract}}" src="../../../Images/icons/brokeragecontract.png" />
                                         </div>
                                     </button><i class="fa fa-times  text-danger">&nbsp;</i>
-                                    <span for="zOrder">HĐ cho thuê </span>
+                                    <span for="zOrder" ng-if="dataSelected.LeasesContract!=''"><a href="..{{dataSelected.LeasesContract}}" download="kimquang_Proposal">HĐ cho thuê </a></span>
+                                    <span for="zOrder" ng-if="dataSelected.LeasesContract==''">HĐ cho thuê </span>
                                 </div>
                             </div>
                             <div class=" col-md-4">
@@ -359,7 +361,7 @@
                                             <img class="image100" alt="{{dataSelected.BidContracts}}" src="../../../Images/icons/brokeragecontract.png" />
                                         </div>
                                     </button><i class="fa fa-times  text-danger">&nbsp;</i>
-                                    <span for="zOrder">Thư chào giá </span>
+                                    <span for="zOrder"> Thư chào giá </span>
                                 </div>
                             </div>
                             <div class=" col-md-4">
@@ -372,7 +374,8 @@
                                             <img class="image100" alt="{{dataSelected.Proposal}}" src="../../../Images/icons/brokeragecontract.png" />
                                         </div>
                                     </button><i class="fa fa-times  text-danger">&nbsp;</i>
-                                    <span for="zOrder">Proposal </span>
+                                    <span for="zOrder" ng-if="dataSelected.Proposal!=''"><a href="..{{dataSelected.Proposal}}" download="kimquang_Proposal">Proposal </a></span>
+                                    <span for="zOrder" ng-if="dataSelected.Proposal==''">Proposal </span>
                                 </div>
                             </div>
                             <div class=" col-md-4">
@@ -385,7 +388,8 @@
                                             <img class="image100" alt="{{dataSelected.Ortherpapers}}" src="../../../Images/icons/brokeragecontract.png" />
                                         </div>
                                     </button><i class="fa fa-times  text-danger">&nbsp;</i>
-                                    <span for="zOrder">Giấy tờ khác </span>
+                                    <span for="zOrder" ng-if="dataSelected.Ortherpapers!=''"><a href="..{{dataSelected.Ortherpapers}}" download="kimquang_giaytokhac">Giấy tờ khác </a></span>
+                                    <span for="zOrder" ng-if="dataSelected.Ortherpapers==''">Giấy tờ khác </span>
                                 </div>
                             </div>
                         </div>
@@ -462,3 +466,4 @@
         $.AdminLTE.boxWidget.activate();
     }
 </script>
+
