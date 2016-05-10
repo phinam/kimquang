@@ -1,0 +1,96 @@
+﻿<content-header title-name="Import sản phẩm"></content-header>
+
+<!-- Main content -->
+<section class="content overflow-x-scroll">
+    <div class="row ng-scope" ng-controller="ImportProductCtrl" ng-init="init()">
+        <form class="form-horizontal row" name="addProductForm" novalidate="">
+            <div class="col-md-12 col-sm-12">
+                <div class="box box-default box-solid">
+                    <div class="box-header with-border">
+                        <i class="fa fa-search"></i>
+                        <h3 class="box-title text-uppercase">
+                            Thông tin import
+                        </h3>
+                        <!-- tools box -->
+                        <div class="pull-right box-tools">
+                            <button class="btn btn-default btn-sm" data-widget="collapse" title="Rút gọn"><i class="fa fa-minus"></i></button>
+                        </div><!-- /. tools -->
+                    </div>
+                    <div class="box-body">
+                        <!--Column Left-->
+                        <div class="col-md-6 col-sm-6">
+                           
+                            <div class="form-group">
+                                <label for="PriceFrom" class="col-sm-4 control-label text-left-important">Thời gian trống</label>
+                                <div class="col-sm-4">
+                                    <div class="input-group input-group-sm">
+                                        <input type="text" class="form-control text-center col-sm-10" datepicker-popup="{{'dd-MM-yyyy'}}" ng-model="searchEntry.AvailableFrom" is-open="openedDD1" close-text="Close" id="txtOpenedDD1" ng-click="openedDD1=true" placeholder="Thời gian trống từ" />
+                                        <span class="input-group-btn">
+                                            <button type="button" class="btn btn-default" ng-click="openedDD1=true"><i class="glyphicon glyphicon-calendar"></i></button>
+                                        </span>
+                                    </div>
+                                </div>
+                                <div class="col-sm-4">
+                                    <div class="input-group input-group-sm">
+                                        <input type="text" class="form-control text-center col-sm-10" datepicker-popup="{{'dd-MM-yyyy'}}" ng-model="searchEntry.AvailableTo" is-open="openedDD2" close-text="Close" id="txtOpenedDD2" ng-click="openedDD2=true" placeholder="Thời gian trống đến" />
+                                        <span class="input-group-btn">
+                                            <button type="button" class="btn btn-default" ng-click="openedDD2=true"><i class="glyphicon glyphicon-calendar"></i></button>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+
+                          
+                        </div>
+                
+
+                        <div class="box-footer clearfix">
+                            <div class="row">
+                                <div class="col-md-12 form-horizontal">
+                                    <div class="col-md-4  col-md-offset-4">
+                                        <div class="form-group">
+                                            <input type="button" class="form-control btn-primary" ng-click="search(searchEntry)" value="TÌM KIẾM">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <!-- Navigator part -->
+                </div>
+            </div>
+
+        </form>
+        <div class="box box-default box-solid">
+            <div class="box-header with-border box-info">
+                <i class="fa fa-list-ol"></i>
+                <h3 class="box-title text-uppercase">
+                    Kết quả
+                </h3>
+                <!-- tools box -->
+
+            </div>
+            <div class="box box-default">
+                <div class="box-body">
+                    <angular-grid-table grid-info="gridInfo" root-scope="this" list-right="listRight"></angular-grid-table>
+                 </div>
+            </div>
+
+        </div>
+    </div>
+
+</section>
+<script>
+
+    //Toggle button
+    var o = $.AdminLTE.options;
+    if (o.enableBoxWidget) {
+        $.AdminLTE.boxWidget.activate();
+    }
+</script>
+
+<iframe src="../service.data/excel/export.aspx" style="display:none" id="hiddenDownloader" />
+
+
