@@ -1,5 +1,5 @@
 ﻿angular.module('indexApp')
-.controller('ProductCtrl', function ($scope, $rootScope, coreService, authoritiesService, alertFactory, dialogs, $filter, $state, $timeout, modalUtils) {
+.controller('ImportProductCtrl', function ($scope, $rootScope, coreService, authoritiesService, alertFactory, dialogs, $filter, $state, $timeout, modalUtils) {
     $rootScope.showModal = false;
     var titleHtml = '<input type="checkbox" ng-model="vm.selectAll" ng-click="vm.toggleAll(vm.selectAll, vm.selected)">';
     $scope.gridInfo = {
@@ -447,68 +447,10 @@
 
     };
 
-    $("#uploadImage1").click(function () {
-        var finder = new CKFinder();
-        finder.resourceType = 'Images';
-        finder.startupPath = "Images:/Images/";
-        finder.startupFolderExpanded = true;
-        finder.selectActionFunction = function (fileUrl) {
-            $scope.dataSelected.Image1 = fileUrl;
-            $scope.$apply();
-        };
-        finder.popup();
-    });
-    $("#uploadLayout").click(function () {
-        var finder = new CKFinder();
-        //finder.resourceType = 'Office';
-        //finder.startupPath = "Office:/Layout";
-        finder.resourceType = 'Images';
-        finder.startupPath = "Images:/Product/Thumbnail/";
-        finder.startupFolderExpanded = true;
-        finder.selectActionFunction = function (fileUrl) {
-            $scope.dataSelected.Layout = fileUrl;
-            $scope.$apply();
-        };
-        finder.popup();
-    });
-    $("#uploadbrokeragecontract").click(function () {
-        var finder = new CKFinder();
-        finder.resourceType = 'Office';
-        finder.startupPath = "Images:/Product/Office/";
-        finder.startupFolderExpanded = true;
-        finder.selectActionFunction = function (fileUrl) {
-            $scope.dataSelected.Brokeragecontract = fileUrl;
-            $scope.$apply();
-        };
-        finder.popup();
-    });
-
-    $("#uploadleasescontract").click(function () {
-        var finder = new CKFinder();
-        finder.resourceType = 'Office';
-        finder.startupPath = "Images:/Product/Office/";
-        finder.startupFolderExpanded = true;
-        finder.selectActionFunction = function (fileUrl) {
-            $scope.dataSelected.LeasesContract = fileUrl;
-            $scope.$apply();
-        };
-        finder.popup();
-    });
-    $("#uploadbidcontracts").click(function () {
-        var finder = new CKFinder();
-        finder.resourceType = 'Images';
-        finder.startupPath = "Images:/Product/Image/";
-        finder.startupFolderExpanded = true;
-        finder.selectActionFunction = function (fileUrl) {
-            $scope.dataSelected.BidContracts = fileUrl;
-            $scope.$apply();
-        };
-        finder.popup();
-    });
     $("#uploadproposal").click(function () {
         var finder = new CKFinder();
-        finder.resourceType = 'Office';
-        finder.startupPath = "Images:/Product/Image/";
+        finder.resourceType = 'Import';
+        finder.startupPath = "Import:/";
         finder.startupFolderExpanded = true;
         finder.selectActionFunction = function (fileUrl) {
             $scope.dataSelected.Proposal = fileUrl;
@@ -516,42 +458,9 @@
         };
         finder.popup();
     });
-    $("#uploadortherpapers").click(function () {
-        var finder = new CKFinder();
-        finder.resourceType = 'Office';
-        finder.startupPath = "Images:/Product/Office/";
-        finder.startupFolderExpanded = true;
-        finder.selectActionFunction = function (fileUrl) {
-            $scope.dataSelected.Ortherpapers = fileUrl;
-            $scope.$apply();
-        };
-        finder.popup();
-    });
+   
     $scope.ChooseImage = function (objUpload) {
-
-        switch (objUpload) {
-            case 'layout':
-                $("#uploadLayout").click();
-                break;
-            case 'brokeragecontract':
-                $("#uploadbrokeragecontract").click();
-                break;
-            case 'image1':
-                $("#uploadImage1").click();
-                break;
-            case 'leasescontract':
-                $("#uploadleasescontract").click();
-                break;
-            case 'bidcontracts':
-                $("#uploadbidcontracts").click();
-                break;
-            case 'proposal':
-                $("#uploadproposal").click();
-                break;
-            case 'ortherpapers':
-                $("#uploadortherpapers").click();
-                break;
-        }
+        $("#uploadproposal").click();
     }
  
 })

@@ -78,6 +78,15 @@ app.config(function ($stateProvider, $urlRouterProvider, $locationProvider) {
                 $scope.productId = $stateParams.productId;
             }
         })
+         .state('importproduct', {
+             //url: '/edit-product/:productId', // not hide productId
+             url: '/import-product',
+             params: { productId: null },
+             templateUrl: '/Templates/view/product/import-product.html',
+             controller: function ($scope, $stateParams) {
+                 $scope.productId = $stateParams.productId;
+             }
+         })
         //customer
         .state('customerlist', {
             url: '/customer-list',
