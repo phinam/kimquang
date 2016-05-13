@@ -106,7 +106,7 @@ namespace Service.Data.Core.Class
             ExcelPackage pck = (ExcelPackage)mixExcel.ExcelMixCore;
             var worksheet = pck.Workbook.Worksheets[sheetNumber];
             CExcelTemplateDefinition def = GetTemplateDefinition(worksheet);
-            if (def == null) return "";
+            if (def == null|| !def.isTemplate) return "";
 
             if(def.loopDataRowIndex>0)
             {
@@ -164,7 +164,7 @@ namespace Service.Data.Core.Class
                 byte[] binaryData = new byte[fs.Length];
                 long bytesRead = fs.Read(binaryData, 0, (int)fs.Length);
                 fs.Close();
-                File.Delete(newFile2);
+                //File.Delete(newFile2);
                 string base64Data = Convert.ToBase64String(binaryData);
                 string result = String.Format("00-{0}", base64Data);
 
@@ -242,26 +242,31 @@ namespace Service.Data.Core.Class
             }
 
             //xoa column
-            ws.DeleteColumn(1);
+            ws.DeleteColumn(def.definedColumnIndex);
         }
         private CExcelTemplateDefinition GetTemplateDefinition(ExcelWorksheet worksheet)
         {
             CExcelTemplateDefinition def = new CExcelTemplateDefinition();
             //Kiem tra o A1 co gia tri [Column] ko
-            ExcelRange a1Cell = worksheet.Cells["A1"];
-            if(a1Cell.Value !=null)
+            //duyet qua cac cell tren row 1 de kiem cel co gia tri [Column]
+            for (int i = 1; i <= worksheet.Dimension.End.Column; i++)
             {
-                if(a1Cell.Value.ToString().Equals("[Column]",StringComparison.OrdinalIgnoreCase))
+                ExcelRange a1Cell = worksheet.Cells[1,i];
+                if (a1Cell.Value != null)
                 {
-                    def.isTemplate = true;
+                    if (a1Cell.Value.ToString().Equals("[Column]", StringComparison.OrdinalIgnoreCase))
+                    {
+                        def.isTemplate = true;
+                        def.definedColumnIndex = i;
+                    }
                 }
             }
             //Neu khong phai template
             if (!def.isTemplate) return def;
             //Tim kiem row Index
-            for(int i=2;i<100;i++)
+            for(int i=1;i<100;i++)
             {
-                ExcelRange aiCell = worksheet.Cells["A"+i];
+                ExcelRange aiCell = worksheet.Cells[i,def.definedColumnIndex];
                 if(aiCell.Value !=null && aiCell.Value.ToString().Equals("[Row]",StringComparison.OrdinalIgnoreCase))
                 {
                     def.definedRowIndex = i;
@@ -273,7 +278,7 @@ namespace Service.Data.Core.Class
                 //Tim kiem row Index
                 for (int i = 2; i < 100; i++)
                 {
-                    ExcelRange aiCell = worksheet.Cells["A" + i];
+                    ExcelRange aiCell = worksheet.Cells[i,def.definedColumnIndex];
                     if (aiCell.Value != null && aiCell.Value.ToString().Equals("[Column]", StringComparison.OrdinalIgnoreCase))
                     {
                         def.definedRowIndex = i;
@@ -304,7 +309,7 @@ namespace Service.Data.Core.Class
             //Tim i
             for (int i = def.definedRowIndex+1; i < 100; i++)
             {
-                ExcelRange aiCell = worksheet.Cells["A" + i];
+                ExcelRange aiCell = worksheet.Cells[i,def.definedColumnIndex];
                 if (aiCell.Value != null && aiCell.Value.ToString().Equals("i", StringComparison.OrdinalIgnoreCase))
                 {
                     def.loopDataRowIndex = i;
@@ -331,7 +336,7 @@ namespace Service.Data.Core.Class
     {
         public bool isTemplate = false;
         public bool isHorizontal = false;
-        public int definedColumnIndex = 0;
+        public int definedColumnIndex = 1;
         public int definedRowIndex=0;
         public List<CExcelCellValue> definedColumnField;
         public int loopDataRowIndex;

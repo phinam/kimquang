@@ -30,6 +30,12 @@ namespace Service.Data.Core
             return new CExcelReport().Export4SSDataToExcel(ClientKey, InputValue);
         }
 
+        /// <summary>
+        /// xuat bao gia co ban
+        /// </summary>
+        /// <param name="ClientKey"></param>
+        /// <param name="InputValue"></param>
+        /// <returns></returns>
         [WebMethod]
         public string OfferLetterBase(string ClientKey, string InputValue)
         {
@@ -37,11 +43,26 @@ namespace Service.Data.Core
             return new CExcelReport().ExportReport(ClientKey, InputValue, template);
         }
 
+        /// <summary>
+        /// xuat bao gia chi tiet
+        /// </summary>
+        /// <param name="ClientKey"></param>
+        /// <param name="InputValue"></param>
+        /// <returns></returns>
         [WebMethod]
         public string OfferLetterDetail(string ClientKey, string InputValue)
         {
             string template = AppDomain.CurrentDomain.BaseDirectory + "\\_Template\\Excel\\Template_BaoGiaChiTiet.xlsx";
             return new CExcelReport().ExportReport(ClientKey, InputValue, template);
         }
+
+        [WebMethod]
+        public string ImportProductExcel(string ClientKey,string InputValue)
+        {
+            
+            new CExcelImporter().ImportExcel(ClientKey, "D:\\spct.xlsx");
+            return "OK";
+        }
+
     }
 }
