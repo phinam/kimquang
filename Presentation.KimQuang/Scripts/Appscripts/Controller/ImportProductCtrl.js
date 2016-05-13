@@ -225,78 +225,7 @@
     //coreService.actionEntry2(entry, function (data) {
     //    console.log('InsertdataProduct', data)
     //});
-    $scope.actionEntry = function (act) {
-        if (typeof act != 'undefined') {
-            var entry = angular.copy($scope.dataSelected);
-            entry.UnAssignedName = tiengvietkhongdau(entry.Name); //coreService.toASCi(entry.Name);
-            entry.UnAssignedStreet = tiengvietkhongdau(entry.StreetName); //coreService.toASCi(entry.Address);
-            if (typeof entry.AvailableFrom!='undefined')
-            if (entry.AvailableFrom!='')
-                entry.AvailableFrom=  $filter('date')(entry.AvailableFrom, "yyyy-MM-dd");
 
-
-            entry.Action = act;
-            entry.Sys_ViewID = 19; //$scope.gridInfo.sysViewID;
-
-            //console.log('entry', entry);
-            for (var property in entry) {
-                if (entry.hasOwnProperty(property)) {
-                    if (entry[property] == '') {
-                        delete entry[property];
-                    }
-                }
-            }
-            if (act == 'DELETE')
-                entry.ID = $scope.deleteId;
-
-            coreService.actionEntry2(entry, function (data) {
-                if (data.Success) {
-                    switch (act) {
-                        case 'INSERT':
-                            entry.ID = data.Result;
-                            $scope.gridInfo.data.unshift(entry);
-                            dialogs.notify(data.Message.Name, data.Message.Description);
-                            break;
-                        case 'UPDATE':
-                            angular.forEach($scope.gridInfo.data, function (item, key) {
-                                if (entry.ID == item.ID) {
-                                    $scope.gridInfo.data[key] = angular.copy(entry);
-                                }
-                            });
-                            $state.go('productlist', '', { reload: true });
-                            break;
-                        case 'DELETE':
-                            var index = -1;
-                            var i = 0;
-                            angular.forEach($scope.gridInfo.data, function (item, key) {
-                                if (entry.ID == item.ID)
-                                    index = i;
-                                i++;
-                            });
-                            if (index > -1)
-                                $scope.gridInfo.data.splice(index, 1);
-
-                            dialogs.notify(data.Message.Name, data.Message.Description);
-
-                            if (typeof $scope.gridInfo.dtInstance == 'undefined') {
-                                $timeout(function () {
-                                    $scope.gridInfo.dtInstance.reloadData();
-                                }, 1000);
-                            } else {
-                                $scope.gridInfo.dtInstance.reloadData();
-                            }
-                            break;
-                    }
-                    $scope.reset();
-
-                }
-                //thong bao ket qua
-                //dialogs.notify(data.Message.Name, data.Message.Description);
-                $scope.$apply();
-
-            });
-        }
-    }
 
     $scope.searchEntry = {
         UnAssignedName: null,
@@ -399,48 +328,7 @@
         });
     }
 
-    function tiengvietkhongdau(str) {
-
-        if (str == null || typeof str == 'undefined' || str == '')
-            return "";
-
-        /* str = str.replace(/à|á|ạ|ả|ã|â|ầ|ấ|ậ|ẩ|ẫ|ă|ằ|ắ|ặ|ẳ|ẵ/g, "a");
-         str = str.replace(/è|é|ẹ|ẻ|ẽ|ê|ề|ế|ệ|ể|ễ.+/g, "e");
-         str = str.replace(/ì|í|ị|ỉ|ĩ/g, "i");
-         str = str.replace(/ò|ó|ọ|ỏ|õ|ô|ồ|ố|ộ|ổ|ỗ|ơ|ờ|ớ|ợ|ở|ỡ.+/g, "o");
-         str = str.replace(/ù|ú|ụ|ủ|ũ|ư|ừ|ứ|ự|ử|ữ/g, "u");
-         str = str.replace(/ỳ|ý|ỵ|ỷ|ỹ/g, "y");
-         str = str.replace(/đ/g, "d");
-         */
-        str = locdau(str);
-        str = str.replace(/-+-/g, "-"); //thay thế 2- thành 1-
-        str = str.replace(/^\-+|\-+$/g, "");
-        return str;
-    }
-    function locdau(slug) {
-        //Đổi ký tự có dấu thành không dấu
-        slug = slug.replace(/á|à|ả|ạ|ã|ă|ắ|ằ|ẳ|ẵ|ặ|â|ấ|ầ|ẩ|ẫ|ậ/gi, "a");
-        slug = slug.replace(/é|è|ẻ|ẽ|ẹ|ê|ế|ề|ể|ễ|ệ/gi, "e");
-        slug = slug.replace(/i|í|ì|ỉ|ĩ|ị/gi, "i");
-        slug = slug.replace(/ó|ò|ỏ|õ|ọ|ô|ố|ồ|ổ|ỗ|ộ|ơ|ớ|ờ|ở|ỡ|ợ/gi, "o");
-        slug = slug.replace(/ú|ù|ủ|ũ|ụ|ư|ứ|ừ|ử|ữ|ự/gi, "u");
-        slug = slug.replace(/ý|ỳ|ỷ|ỹ|ỵ/gi, "y");
-        slug = slug.replace(/đ/gi, "d");
-        //Xóa các ký tự đặt biệt
-        slug = slug.replace(/\`|\~|\!|\@|\#|\||\$|\%|\^|\&|\*|\(|\)|\+|\=|\,|\.|\/|\?|\>|\<|\"|\"|\:|\;|_/gi, "");
-        //Đổi khoảng trắng thành ký tự gạch ngang
-        slug = slug.replace(/ /gi, " ");
-        //Đổi nhiều ký tự gạch ngang liên tiếp thành 1 ký tự gạch ngang
-        //Phòng trường hợp người nhập vào quá nhiều ký tự trắng
-        slug = slug.replace(/\-\-\-\-\-/gi, "-");
-        slug = slug.replace(/\-\-\-\-/gi, "-");
-        slug = slug.replace(/\-\-\-/gi, "-");
-        slug = slug.replace(/\-\-/gi, "-");
-        //Xóa các ký tự gạch ngang ở đầu và cuối
-        slug = "@" + slug + "@";
-        slug = slug.replace(/\@\-|\-\@|\@/gi, "");
-        return slug;
-    }
+  
     $scope.files = [];
     $scope.upload = function () {
         alert($scope.files.length + " files selected ... Write your Upload Code");
@@ -461,6 +349,19 @@
    
     $scope.ChooseImage = function (objUpload) {
         $("#uploadproposal").click();
+    }
+    $scope.importAction = function () {
+        $scope.dataSelected.Proposal;
+        var entry = {
+            ClientKey: 1,
+            filename: $scope.dataSelected.Proposal
+        }
+        coreService.callServer('core/TemplateService.asmx', 'ImportProductExcel', entry, function (data) {
+            //if (data.Success) {
+            //}
+            alert(data)
+            });      
+
     }
  
 })

@@ -352,6 +352,7 @@ var coreApp;
                     url: 'Core/CoreService.asmx/' + fnName,
                     data: {
                         clientKey: a.systemConfig.clientKey,
+                        ClientKey: a.systemConfig.clientKey,
                         inputValue: a.html.encode(inputValue)
                     }
                 }, callback);
