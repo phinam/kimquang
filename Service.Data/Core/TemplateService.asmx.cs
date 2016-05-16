@@ -4,7 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Services;
 using Service.Data.Core.Class;
-
+using Service.Data.Base;
 namespace Service.Data.Core
 {
     /// <summary>
@@ -15,7 +15,7 @@ namespace Service.Data.Core
     [System.ComponentModel.ToolboxItem(false)]
     // To allow this Web Service to be called from script, using ASP.NET AJAX, uncomment the following line. 
     // [System.Web.Script.Services.ScriptService]
-    public class TemplateService : System.Web.Services.WebService
+    public class TemplateService : CServiceBase
     {
 
         [WebMethod]
@@ -59,9 +59,11 @@ namespace Service.Data.Core
         [WebMethod]
         public string ImportProductExcel(string ClientKey,string InputValue)
         {
+            InputValue = HtmlDecode(InputValue);
             string uploadPath = System.Configuration.ConfigurationManager.AppSettings["UploadDirectory"];
             string fileName = CXmlUtils.GetXmlNodeValue(InputValue,"RequestParams/@Filename");
             fileName = System.IO.Path.Combine(uploadPath, fileName);
+
             return  new CExcelImporter().ImportExcel(ClientKey, fileName);
             
         }

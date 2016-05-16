@@ -121,7 +121,6 @@
     </Compile>
     <Compile Include="Core\TemplateService.asmx.cs">
       <DependentUpon>TemplateService.asmx</DependentUpon>
-      <SubType>Component</SubType>
     </Compile>
     <Compile Include="Excel\Class\CExcelCSVOutput.cs" />
     <Compile Include="Excel\Class\CExcelUtil.cs" />

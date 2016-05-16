@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using System.Web;
+using System.IO;
 
 namespace Service.Data.Core.Class
 {
@@ -61,45 +62,57 @@ namespace Service.Data.Core.Class
         };
         public string ImportExcel(string clientKey,string excelfile)
         {
-           
-            int startDataRow = 11;
-            CMixExcel mixExcel = new CMixExcel(excelfile, false);
-            ExcelPackage pck = (ExcelPackage)mixExcel.ExcelMixCore;
-            var worksheet = pck.Workbook.Worksheets[1];
-            bool isAllOk = true;
-            for(int row = startDataRow;row <= worksheet.Dimension.End.Row;row ++)
+            try
             {
-                string inputValue = GetRowInXml(worksheet, row);
-                if(string.IsNullOrEmpty(inputValue))
+                int startDataRow = 11;
+                CMixExcel mixExcel = new CMixExcel(excelfile, false);
+                ExcelPackage pck = (ExcelPackage)mixExcel.ExcelMixCore;
+                var worksheet = pck.Workbook.Worksheets[1];
+                bool isAllOk = true;
+                for (int row = startDataRow; row <= worksheet.Dimension.End.Row; row++)
                 {
-                    continue;
+                    string inputValue = GetRowInXml(worksheet, row);
+                    if (string.IsNullOrEmpty(inputValue))
+                    {
+                        continue;
+                    }
+                    inputValue = "<RequestParams Sys_ViewID=\"28\" Action=\"INSERT\" " + inputValue + "/>";
+                    if (ExecuteImport(clientKey, inputValue))
+                    {
+                        //Delete imported row
+                        worksheet.DeleteRow(row);
+                        row--;
+                    }
+                    else
+                    {
+                        isAllOk = false;
+                    }
                 }
-                inputValue = "<RequestParams Sys_ViewID=\"28\" Action=\"INSERT\" " + inputValue + "/>";
-                if(ExecuteImport(clientKey, inputValue))
+
+                string downloadDir = System.Configuration.ConfigurationManager.AppSettings["DownloadDirectory"];
+                string tempFile = downloadDir + "\\Product\\Error";// + Guid.NewGuid().ToString() + DateTime.Now.ToString("yyyyMMddHHmmss") + ".xlsx";
+                if(!Directory.Exists(tempFile))
                 {
-                    //Delete imported row
-                    worksheet.DeleteRow(row);
-                    row--;
+                    Directory.CreateDirectory(tempFile);
+                }
+                tempFile = tempFile+"/" + Guid.NewGuid().ToString() + DateTime.Now.ToString("yyyyMMddHHmmss") + ".xlsx";
+                //Khi xong thi luu file con lai vao temp
+                pck.SaveAs(new System.IO.FileInfo(tempFile));
+                mixExcel.CloseStream();
+
+                if (isAllOk)
+                {
+                    return "00-OK";
                 }
                 else
                 {
-                    isAllOk = false;
+                    return "01-" + tempFile;
                 }
             }
-            string tempFile = AppDomain.CurrentDomain.BaseDirectory + "\\_Import\\Excel\\"+Guid.NewGuid().ToString()+DateTime.Now.ToString("yyyyMMddHHmmss") + ".xlsx";
-            //Khi xong thi luu file con lai vao temp
-            pck.SaveAs(new System.IO.FileInfo(tempFile));
-            mixExcel.CloseStream();
-
-            if(isAllOk)
+            catch(Exception ex)
             {
-                return "00-OK";
+                return "02-" + ex.Message;
             }
-            else
-            {
-                return "01-" + tempFile;
-            }
-
         }
 
         private string GetRowInXml(ExcelWorksheet ws,int row)

@@ -20,7 +20,7 @@ namespace Service.Data.Base
            
         }
 
-        private static string HtmlDecode(string xmlString)
+        protected static string HtmlDecode(string xmlString)
         {
             return System.Web.HttpUtility.HtmlDecode(xmlString);
         }
