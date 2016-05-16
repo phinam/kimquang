@@ -62,8 +62,8 @@ namespace Service.Data.Core
             string uploadPath = System.Configuration.ConfigurationManager.AppSettings["UploadDirectory"];
             string fileName = CXmlUtils.GetXmlNodeValue(InputValue,"RequestParams/@Filename");
             fileName = System.IO.Path.Combine(uploadPath, fileName);
-             new CExcelImporter().ImportExcel(ClientKey, fileName);
-            return "OK";
+            return  new CExcelImporter().ImportExcel(ClientKey, fileName);
+            
         }
 
     }
