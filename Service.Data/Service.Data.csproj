@@ -52,6 +52,9 @@
     <Reference Include="HttpCompress">
       <HintPath>..\DLL\HttpCompress.dll</HintPath>
     </Reference>
+    <Reference Include="itextsharp">
+      <HintPath>.\itextsharp.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="Microsoft.Office.Interop.Excel, Version=15.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -107,9 +110,11 @@
     <Compile Include="Base\CDataParser.cs" />
     <Compile Include="Base\CServiceBase.cs" />
     <Compile Include="Core\Class\CCoreService.cs" />
+    <Compile Include="Core\Class\CExcelImporter.cs" />
     <Compile Include="Core\Class\CExcelReport.cs" />
     <Compile Include="Core\Class\CExcelTemplateUtils.cs" />
     <Compile Include="Core\Class\CMixExcel.cs" />
+    <Compile Include="Core\Class\CXmlUtils.cs" />
     <Compile Include="Core\CoreService.asmx.cs">
       <DependentUpon>CoreService.asmx</DependentUpon>
       <SubType>Component</SubType>

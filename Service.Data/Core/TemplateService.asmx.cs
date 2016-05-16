@@ -59,8 +59,10 @@ namespace Service.Data.Core
         [WebMethod]
         public string ImportProductExcel(string ClientKey,string InputValue)
         {
-            
-            new CExcelImporter().ImportExcel(ClientKey, "D:\\spct.xlsx");
+            string uploadPath = System.Configuration.ConfigurationManager.AppSettings["UploadDirectory"];
+            string fileName = CXmlUtils.GetXmlNodeValue(InputValue,"RequestParams/@Filename");
+            fileName = System.IO.Path.Combine(uploadPath, fileName);
+             new CExcelImporter().ImportExcel(ClientKey, fileName);
             return "OK";
         }
 
