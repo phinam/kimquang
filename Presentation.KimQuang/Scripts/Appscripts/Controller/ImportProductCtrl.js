@@ -1,6 +1,5 @@
 ﻿angular.module('indexApp')
 .controller('ImportProductCtrl', function ($scope, $rootScope, coreService, authoritiesService, alertFactory, dialogs, $filter, $state, $timeout, modalUtils) {
-    $rootScope.showModal = false;
     var titleHtml = '<input type="checkbox" ng-model="vm.selectAll" ng-click="vm.toggleAll(vm.selectAll, vm.selected)">';
     $scope.gridInfo = {
         gridID: 'productgrid',
@@ -197,34 +196,6 @@
         $scope.tempWardSelectList = angular.copy($scope.wardSelectList);
     });
 
-    //coreService.getListEx({ ProductID: 1, Sys_ViewID: 19 }, function (data) {
-    //    console.log('ProductID', data)
-    //});
-    $scope.$watch('productId', function (newVal, oldVal) {
-        if (typeof newVal != 'undefined') {
-            $rootScope.showModal = true;
-            coreService.getListEx({ ProductID: $scope.productId, Sys_ViewID: 20 }, function (data) {
-                console.log('ProductID', data);
-                convertStringtoNumber(data[1], 'DistrictID');
-                convertStringtoNumber(data[1], 'WardID');
-                convertStringtoNumber(data[1], 'AreaPerFloor');
-                convertStringtoBoolean(data[1], 'IsGroundFloor');
-                convertStringtoBoolean(data[1], 'IsHiredWholeBuilding');
-
-                $scope.dataSelected = data[1][0];
-                $rootScope.showModal = false;
-                $scope.$apply();
-                //console.log('ProductID after', data[1]);
-            });
-        }
-    })
-
-    //var entry = { Name: 'thanh', WardID: 1, DistrictID: 1, Address: '537/7A Đường Tân Chánh Hiệp. P. Tân Chánh Hiệp. Q.12. TPHCM.' };
-    //entry.Action = 'INSERT';
-    //entry.Sys_ViewID = 19;
-    //coreService.actionEntry2(entry, function (data) {
-    //    console.log('InsertdataProduct', data)
-    //});
 
 
     $scope.searchEntry = {
@@ -246,10 +217,7 @@
         Sys_ViewID: 20
     };
 
-    $scope.search = function (searchEntry) {
-        $rootScope.showModal = true;
-
-       
+    $scope.search = function (searchEntry) {       
         searchEntry.UnAssignedName = tiengvietkhongdau(searchEntry.Name);
         searchEntry.UnAssignedStreet = tiengvietkhongdau(searchEntry.StreetName); //coreService.toASCi(entry.Address);
         for (var property in searchEntry) {
@@ -329,7 +297,7 @@
     }
 
   
-    $scope.files = [];
+    $scope.files = "";
     $scope.upload = function () {
         alert($scope.files.length + " files selected ... Write your Upload Code");
 
@@ -341,7 +309,7 @@
         finder.startupPath = "Import:/";
         finder.startupFolderExpanded = true;
         finder.selectActionFunction = function (fileUrl) {
-            $scope.dataSelected.Proposal = fileUrl;
+            $scope.files = fileUrl.substring(1);
             $scope.$apply();
         };
         finder.popup();
@@ -351,17 +319,29 @@
         $("#uploadproposal").click();
     }
     $scope.importAction = function () {
-        $scope.dataSelected.Proposal;
         var entry = {
             ClientKey: 1,
-            filename: $scope.dataSelected.Proposal
+            Filename: $scope.files
         }
+    //    $rootScope.showModal = true;
+        $scope.errorFile = '';
         coreService.callServer('core/TemplateService.asmx', 'ImportProductExcel', entry, function (data) {
-            //if (data.Success) {
-            //}
-            alert(data)
+            $rootScope.showModal = false;
+            if (data == "00-OK")
+                dialogs.notify("Import thành công", "Import thành công");
+            else if (data.startsWith("01-")==true){
+                dialogs.notify("Import còn dòng lỗi", "Import còn dòng lỗi. Nhân vào nút download bên dưới để downf ile lỗi về điều chỉnh");
+                $scope.errorFile = data.substring(3);
+            }
+            else {
+
+                dialogs.notify("Import không thành công", "Import không thành công");
+                el
+            }
+            $rootScope.$apply();
             });      
 
     }
+    $rootScope.showModal = false;
  
 })

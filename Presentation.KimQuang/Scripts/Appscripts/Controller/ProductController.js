@@ -1,5 +1,5 @@
 ﻿angular.module('indexApp')
-.controller('ProductCtrl', function ($scope, $rootScope, coreService, authoritiesService, alertFactory, dialogs, $filter, $state, $timeout, modalUtils) {
+.controller('ProductCtrl', function ($scope, $rootScope, coreService, authoritiesService, alertFactory, dialogs, $filter, $state, $timeout, modalUtils, productService) {
     $rootScope.showModal = false;
     var titleHtml = '<input type="checkbox" ng-model="vm.selectAll" ng-click="vm.toggleAll(vm.selectAll, vm.selected)">';
     $scope.gridInfo = {
@@ -197,9 +197,26 @@
         $scope.tempWardSelectList = angular.copy($scope.wardSelectList);
     });
 
-    //coreService.getListEx({ ProductID: 1, Sys_ViewID: 19 }, function (data) {
-    //    console.log('ProductID', data)
-    //});
+    $scope.openDialog = function (act) {
+        console.log('openDialog');
+        var dlg = dialogs.create('/templates/view/product/document-popup.html', 'productDialogCtrl', productService, { size: 'lg', keyboard: false, backdrop: false });
+        dlg.result.then(function (refreshList) {
+            //            console.log('dialogs', refreshList);
+            if (refreshList) {
+                if (typeof $scope.gridInfo.dtInstance == 'undefined') {
+                    $timeout(function () {
+                        $scope.gridInfo.dtInstance.reloadData();
+                    }, 1000);
+                } else {
+                    $scope.gridInfo.dtInstance.reloadData();
+                }
+            }
+
+        }, function () {
+            if (angular.equals($scope.name, ''))
+                $scope.name = 'You did not enter in your name!';
+        });
+    }
     $scope.$watch('productId', function (newVal, oldVal) {
         if (typeof newVal != 'undefined') {
             $rootScope.showModal = true;
@@ -530,15 +547,18 @@
     $scope.ChooseImage = function (objUpload) {
 
         switch (objUpload) {
+            case 'image1':
+                // $("#uploadImage1").click();
+                $scope.openDialog();
+                break;
             case 'layout':
-                $("#uploadLayout").click();
+              //  $("#uploadLayout").click();
+                $scope.openDialog();
                 break;
             case 'brokeragecontract':
                 $("#uploadbrokeragecontract").click();
                 break;
-            case 'image1':
-                $("#uploadImage1").click();
-                break;
+          
             case 'leasescontract':
                 $("#uploadleasescontract").click();
                 break;

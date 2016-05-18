@@ -60,7 +60,7 @@ function dataGridsCtrl(DTOptionsBuilder, DTColumnDefBuilder, DTColumnBuilder, $s
                 recordsFiltered: totalRow,
                 data: data
             });
-         //   $rootScope.showModal = false;
+          $rootScope.showModal = false;
         }, function errorCallback(response) {
             console.log('error', response);
         })
