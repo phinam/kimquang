@@ -29,7 +29,7 @@
                                         <span class="input-group-btn" ng-click="ChooseImage('proposal')">
                                             <button type="button" class="btn btn-info btn-flat">Chọn file</button>
                                         </span>
-                                        <a ng-if="errorFile!=''" href="../content/download/product/{{errorFile}}" download="import_product_error">Download dòng import lỗi</a>{{showModal}}
+                                        <a ng-if="errorFile" href="../content/download/product/{{errorFile}}" download="import_product_error">Download dòng import lỗi</a>{{errorFile}}
 
                                     </div>
                                 </div>
