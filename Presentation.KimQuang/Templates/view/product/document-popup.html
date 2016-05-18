@@ -1,0 +1,425 @@
+﻿<div class="modal-header dialog-header-confirm">
+    <button type="button" class="close" ng-click="cancel()">×</button>
+    <h4 class="modal-title ng-binding"><span class="glyphicon glyphicon-check"></span>&nbsp; {{title}}</h4>
+</div>
+
+<div class="modal-body">
+    <div class="row text-center">
+        <h1 class="text-bold">REQUISITION FOR SHOP DECORATION</h1>
+        <h3>(PHIẾU YÊU CẦU HỖ TRỢ HÌNH ẢNH THƯƠNG HIỆU TẠI CỬA HÀNG)</h3>
+    </div>
+    <div class="row">
+        <div class="col-md-12  projectForm">
+            <form class="form-horizontal firstGroup">
+                <div class="box-body">
+                    <div class="form-group">
+                        <label for="inputEmail3" class="col-sm-10 control-label text-bold heading">General Information (Thông tin chung) </label>
+                        <div class="col-sm-2">
+                            &nbsp;
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="AgentName" class="col-sm-4 control-label">Name of shop (Tên cửa hàng)</label>
+                        <div class="col-sm-8">
+                            <input ng-model="dataSelected.AgentName" type="text" class="form-control" id="AgentName" placeholder="">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="AgentAddress" class="col-sm-4 control-label">Address (địa chỉ):</label>
+                        <div class="col-sm-8">
+                            <input ng-model="dataSelected.AgentAddress" type="text" class="form-control" id="AgentAddress" placeholder="">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="AgentPhone" class="col-sm-4 control-label">Tel (Điện thoại)</label>
+                        <div class="col-sm-8">
+                            <input ng-model="dataSelected.AgentPhone" type="text" class="form-control" id="AgentPhone" placeholder="">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="AgentContactName" class="col-sm-4 control-label">Contacted person (Người liên lạc):</label>
+                        <div class="col-sm-8">
+                            <input ng-model="dataSelected.AgentContactName" type="text" class="form-control" id="AgentContactName" placeholder="">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="AreaID" class="col-sm-4 control-label">Khu vực:</label>
+                        <div class="col-sm-8">
+                            <ui-select ng-model="dataSelected.AreaID" theme="selectize" ng-disabled="disabled" id="AreaID" title="Choose a manager">
+                                <ui-select-match placeholder="Select or search a area in the list...">{{$select.selected.Name}}</ui-select-match>
+                                <ui-select-choices repeat="item.ID as item in areaList | filter: $select.search">
+                                  <span ng-bind-html="item.Name | highlight: $select.search"></span>
+                                  <small ng-bind-html="item.Code | highlight: $select.search"></small>
+                                </ui-select-choices>
+                              </ui-select>
+                            </ui-select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="ApprovedBy" class="col-sm-4 control-label">Người duyệt mẫu:</label>
+                        <div class="col-sm-8">
+                            <ui-select ng-model="dataSelected.AreaManagerID" theme="selectize" ng-disabled="disabled" id="ApprovedBy" title="Choose a manager">
+                                <ui-select-match placeholder="Select or search a area in the list...">{{$select.selected.Name}}</ui-select-match>
+                                <ui-select-choices repeat="item.ID as item in areaManagerList | filter: $select.search">
+                                  <span ng-bind-html="item.Name | highlight: $select.search"></span>
+                                  <small ng-bind-html="item.Code | highlight: $select.search"></small>
+                                </ui-select-choices>
+                              </ui-select>
+                            </ui-select>
+                        </div>
+                    </div>
+                </div>
+                <!-- /.box-body -->
+
+            </form>
+
+            <form class="form-horizontal childGroup">
+                <div class="box-body">
+                    <div class="form-group">
+                        <label for="inputEmail3" class="col-sm-10 control-label text-bold heading">Dealer Type (Loại đại lý) </label>
+                        <div class="col-sm-2">
+                            &nbsp;
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-sm-4 ">
+
+                            <div class="radio radio-success">
+                                <input ng-model="dataSelected.DealerType" id="cbDealer1" name="Dealer" class="styled" type="radio" ng-value="'1'" ng-false-value="'0'">
+                                <label for="cbDealer1" class="checkbox5 text-bold">
+                                    Master Dealer (Đại lý cấp 1)
+                                </label>
+                            </div>
+                        </div>
+                        <div class="col-sm-8">
+
+                            <div class="radio radio-success">
+                                <input ng-model="dataSelected.DealerType" id="cbDealer2" name="Dealer" class="styled" type="radio" ng-value="'2'" ng-false-value="'0'">
+                                <label for="cbDealer2" class="checkbox5 text-bold">
+                                    Sub-Dealer (Đại lý cấp 2)
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-sm-4 ">
+                            &nbsp;
+                        </div>
+                        <div class="col-sm-8">
+                            <div class="row">
+                                <label for="MasterDealerName" class="col-sm-5 control-label">
+                                    Buying from master dealer :
+                                    <br />
+                                    (Mua từ đại lý trực tiếp)</label>
+                                <div class="col-sm-7">
+                                    <input ng-model="dataSelected.MasterDealerName" type="text" class="form-control" id="MasterDealerName" placeholder="">
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="form-group">
+                        <label for="EstimatedAnnualTurnover" class="col-sm-4 control-label">
+                            Estimated Annual Turnover (VND)<br />
+                            (Doanh số ước tính hàng năm) 
+                        </label>
+                        <div class="col-sm-8">
+                            <input ng-model="dataSelected.EstimatedAnnualTurnover" type="text" class="form-control" id="EstimatedAnnualTurnover" placeholder="">
+                        </div>
+                    </div>
+
+                </div>
+                <!-- /.box-body -->
+
+            </form>
+
+            <form class="form-horizontal childGroup">
+                <div class="box-body">
+                    <div class="form-group">
+                        <label for="inputEmail3" class="col-sm-10 control-label text-bold heading">Task/ Job requested for ( công việc yêu cầu) </label>
+                        <div class="col-sm-2">
+                            &nbsp;
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-sm-3 ">
+                            <div class="checkbox checkbox-success">
+                                <input ng-model="dataSelected.IsShopsign" id="cbxShopsign" class="styled" type="checkbox" ng-true-value="1" ng-false-value="'0'">
+                                <label for="cbxShopsign" class="checkbox5 text-bold">
+                                    Shopsign (bảng hiệu)
+                                </label>
+                            </div>
+                        </div>
+                        <div class="col-sm-3 ">
+                            <div class="checkbox checkbox-success">
+                                <input ng-model="dataSelected.IsOutHouse" id="cbxOutHouse" class="styled" type="checkbox" ng-true-value="2" ng-false-value="'0'">
+                                <label for="cbxOutHouse" class="checkbox5 text-bold">
+                                    Mái che
+                                </label>
+                            </div>
+                        </div>
+                        <div class="col-sm-3 ">
+                            <div class="checkbox checkbox-success">
+                                <input ng-model="dataSelected.IsShelves" id="cbxsShelves" class="styled" type="checkbox" ng-true-value="4" ng-false-value="'0'">
+                                <label for="cbxsShelves" class="checkbox5 text-bold">
+                                    Kệ
+                                </label>
+                            </div>
+                        </div>
+                        <div class="col-sm-3 ">
+                            <div class="checkbox checkbox-success">
+                                <input ng-model="dataSelected.IsInHouse" id="cbxInHous" class="styled" type="checkbox" ng-true-value="8" ng-false-value="'0'">
+                                <label for="cbxInHous" class="checkbox5 text-bold">
+                                    Bảng trong nhà
+                                </label>
+                            </div>
+                        </div>
+                        <div class="col-sm-3 ">
+                            <div class="checkbox checkbox-success">
+                                <input ng-model="dataSelected.IsShopsignPoster" id="cbxShopsignPoster" ng-check="" class="styled" type="checkbox" ng-true-value="16" ng-false-value="'0'">
+                                <label for="cbxShopsignPoster" class="checkbox5 text-bold">
+                                    Poster kính
+                                </label>
+                            </div>
+                        </div>
+                        <div class="col-sm-9 ">
+                            <div class="checkbox checkbox-success">
+                                <input ng-model="dataSelected.IsShopsignOther" id="cbxShopsignOther" class="styled" type="checkbox" ng-true-value="32" ng-false-value="'0'">
+                                <label for="cbxShopsignOther" class="checkbox5 text-bold">
+                                    Khác
+                                </label>
+                                <input ng-model="dataSelected.RequestOther" type="text" class="col-lg-11" ng-show="dataSelected.IsShopsignOther==32" style="float: right" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-sm-6 ">
+
+                            <div class="radio radio-success">
+                                <input ng-model="dataSelected.HadCCM" id="cbxSDealernoCCM" class="styled" type="radio" ng-value="'0'" ng-false-value="'1'">
+                                <label for="cbxSDealernoCCM" class="checkbox5 text-bold">
+                                    Dealer no CCM
+                                    ( Đại lí bình thường)
+                                </label>
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+
+                            <div class="radio radio-success">
+                                <input ng-model="dataSelected.HadCCM" id="cbxDealerwithCCM" class="styled" type="radio" ng-value="'1'" ng-false-value="'0'">
+                                <label for="cbxDealerwithCCM" class="checkbox5 text-bold">
+                                    Dealer with CCM 
+                                    (Đại lí có máy pha màu)
+                                </label>
+                            </div>
+                        </div>
+
+
+                    </div>
+                    <div class="form-group">
+                        <div class="col-sm-11 ">
+
+                            <div class="checkbox checkbox-success">
+                                <input ng-model="dataSelected.IsCCM" id="cbxSCCMCorner" class="styled" type="checkbox" ng-true-value="'1'" ng-false-value="'0'">
+                                <label for="cbxSCCMCorner" class="checkbox5 text-bold">
+                                    CCM Corner (Đặt máy pha màu, trang trí showroom)
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="inputEmail3" class="col-sm-3 control-label">
+                            Shopsign Placement<br />
+                            (Vị trí đặt bảng hiệu)
+                        </label>
+                        <div class="col-sm-3">
+                            <div class="checkbox checkbox-success">
+                                <input ng-model="dataSelected.ShopsignPlacementFront" id="cbxShopsignPlacementFront" class="styled" type="checkbox" ng-true-value="1" ng-false-value="0">
+                                <label for="cbxShopsignPlacementFront" class="checkbox5 text-bold">
+                                    Front of shop 
+                                    <br />
+                                    (Trước cửa hàng)
+                                </label>
+                            </div>
+                        </div>
+                        <div class="col-sm-3">
+
+                            <div class="checkbox checkbox-success">
+                                <input ng-model="dataSelected.ShopsignPlacementRight" id="cbxShopsignPlacementRight" class="styled" type="checkbox" ng-true-value="2" ng-false-value="0">
+                                <label for="cbxShopsignPlacementRight" class="checkbox5 text-bold">
+                                    Right side of shop
+                                    <br />
+                                    (Phía sau cửa hàng)
+                                </label>
+                            </div>
+                        </div>
+                        <div class="col-sm-3">
+
+                            <div class="checkbox checkbox-success">
+                                <input ng-model="dataSelected.ShopsignPlacementLeft" id="cbxShopsignPlacementLeft" class="styled" type="checkbox" ng-true-value="4" ng-false-value="0">
+                                <label for="cbxShopsignPlacementLeft" class="checkbox5 text-bold">
+                                    Left side of shop 
+                                    <br />
+                                    (Bên trái cửa hàng)
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="ShopsignSize" class="col-sm-4 control-label">
+                            Size of shop sign
+                            <br />
+                            (Kích thước bảng hiệu, Bề rộng mặt tiền cửa hàng) 
+                        </label>
+                        <div class="col-sm-8">
+                            <input ng-model="dataSelected.ShopsignSize" type="text" class="form-control" id="ShopsignSize" placeholder="">
+                        </div>
+                    </div>
+                </div>
+                <!-- /.box-body -->
+
+            </form>
+
+            <form class="form-horizontal childGroup">
+                <div class="box-body">
+                    <div class="form-group">
+                        <label for="inputEmail3" class="col-sm-10 control-label text-bold heading">Other Information (Thông tin khác)</label>
+                        <div class="col-sm-2">
+                            &nbsp;
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="inputEmail3" class="col-sm-3 control-label">
+                            Competitors' shop sign
+                            <br />
+
+                        </label>
+
+                        <div class="col-sm-3">
+
+                            <div class="radio radio-success">
+                                <input ng-model="dataSelected.HadCompetitorShopsign" id="cbxRYes" class="styled" type="radio" checked="checked" ng-value="'1'" ng-false-value="'0'">
+                                <label for="cbxRYes" class="checkbox5 text-bold">
+                                    Yes 
+                                </label>
+                            </div>
+                        </div>
+
+
+                        <div class="col-sm-3">
+
+                            <div class="radio radio-success">
+                                <input ng-model="dataSelected.HadCompetitorShopsign" id="cbxNo" class="styled" type="radio" ng-value="'0'" ng-false-value="'1'">
+                                <label for="cbxNo" class="checkbox5 text-bold">
+                                    No
+                                </label>
+                            </div>
+                        </div>
+                        <label for="CompetitorName" class="col-sm-3 control-label">
+                            Brand name(Tên nhãn hiệu)
+                        </label>
+
+                        <label class="col-sm-9">
+                            Hiện tại cửa hàng có bảng hiệu của đối thủ cạnh tranh
+                        </label>
+                        <div class="col-sm-3">
+                            <input ng-model="CompetitorName" type="text" class="form-control" id="CompetitorName" placeholder="">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="inputEmail3" class="col-sm-3 control-label">
+                            Khu Vực(Area)
+
+                        </label>
+
+                        <div class="col-sm-3">
+
+                            <div class="radio radio-success">
+                                <input ng-model="dataSelected.StepConfigID" id="rdHCMHN" class="styled" name="StepConfigID" type="radio" checked="checked" ng-value="'1'" ng-false-value="'2'">
+                                <label for="rdHCMHN" class="checkbox5 text-bold">
+                                    HN, HCM
+                                </label>
+                            </div>
+                        </div>
+
+                         <div class="col-sm-3">
+                            <div class="radio radio-success">
+                                <input ng-model="dataSelected.StepConfigID" id="rdAreaOther" name="StepConfigID" class="styled" type="radio" checked="checked" ng-value="'2'" ng-false-value="'1'">
+                                <label for="rdAreaOther" class="checkbox5 text-bold">
+                                   Khác (Other)
+                                </label>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="form-group">
+                        <label for="inputEmail3" class="col-sm-3 control-label">
+                            Requisition Date
+                            <br />
+                            (Ngày yêu cầu)
+                        </label>
+                        <div class="col-sm-3">
+                            <input type="text" class="form-control" id="Text5" placeholder="">
+                        </div>
+                        <label for="inputEmail3" class="col-sm-3 control-label">
+                            Completion Date
+                            <br />
+                            (Ngày hoàn thành)
+                        </label>
+                        <div class="col-sm-3">
+                            <input type="text" class="form-control" id="Text6" placeholder="">
+                        </div>
+                    </div>
+                    <!--  <div class="form-group">
+                        <label for="inputEmail3" class="col-sm-6 control-label">
+                           Photo of shop attached (Ảnh thực tế của cửa hàng)
+                            <br />
+
+                        </label>
+
+                        <div class="col-sm-3">
+
+                            <div class="checkbox checkbox-success">
+                                <input id="Checkbox1" class="styled" type="checkbox">
+                                <label for="cbxRYes" class="checkbox5 text-bold">
+                                    Yes 
+                                </label>
+                            </div>
+                        </div>
+
+
+                        <div class="col-sm-3">
+
+                            <div class="checkbox checkbox-success">
+                                <input id="Checkbox2" class="styled" type="checkbox">
+                                <label for="cbxNo" class="checkbox5 text-bold">
+                                    No
+                                </label>
+                            </div>
+                        </div>
+                       
+                    </div>-->
+
+                    <div class="form-group">
+                        <label for="ShopsignSize" class="col-sm-4 control-label">
+                            Người yêu cầu
+                        </label>
+                        <div class="col-sm-8">
+                            <input ng-model="dataSelected.RequestedByName" type="text" class="form-control ng-pristine ng-untouched ng-valid" id="RequestedByName" placeholder="">
+                        </div>
+                    </div>
+
+                </div>
+                <!-- /.box-body -->
+
+            </form>
+
+        </div>
+    </div>
+
+</div>
+<div class="modal-footer">
+    <button class="btn btn-primary" type="button" ng-click="save()">OK</button>
+    <button class="btn btn-warning" type="button" ng-click="cancel()">Cancel</button>
+</div>
