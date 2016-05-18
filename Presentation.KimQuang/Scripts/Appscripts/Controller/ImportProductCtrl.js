@@ -19,13 +19,13 @@
              { name: 'HireTotalAmount', heading: 'Giá tổng(DT)', className: 'text-center pd-0 break-word' },
              { name: 'HireFinalPrice', heading: 'Giá chốt', className: 'text-center pd-0 break-word' },
              { name: 'BasicInfo', heading: 'Thông tin cơ bản', width: '250px', className: 'text-center pd-0 break-word' },
-             { name: 'Contact', heading: 'Liên hệ', width: '152px',className: 'text-center pd-0 break-word' },
+             { name: 'Contact', heading: 'Liên hệ', width: '152px', className: 'text-center pd-0 break-word' },
             { name: 'HomeNumber', heading: 'Số nhà', className: 'text-center pd-0 break-word' },
             { name: 'StreetName', heading: 'Đường', className: 'text-center pd-0 break-word' },
               { name: 'WardName', heading: 'Phường', className: 'text-center pd-0 break-word' },
             { name: 'DistrictName', heading: 'Quận', className: 'text-center pd-0 break-word' },
-          
-        
+
+
             { name: 'Action1', heading: 'Sửa', width: '50px', className: 'text-center pd-0 break-word', type: controls.LIST_ICON, listAction: [{ classIcon: 'fa-pencil-square-o', action: 'view' }] },
             { name: 'Action2', heading: 'Xóa', width: '50px', className: 'text-center pd-0 break-word', type: controls.LIST_ICON, listAction: [{ classIcon: 'fa-times  text-danger', action: 'delete' }] }
         ],
@@ -217,7 +217,7 @@
         Sys_ViewID: 20
     };
 
-    $scope.search = function (searchEntry) {       
+    $scope.search = function (searchEntry) {
         searchEntry.UnAssignedName = tiengvietkhongdau(searchEntry.Name);
         searchEntry.UnAssignedStreet = tiengvietkhongdau(searchEntry.StreetName); //coreService.toASCi(entry.Address);
         for (var property in searchEntry) {
@@ -243,16 +243,16 @@
         }
 
 
-       
+
     }
 
     if ($rootScope.searchEntryFilter != null && typeof $rootScope.searchEntryFilter != 'undefined' && $state.current.url == '/product-list') {
         $scope.searchEntry = $rootScope.searchEntryFilter;
-      //  console.log('$scope.searchEntry', $scope.searchEntry);
+        //  console.log('$scope.searchEntry', $scope.searchEntry);
         $scope.search($scope.searchEntry);
 
     }
-   
+
 
     $scope.exportFile = function (exportType, sysViewId) {
         var selectedId = [];
@@ -296,7 +296,7 @@
         });
     }
 
-  
+
     $scope.files = "";
     $scope.upload = function () {
         alert($scope.files.length + " files selected ... Write your Upload Code");
@@ -314,7 +314,7 @@
         };
         finder.popup();
     });
-   
+
     $scope.ChooseImage = function (objUpload) {
         $("#uploadproposal").click();
     }
@@ -323,25 +323,212 @@
             ClientKey: 1,
             Filename: $scope.files
         }
-    //    $rootScope.showModal = true;
+        //    $rootScope.showModal = true;
         $scope.errorFile = '';
         coreService.callServer('core/TemplateService.asmx', 'ImportProductExcel', entry, function (data) {
             $rootScope.showModal = false;
-            if (data == "00-OK")
+            var pData = data[0][0];
+            if (pData.ID.indexOf("00")!=-1)
                 dialogs.notify("Import thành công", "Import thành công");
-            else if (data.startsWith("01-")==true){
+            else if (pData.ID.indexOf("01") != -1) {
                 dialogs.notify("Import còn dòng lỗi", "Import còn dòng lỗi. Nhân vào nút download bên dưới để downf ile lỗi về điều chỉnh");
-                $scope.errorFile = data.substring(3);
+                $scope.errorFile = pData.Name;
             }
             else {
-
                 dialogs.notify("Import không thành công", "Import không thành công");
-                el
             }
             $rootScope.$apply();
-            });      
+        });
 
     }
     $rootScope.showModal = false;
- 
+
+})
+.controller('productDialogCtrl', function ($scope, $rootScope, $modalInstance, productService, $timeout, coreService, dialogs, $filter) {
+    $rootScope.showModal = true;
+    $timeout(function () {
+        console.log("$scope.dataSelected", $scope.dataSelected)
+        //$scope.dataSelected = productService.dataSelected;
+        //console.log('$scope.dataSelected', $scope.dataSelected);
+        //$scope.dataSelected.Description && ($scope.dataSelected.Description = $scope.dataSelected.Description.replace(/<br \/>/g, '\n'));
+        $rootScope.showModal = false;
+    }, 2000);
+
+    $scope.title = 'Chỉnh sửa sản phẩm';
+    $scope.refreshList = false;
+
+    $scope.cancel = function () {
+        $modalInstance.dismiss('Canceled');
+    }; // end cancel
+
+    $scope.save = function () {
+        var act = "UPDATE";
+        //console.log("save:data", $scope.dataSelected);
+        //console.log("save:projectService", projectService.dataSelected);
+        if ($scope.dataSelected.ID != undefined && $scope.dataSelected.ID > 0) act = "UPDATE";
+        $scope.actionConfirm(act);
+    }; // end save
+
+    $scope.actionConfirm = function (act) {
+        $scope.actionEntry(act);
+        //var dlg = dialogs.confirm('Confirmation', 'Confirmation required');
+        //dlg.result.then(function (btn) {
+        //    $scope.actionEntry(act);
+        //}, function (btn) {
+        //    //$scope.confirmed = 'You confirmed "No."';
+        //});
+    }
+
+    $scope.actionEntry = function (act) {
+        if (typeof act != 'undefined') {
+            var entry = angular.copy($scope.dataSelected);
+            entry.UnAssignedName = tiengvietkhongdau(entry.Name); //coreService.toASCi(entry.Name);
+            entry.UnAssignedAddress = tiengvietkhongdau(entry.Address); //coreService.toASCi(entry.Address);
+            entry.Action = act;
+            entry.Sys_ViewID = 19; //$scope.gridInfo.sysViewID;
+            entry.Description && (entry.Description = entry.Description.replace(/\n\r?/g, '<br />'));
+            //            console.log('entry', entry);
+
+            for (var property in entry) {
+                if (entry.hasOwnProperty(property)) {
+                    if (entry[property] == '') {
+                        delete entry[property];
+                    }
+                }
+            }
+            if (act == 'DELETE')
+                entry.ID = $scope.deleteId;
+
+            coreService.actionEntry2(entry, function (data) {
+                if (data.Success) {
+                    switch (act) {
+                        case 'INSERT':
+                            //                            entry.ID = data.Result;
+                            //                            $scope.gridInfo.data.unshift(entry);
+                            //                            dialogs.notify(data.Message.Name, data.Message.Description);
+                            break;
+                        case 'UPDATE':
+                            $modalInstance.close($scope.refreshList);
+                            break;
+                        case 'DELETE':
+                            //                            var index = -1;
+                            //                            var i = 0;
+                            //                            angular.forEach($scope.gridInfo.data, function (item, key) {
+                            //                                if (entry.ID == item.ID)
+                            //                                    index = i;
+                            //                                i++;
+                            //                            });
+                            //                            if (index > -1)
+                            //                                $scope.gridInfo.data.splice(index, 1);
+                            //
+                            //                            dialogs.notify(data.Message.Name, data.Message.Description);
+                            //
+                            //                            if (typeof $scope.gridInfo.dtInstance == 'undefined') {
+                            //                                $timeout(function () {
+                            //                                    $scope.gridInfo.dtInstance.reloadData();
+                            //                                }, 1000);
+                            //                            } else {
+                            //                                $scope.gridInfo.dtInstance.reloadData();
+                            //                            }
+                            break;
+                    }
+                    //                    $scope.reset();
+
+                }
+                //thong bao ket qua
+                //dialogs.notify(data.Message.Name, data.Message.Description);
+                $scope.$apply();
+
+            });
+        }
+    }
+
+    $scope.statusOptions = statusOptions;
+    $scope.layout = {
+        enableClear: false,
+        enableButtonOrther: false
+    }
+
+    coreService.getListEx({ Code: "BUILDINGDIRECTION", Sys_ViewID: 17 }, function (data) {
+        $scope.buildingDirectionIDSelectList = data[1];
+    });
+
+    $scope.districtSelectList = null;
+    $scope.wardSelectList = null;
+    coreService.getListEx({ CityID: 2, Sys_ViewID: 18 }, function (data) {
+        //console.log('District--ward', data);
+        $scope.districtSelectList = data[1];
+        $scope.wardSelectList = data[2];
+
+        convertStringtoNumber($scope.districtSelectList, 'ID');
+        convertStringtoNumber($scope.wardSelectList, 'DistrictID');
+        convertStringtoNumber($scope.wardSelectList, 'ID');
+
+        $scope.tempWardSelectList = angular.copy($scope.wardSelectList);
+    });
+
+    $scope.changeDistrict = function (districtID) {
+        $scope.dataSelected.WardId = null;
+        $scope.wardSelectList = $filter('filterDistrictID')($scope.tempWardSelectList, districtID);
+    }
+
+    function convertStringtoNumber(array, fieldName) {
+        angular.forEach(array, function (item, key) {
+            if (!isNaN(item[fieldName]) && item[fieldName] != '')
+                item[fieldName] = parseInt(item[fieldName]);
+        });
+    }
+    function convertStringtoBoolean(array, fieldName) {
+        angular.forEach(array, function (item, key) {
+            if (item[fieldName] === "True") {
+                item[fieldName] = true;
+            } else {
+                item[fieldName] = false;
+            }
+
+        });
+    }
+
+    function tiengvietkhongdau(str) {
+
+        if (str == null || typeof str == 'undefined' || str == '')
+            return "";
+
+        /* str = str.replace(/à|á|ạ|ả|ã|â|ầ|ấ|ậ|ẩ|ẫ|ă|ằ|ắ|ặ|ẳ|ẵ/g, "a");
+         str = str.replace(/è|é|ẹ|ẻ|ẽ|ê|ề|ế|ệ|ể|ễ.+/g, "e");
+         str = str.replace(/ì|í|ị|ỉ|ĩ/g, "i");
+         str = str.replace(/ò|ó|ọ|ỏ|õ|ô|ồ|ố|ộ|ổ|ỗ|ơ|ờ|ớ|ợ|ở|ỡ.+/g, "o");
+         str = str.replace(/ù|ú|ụ|ủ|ũ|ư|ừ|ứ|ự|ử|ữ/g, "u");
+         str = str.replace(/ỳ|ý|ỵ|ỷ|ỹ/g, "y");
+         str = str.replace(/đ/g, "d");
+         */
+        str = locdau(str);
+        str = str.replace(/-+-/g, "-"); //thay thế 2- thành 1-
+        str = str.replace(/^\-+|\-+$/g, "");
+        return str;
+    }
+    function locdau(slug) {
+        //Đổi ký tự có dấu thành không dấu
+        slug = slug.replace(/á|à|ả|ạ|ã|ă|ắ|ằ|ẳ|ẵ|ặ|â|ấ|ầ|ẩ|ẫ|ậ/gi, "a");
+        slug = slug.replace(/é|è|ẻ|ẽ|ẹ|ê|ế|ề|ể|ễ|ệ/gi, "e");
+        slug = slug.replace(/i|í|ì|ỉ|ĩ|ị/gi, "i");
+        slug = slug.replace(/ó|ò|ỏ|õ|ọ|ô|ố|ồ|ổ|ỗ|ộ|ơ|ớ|ờ|ở|ỡ|ợ/gi, "o");
+        slug = slug.replace(/ú|ù|ủ|ũ|ụ|ư|ứ|ừ|ử|ữ|ự/gi, "u");
+        slug = slug.replace(/ý|ỳ|ỷ|ỹ|ỵ/gi, "y");
+        slug = slug.replace(/đ/gi, "d");
+        //Xóa các ký tự đặt biệt
+        slug = slug.replace(/\`|\~|\!|\@|\#|\||\$|\%|\^|\&|\*|\(|\)|\+|\=|\,|\.|\/|\?|\>|\<|\"|\"|\:|\;|_/gi, "");
+        //Đổi khoảng trắng thành ký tự gạch ngang
+        slug = slug.replace(/ /gi, " ");
+        //Đổi nhiều ký tự gạch ngang liên tiếp thành 1 ký tự gạch ngang
+        //Phòng trường hợp người nhập vào quá nhiều ký tự trắng
+        slug = slug.replace(/\-\-\-\-\-/gi, "-");
+        slug = slug.replace(/\-\-\-\-/gi, "-");
+        slug = slug.replace(/\-\-\-/gi, "-");
+        slug = slug.replace(/\-\-/gi, "-");
+        //Xóa các ký tự gạch ngang ở đầu và cuối
+        slug = "@" + slug + "@";
+        slug = slug.replace(/\@\-|\-\@|\@/gi, "");
+        return slug;
+    }
 })

@@ -198,7 +198,6 @@
     });
 
     $scope.openDialog = function (act) {
-        console.log('openDialog');
         var dlg = dialogs.create('/templates/view/product/document-popup.html', 'productDialogCtrl', productService, { size: 'lg', keyboard: false, backdrop: false });
         dlg.result.then(function (refreshList) {
             //            console.log('dialogs', refreshList);
