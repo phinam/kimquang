@@ -41,13 +41,13 @@
     <link href="Scripts/plugins/datatables/dataTables.bootstrap.css" rel="stylesheet" />
 
 </head>
-<body class="skin-blue-light sidebar-mini" ng-controller="BodyController" ng-class="{'sidebar-collapse': IsSidebarCollapse }" id="body">
+<body class="skin-blue-light sidebar-mini" ng-controller="BodyController" ng-class="{'sidebar-collapse': IsSidebarCollapse ,'loading':showModal==true}" id="body">
     <div class="wrapper">
         <header class="main-header">
             <!-- Logo -->
             <a ui-sref="welcome" href="#" class="logo">
 
-                <span class="logo-mini" ><b style="color:#f8df00">KQ</b></span>
+                <span class="logo-mini"><b style="color:#f8df00">KQ</b></span>
 
                 <span class="logo-lg">
                     <img src="Images/img/logo.png" style="height: 45px; margin-right: 7px; line-height: 45px; margin-top: -4px;" />
@@ -194,6 +194,7 @@
     <script src="Scripts/Appscripts/Controller/ImportProductCtrl.js"></script>
     <script src="Scripts/Appscripts/Controller/ProjectService.js"></script>
     <script src="Scripts/Appscripts/Controller/BaseLineChartController.js"></script>
+    <script src="Scripts/Appscripts/Controller/productService.js"></script>
     <!--Factory-->
     <script src="Scripts/Appscripts/Factory/AccessPermissionFactory.js"></script>
     <script src="Scripts/Appscripts/Factory/AlertFactory.js"></script>
