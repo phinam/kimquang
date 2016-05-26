@@ -182,6 +182,12 @@
         $scope.buildingDirectionIDSelectList = data[1];
     });
 
+    coreService.getListEx({ Code: "FILETYPEUPLOAD", Sys_ViewID: 17 }, function (data) {
+        //        console.log('FILETYPEUPLOAD', data);
+        $scope.FileTypeSelectList = data[1];
+    });
+
+
     //phu viet cho nay
     $scope.districtSelectList = null;
     $scope.wardSelectList = null;
