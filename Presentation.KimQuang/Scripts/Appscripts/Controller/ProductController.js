@@ -572,5 +572,86 @@
                 break;
         }
     }
+
  
+})
+.controller('productDialogCtrl', function ($scope, $rootScope, $modalInstance, productService, $timeout, coreService, dialogs, $filter) {
+    $rootScope.showModal = true;
+    $timeout(function () {
+        console.log("$scope.dataSelected", $scope.dataSelected)
+        $rootScope.showModal = false;
+    }, 2000);
+
+    $scope.title = 'Chỉnh sửa sản phẩm';
+    $scope.refreshList = false;
+
+    $scope.cancel = function () {
+        $modalInstance.dismiss('Canceled');
+    }; // end cancel
+
+    $scope.save = function () {
+        var act = "UPDATE";
+        //console.log("save:data", $scope.dataSelected);
+        //console.log("save:projectService", projectService.dataSelected);
+        if ($scope.dataSelected.ID != undefined && $scope.dataSelected.ID > 0) act = "UPDATE";
+        $scope.actionConfirm(act);
+    }; // end save
+
+    $scope.actionConfirm = function (act) {
+        $scope.actionEntry(act);
+        //var dlg = dialogs.confirm('Confirmation', 'Confirmation required');
+        //dlg.result.then(function (btn) {
+        //    $scope.actionEntry(act);
+        //}, function (btn) {
+        //    //$scope.confirmed = 'You confirmed "No."';
+        //});
+    }
+
+    $scope.actionEntry = function (act) {
+        if (typeof act != 'undefined') {
+            var entry = angular.copy($scope.dataSelected);
+            entry.UnAssignedName = tiengvietkhongdau(entry.Name); //coreService.toASCi(entry.Name);
+            entry.UnAssignedAddress = tiengvietkhongdau(entry.Address); //coreService.toASCi(entry.Address);
+            entry.Action = act;
+            entry.Sys_ViewID = 19; //$scope.gridInfo.sysViewID;
+            entry.Description && (entry.Description = entry.Description.replace(/\n\r?/g, '<br />'));
+            //            console.log('entry', entry);
+
+            for (var property in entry) {
+                if (entry.hasOwnProperty(property)) {
+                    if (entry[property] == '') {
+                        delete entry[property];
+                    }
+                }
+            }
+            if (act == 'DELETE')
+                entry.ID = $scope.deleteId;
+
+            coreService.actionEntry2(entry, function (data) {
+                if (data.Success) {
+                    switch (act) {
+                        case 'INSERT':
+                            //                            entry.ID = data.Result;
+                            //                            $scope.gridInfo.data.unshift(entry);
+                            //                            dialogs.notify(data.Message.Name, data.Message.Description);
+                            break;
+                        case 'UPDATE':
+                            $modalInstance.close($scope.refreshList);
+                            break;
+                        case 'DELETE':
+                           
+                            break;
+                    }
+                    //                    $scope.reset();
+
+                }
+                //thong bao ket qua
+                //dialogs.notify(data.Message.Name, data.Message.Description);
+                $scope.$apply();
+
+            });
+        }
+    }
+
+    
 })
