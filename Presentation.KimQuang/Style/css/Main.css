@@ -355,3 +355,10 @@ body.loading:after {
 		-webkit-transform:rotate(360deg);
 	}
 }
+
+td.pd-10{
+    padding-left:10px;
+}
+th.pd-10{
+   text-align:center;
+}
