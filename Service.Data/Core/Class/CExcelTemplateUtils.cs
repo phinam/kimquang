@@ -90,7 +90,7 @@ namespace Service.Data.Core.Class
         /// <param name="templatePath"></param>
         /// <param name="dt"></param>
         /// <returns></returns>
-        public string ExportTemplate(string templatePath, System.Data.DataTable dt, int sheetNumber =1)
+        public string ExportTemplate(string templatePath, System.Data.DataTable title, System.Data.DataTable dt, int sheetNumber =1,bool isExportPdf=false)
         {
             FileInfo info = new FileInfo(templatePath);
             string newFile = info.DirectoryName +"\\" + Guid.NewGuid().ToString()+ info.Name;
@@ -105,6 +105,8 @@ namespace Service.Data.Core.Class
             CMixExcel mixExcel = new CMixExcel(newFile, true);
             ExcelPackage pck = (ExcelPackage)mixExcel.ExcelMixCore;
             var worksheet = pck.Workbook.Worksheets[sheetNumber];
+
+            ApplyTitleData(worksheet, title);
             CExcelTemplateDefinition def = GetTemplateDefinition(worksheet);
             if (def == null|| !def.isTemplate) return "";
 
@@ -157,6 +159,12 @@ namespace Service.Data.Core.Class
             
             //pck.Stream.Flush();
             //pck.Stream.Close();
+            if(isExportPdf)
+            {
+                string pdfFile = AppDomain.CurrentDomain.BaseDirectory + "\\_Template\\Excel\\SaveAs" + Guid.NewGuid().ToString() + ".pdf";
+                CExcelToPDF.ExportWorkbookToPdf(newFile2, pdfFile);
+                newFile2 = pdfFile;
+            }
 
             FileStream fs = new FileStream(newFile2, FileMode.OpenOrCreate);
             if (fs != null)
@@ -194,7 +202,10 @@ namespace Service.Data.Core.Class
             
             for(int i = 0;i < def.definedColumnField.Count;i++)
             {
-                ws.Cells[def.definedColumnField[i].address + pasteRow].Value = row[def.definedColumnField[i].value];
+                if (row.Table.Columns.Contains(def.definedColumnField[i].value))
+                {
+                    ws.Cells[def.definedColumnField[i].address + pasteRow].Value = row[def.definedColumnField[i].value];
+                }
             }
 
         }
@@ -219,7 +230,10 @@ namespace Service.Data.Core.Class
           
             for (int i = 0; i < def.definedDataRowIndex.Count; i++)
             {
-                ws.Cells[col.address + def.definedDataRowIndex[i].address].Value = row[def.definedDataRowIndex[i].value];
+                if (row.Table.Columns.Contains(def.definedDataRowIndex[i].value))
+                {
+                    ws.Cells[col.address + def.definedDataRowIndex[i].address].Value = row[def.definedDataRowIndex[i].value];
+                }
             }
 
         }
@@ -331,6 +345,38 @@ namespace Service.Data.Core.Class
             ExcelRange cell = worksheet.Cells[address];
             if (cell != null) return null;
             return cell.Value.ToString();
+        }
+
+        private void ApplyTitleData(ExcelWorksheet ws,DataTable title)
+        {
+            //Duyet qua tat ca cell cua template
+            //cel nao co dinh dang {colName} thi replay gia tri vao
+            //table title co 1 dong
+            if (title == null || title.Rows.Count == 0) return;
+            int maxcol = ws.Dimension.End.Column;
+            int maxRow = ws.Dimension.End.Row;
+            for(int row=1;row<=maxRow;row++)
+            {
+                for (int col = 1; col <= maxcol; col++)
+                {
+                    if (ws.Cells[row, col].Value == null) continue;
+                    string value = ws.Cells[row, col].Value.ToString();
+                    if (value.Contains("{{") && value.Contains("}}"))
+                    {
+                        string colname = value.Substring(value.IndexOf("{{") + 2, value.IndexOf("}}") - value.IndexOf("{{") - 2);
+                        for (int i = 0; i < title.Columns.Count; i++)
+                        {
+                            if (title.Columns[i].ColumnName.Equals(colname, StringComparison.OrdinalIgnoreCase))
+                            {
+                                //gan gia tri
+                                value = value.Replace("{{" + colname + "}}", title.Rows[0][i].ToString());
+                                ws.Cells[row, col].Value = value;
+                            }
+                        }
+                    }
+                    
+                }
+            }
         }
     }
     public class CExcelTemplateDefinition

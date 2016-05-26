@@ -31,6 +31,7 @@ namespace Service.Data.Core.Class
         {
             //if (IsUpperVer2003)
                 _excelPackage = new ExcelPackage(s);
+
             //else
             //    _HSSFWorkbook = new HSSFWorkbook(s);
         }

@@ -60,6 +60,12 @@ namespace Service.Data.Core.Class
             "Description"
 
         };
+        /// <summary>
+        /// Doc file excel chi tiet dua vao database
+        /// </summary>
+        /// <param name="clientKey"></param>
+        /// <param name="excelfile"></param>
+        /// <returns></returns>
         public string ImportExcel(string clientKey,string excelfile)
         {
             try
@@ -115,6 +121,12 @@ namespace Service.Data.Core.Class
             }
         }
 
+        /// <summary>
+        /// chuyen du lieu 1 row thanh xml
+        /// </summary>
+        /// <param name="ws"></param>
+        /// <param name="row"></param>
+        /// <returns></returns>
         private string GetRowInXml(ExcelWorksheet ws,int row)
         {
             string s = "";
@@ -140,12 +152,22 @@ namespace Service.Data.Core.Class
                         }
                         
                     }
+                    //neu la so thi lay 3 so le
+                    if(value is float) value = ((float)value).ToString("#.###");
+                    if(value is double ) value = ((double)value).ToString("#.###");
+                    if(value is decimal) value = ((decimal)value).ToString("#.###");
+
                     s += string.Format("{0}=\"{1}\" ", col, XmlEscape(value.ToString()));
                 }
                 
             }
             return s;
         }
+        /// <summary>
+        /// Escape file special char in xml: &,",',<,>,
+        /// </summary>
+        /// <param name="s"></param>
+        /// <returns></returns>
         private string XmlEscape(string s)
         {
             /*

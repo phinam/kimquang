@@ -104,7 +104,8 @@ D:\DEVELOP\OTHER\KimQuang\Source\Service.Data\bin\PMSA.Framework.Utils.dll
 D:\DEVELOP\OTHER\KimQuang\Source\Service.Data\bin\ICSharpCode.SharpZipLib.dll
 D:\DEVELOP\OTHER\KimQuang\Source\Service.Data\bin\Interop.Microsoft.Office.Interop.Excel.dll
 D:\DEVELOP\OTHER\KimQuang\Source\Service.Data\bin\Datalayer.DataObject.pdb
-D:\DEVELOP\OTHER\KimQuang\Source\Service.Data\obj\Debug\Service.Data.csprojResolveAssemblyReference.cache
 D:\DEVELOP\OTHER\KimQuang\Source\Service.Data\obj\Debug\Service.Data.dll
 D:\DEVELOP\OTHER\KimQuang\Source\Service.Data\obj\Debug\Service.Data.pdb
 D:\DEVELOP\OTHER\KimQuang\Source\Service.Data\bin\EPPlus.xml
+D:\DEVELOP\OTHER\KimQuang\Source\Service.Data\obj\Debug\Service.Data.csprojFakesResolveAssemblyReference.cache
+D:\DEVELOP\OTHER\KimQuang\Source\Service.Data\obj\Debug\Service.Data.csprojResolveAssemblyReference.cache

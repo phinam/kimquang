@@ -52,14 +52,11 @@
     <Reference Include="HttpCompress">
       <HintPath>..\DLL\HttpCompress.dll</HintPath>
     </Reference>
-    <Reference Include="itextsharp">
-      <HintPath>.\itextsharp.dll</HintPath>
-    </Reference>
     <Reference Include="Microsoft.CSharp" />
-    <Reference Include="Microsoft.Office.Interop.Excel, Version=15.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c, processorArchitecture=MSIL">
+    <Reference Include="Microsoft.Office.Interop.Excel, Version=12.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c">
       <SpecificVersion>False</SpecificVersion>
       <EmbedInteropTypes>True</EmbedInteropTypes>
-      <HintPath>..\DLL\Microsoft.Office.Interop.Excel.dll</HintPath>
+      <HintPath>C:\Windows\assembly\GAC\Microsoft.Office.Interop.Excel\12.0.0.0__71e9bce111e9429c\Microsoft.Office.Interop.Excel.dll</HintPath>
     </Reference>
     <Reference Include="Newtonsoft.Json.Net20">
       <HintPath>..\DLL\Newtonsoft.Json.Net20.dll</HintPath>
@@ -113,6 +110,7 @@
     <Compile Include="Core\Class\CExcelImporter.cs" />
     <Compile Include="Core\Class\CExcelReport.cs" />
     <Compile Include="Core\Class\CExcelTemplateUtils.cs" />
+    <Compile Include="Core\Class\CExcelToPDF.cs" />
     <Compile Include="Core\Class\CMixExcel.cs" />
     <Compile Include="Core\Class\CXmlUtils.cs" />
     <Compile Include="Core\CoreService.asmx.cs">
@@ -147,6 +145,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
+    <Fakes Include="Fakes\Microsoft.Office.Interop.Excel.fakes" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
