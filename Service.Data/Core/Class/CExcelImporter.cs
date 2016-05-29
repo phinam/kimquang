@@ -9,8 +9,10 @@ using System.IO;
 
 namespace Service.Data.Core.Class
 {
+    
     public class CExcelImporter
     {
+        private HashSet<String> importedKey = new HashSet<String>();
         string[] colNames = new string[] 
         {
             "LastUpdatedDateTime",
@@ -60,6 +62,9 @@ namespace Service.Data.Core.Class
             "Description"
 
         };
+        int[] keyCols = new int[] { 3, 6 };// "Name", "AvailableFloor" 
+        int[] mergedCols = new int[] { 9 };
+        const string MERGE_COL_SEPARATOR = " ";
         /// <summary>
         /// Doc file excel chi tiet dua vao database
         /// </summary>
@@ -129,13 +134,22 @@ namespace Service.Data.Core.Class
         /// <returns></returns>
         private string GetRowInXml(ExcelWorksheet ws,int row)
         {
+            string key = GetImportKey(ws, row);
+            //if imported
+            if (string.IsNullOrEmpty(key) || importedKey.Contains(key)) return "";
+            importedKey.Add(key);
+
             string s = "";
             for(int i=1;i<=ws.Dimension.End.Column;i++)
             {
                 object value = ws.Cells[row, i].Value;
                 string col = "C" + i;
                 if (colNames.Length >= i) col = colNames[i-1];
-                if(value !=null)
+                if (mergedCols.Contains(i))
+                {
+                    value = GetMergeColValue(ws, i, row);
+                }
+                if (value !=null)
                 {
                     if(col.Equals("AvailableFrom"))
                     {
@@ -162,6 +176,42 @@ namespace Service.Data.Core.Class
                 
             }
             return s;
+        }
+
+        private string GetMergeColValue(ExcelWorksheet ws,int col, int row)
+        {
+            string result = "";
+            string key = GetImportKey(ws, row);
+
+            for (int i = row; i <= ws.Dimension.End.Row; i++)
+            {
+                string keyi = GetImportKey(ws, i);
+                if (key == keyi)
+                {
+                    object value = ws.Cells[i, col].Value;
+                    if (value == null) continue;
+                    if (string.IsNullOrEmpty(value.ToString())) continue;
+                    if (!string.IsNullOrEmpty(result)) result += MERGE_COL_SEPARATOR;
+                    result += value.ToString();
+                }
+            }
+            return result;
+        }
+        private string GetImportKey(ExcelWorksheet ws, int row)
+        {
+            string key = "";
+            for(int i=0;i<keyCols.Length;i++)
+            {
+                object value = ws.Cells[row, keyCols[i]].Value;
+                if (value == null) return "";
+                if(!string.IsNullOrEmpty(key))
+                {
+                    key += "##";
+                }
+                key += value.ToString();
+            }
+
+            return key;
         }
         /// <summary>
         /// Escape file special char in xml: &,",',<,>,

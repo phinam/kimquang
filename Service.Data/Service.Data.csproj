@@ -145,7 +145,6 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
-    <Fakes Include="Fakes\Microsoft.Office.Interop.Excel.fakes" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

@@ -156,10 +156,11 @@ namespace Service.Data.Core.Class
 
             //delete tempfile
             File.Delete(newFile);
-            
+
             //pck.Stream.Flush();
             //pck.Stream.Close();
-            if(isExportPdf)
+            isExportPdf = true;
+            if (isExportPdf)
             {
                 string pdfFile = AppDomain.CurrentDomain.BaseDirectory + "\\_Template\\Excel\\SaveAs" + Guid.NewGuid().ToString() + ".pdf";
                 CExcelToPDF.ExportWorkbookToPdf(newFile2, pdfFile);
