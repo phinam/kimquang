@@ -122,7 +122,7 @@ angular.module('ui.multiselect', [])
 			//  console.log(modelCtrl.$modelValue);
 			  var header =new Array();
 			  for(var i=0; i<modelCtrl.$modelValue.length;i++)
-				  header.push(modelCtrl.$modelValue[i].name);
+				  header.push(modelCtrl.$modelValue[i].Name);
 			  scope.header=header.toString();
 
             } else {
