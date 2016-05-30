@@ -178,7 +178,7 @@
 
     //phu viet cho nay
     coreService.getListEx({ Code: "BUILDINGDIRECTION", Sys_ViewID: 17 }, function (data) {
-        //        console.log('BUILDINGDIRECTION', data);
+                console.log('BUILDINGDIRECTION', data);
         $scope.buildingDirectionIDSelectList = data[1];
     });
 
@@ -579,6 +579,9 @@
         }
     }
 
+    $scope.cars = [{ id: 1, name: 'Audi' }, { id: 2, name: 'BMW' }, { id: 1, name: 'Honda' }];
+    $scope.selectedCar = [];
+
  
 })
 .controller('productDialogCtrl', function ($scope, $rootScope, $modalInstance, productService, $timeout, coreService, dialogs, $filter) {
@@ -612,6 +615,9 @@
         //    //$scope.confirmed = 'You confirmed "No."';
         //});
     }
+
+
+
 
     $scope.actionEntry = function (act) {
         if (typeof act != 'undefined') {
