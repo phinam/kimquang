@@ -19,6 +19,18 @@
                     <div class="box-body">
                         <!--Column Left-->
                         <div class="col-md-6 col-sm-6">
+
+                            <div class="form-group">
+                                <label for="DistrictID" class="col-sm-4 control-label text-left-important">Quận/Huyện</label>
+                                <div class="col-sm-8">
+                                    <multiselect class="input-xlarge" multiple="true"
+                                                 ng-model="selectedCar"
+                                                 options="c.name for c in cars"
+                                                 change="selected()"></multiselect>
+                                </div>
+                            </div>
+
+
                             <div class="form-group">
                                 <label for="Name" class="col-sm-4 control-label text-left-important">Tên tòa nhà</label>
                                 <div class="col-sm-8">
@@ -171,20 +183,20 @@
 
                         </div>
 
-                        <div class="box-footer clearfix">
-                            <div class="row">
-                                <div class="col-md-12 form-horizontal">
-                                    <div class="col-md-4  col-md-offset-4">
-                                        <div class="form-group">
-                                            <input type="button" class="form-control btn-primary" ng-click="search(searchEntry)" value="TÌM KIẾM">
-                                        </div>
+                     
+
+                    </div>
+                    <div class="box-footer clearfix">
+                        <div class="row">
+                            <div class="col-md-12 form-horizontal">
+                                <div class="col-md-4  col-md-offset-4">
+                                    <div class="form-group">
+                                        <input type="button" class="form-control btn-primary" ng-click="search(searchEntry)" value="TÌM KIẾM">
                                     </div>
                                 </div>
                             </div>
                         </div>
-
                     </div>
-
                     <!-- Navigator part -->
                 </div>
             </div>
