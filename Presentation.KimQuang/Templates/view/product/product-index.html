@@ -20,17 +20,7 @@
                         <!--Column Left-->
                         <div class="col-md-6 col-sm-6">
 
-                            <div class="form-group">
-                                <label for="DistrictID" class="col-sm-4 control-label text-left-important">Quận/Huyện</label>
-                                <div class="col-sm-8">
-                                    <multiselect class="input-xlarge" multiple="true"
-                                                 ng-model="selectedCar"
-                                                 options="c.name for c in cars"
-                                                 change="selected()"></multiselect>
-                                </div>
-                            </div>
-
-
+                           
                             <div class="form-group">
                                 <label for="Name" class="col-sm-4 control-label text-left-important">Tên tòa nhà</label>
                                 <div class="col-sm-8">
@@ -107,10 +97,10 @@
                             <div class="form-group">
                                 <label for="BuildingDirectionID" class="col-sm-4 control-label text-left-important">Hướng tòa nhà</label>
                                 <div class="col-sm-8">
-                                    <select ng-model="searchEntry.BuildingDirectionID" name="BuildingDirectionID" id="BuildingDirectionID" class="form-control"
-                                            ng-options="option.Value as option.Name for option in buildingDirectionIDSelectList">
-                                        <option value="">-- Chọn hướng nhà</option>
-                                    </select>
+                                    <multiselect class="input-xlarge" multiple="true"
+                                                 ng-model="selectedCar"
+                                                 options="c.Name for c in buildingDirectionIDSelectList"
+                                                 change="selected()"></multiselect>
                                 </div>
                             </div>
                             <div class="form-group">
