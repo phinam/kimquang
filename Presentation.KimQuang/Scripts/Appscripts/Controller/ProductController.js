@@ -177,6 +177,7 @@
     // $scope.launch('error');
 
     //phu viet cho nay
+    $scope.buildingDirectionIDSelectList =[]
     coreService.getListEx({ Code: "BUILDINGDIRECTION", Sys_ViewID: 17 }, function (data) {
                 console.log('BUILDINGDIRECTION', data);
         $scope.buildingDirectionIDSelectList = data[1];
