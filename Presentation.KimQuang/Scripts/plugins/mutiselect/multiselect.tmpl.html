@@ -8,12 +8,12 @@
       <input class="input-block-level" type="text" ng-model="searchText.label" autofocus="autofocus" placeholder="Filter" />
     </li>
     <li ng-show="multiple">
-      <button class="btn-link btn-small" ng-click="checkAll()"><i class="icon-ok"></i> Chọn tất cả</button>
-      <button class="btn-link btn-small" ng-click="uncheckAll()"><i class="icon-remove"></i> Bỏ chọn</button>
+      <button class="btn-link btn-small" ng-click="checkAll()"><i class="fa fa-check"></i> Chọn tất cả</button>
+      <button class="btn-link btn-small" ng-click="uncheckAll()"><i class="fa fa-times"></i> Bỏ chọn</button>
     </li>
     <li ng-repeat="i in items | filter:searchText">
       <a ng-click="select(i); focus()">
-        <i ng-class="{'icon-ok': i.checked, 'icon-empty': !i.checked}"></i>{{i.label}}</a>
+        <i ng-class="{'fa fa-check': i.checked, 'icon-empty': !i.checked}"></i>{{i.label}}</a>
     </li>
   </ul>
 </div>

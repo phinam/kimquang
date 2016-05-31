@@ -223,7 +223,7 @@ angular.module('ui.multiselect', [])
       restrict: 'E',
       scope: false,
       replace: true,
-      templateUrl: 'multiselect.tmpl.html',
+      templateUrl: 'Scripts/plugins/mutiselect/multiselect.tmpl.html',
       link: function (scope, element, attrs) {
         scope.isVisible = false;
 
