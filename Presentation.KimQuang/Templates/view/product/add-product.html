@@ -39,6 +39,14 @@
                             <input type="number" class="form-control" ng-model="dataSelected.PriorityLevel" tabindex="5" placeholder="Ưu tiên">
                         </div>
                     </div>
+                    <div class="form-group">
+                        <label for="inputPassword3" class="col-sm-3 control-label">Diện tích cho thuê</label>
+                        <div class="col-sm-9">
+                            <input type="text" class="form-control" ng-model="dataSelected.HireArea" tabindex="6">
+
+                        </div>
+                    </div>
+
 
                     <div class="form-group">
                         <label for="HirePrice" class="col-sm-3 control-label text-left-important">Diện tích trống</label>
@@ -149,12 +157,10 @@
 
                     <div class="form-group">
                         <label for="ContactMgntName" class="col-sm-3 control-label text-left-important">TT Quản lý</label>
-                        <div class="col-sm-3 ">
-                            <input type=" text" class="form-control" id="ContactMgntName" name="ContactMgntName" tabindex="22" ng-model="dataSelected.ContactMgntName" placeholder="Tên quản lý" />
+                        <div class="col-sm-6 ">
+                            <input type=" text" class="form-control" id="ContactMgntName" name="ContactMgntName" tabindex="22" ng-model="dataSelected.ContactMgntName" placeholder="Số điện thoại - Tên" />
                         </div>
-                        <div class="col-sm-3 ">
-                            <input type=" text" class="form-control" id="ContactMgntPhone" name="ContactMgntPhone" tabindex="23" ng-model="dataSelected.ContactMgntPhone" placeholder="Số điện thoại" />
-                        </div>
+                       
                         <div class="col-sm-3 ">
                             <input type=" text" class="form-control" id="ContactMgntEmail" name="ContactMgntEmail" tabindex="24" ng-model="dataSelected.ContactMgntEmail" placeholder="Email" />
                         </div>
@@ -162,11 +168,8 @@
 
                     <div class="form-group">
                         <label for="ContactOwnerNane" class="col-sm-3 control-label text-left-important">TT Chủ đầu tư</label>
-                        <div class="col-sm-3 ">
-                            <input type=" text" class="form-control" id="ContactOwnerNane" name="ContactOwnerNane" tabindex="25" ng-model="dataSelected.ContactOwnerNane" placeholder="Tên chủ đầu tư " />
-                        </div>
-                        <div class="col-sm-3 ">
-                            <input type=" text" class="form-control" id="ContactOwnerPhone" name="ContactOwnerPhone" tabindex="26" ng-model="dataSelected.ContactOwnerPhone" placeholder="Số điện thoại" />
+                        <div class="col-sm-6 ">
+                            <input type=" text" class="form-control" id="ContactOwnerNane" name="ContactOwnerNane" tabindex="25" ng-model="dataSelected.ContactOwnerNane" placeholder="Số điện thoại - Tên " />
                         </div>
                         <div class="col-sm-3 ">
                             <input type=" text" class="form-control" id="ContactOwnerEmail" name="ContactOwnerEmail" tabindex="27" ng-model="dataSelected.ContactOwnerEmail" placeholder="Email" />
@@ -362,18 +365,18 @@
                                 <div class="box-body no-padding">
                                     <table class="table table-condensed table-striped">
                                         <tr>
-                                              <th ># Tên file</th>
+                                            <th># Tên file</th>
                                             <th style="width: 100px">Loại</th>
                                             <th style="width: 50px">Xóa</th>
                                         </tr>
                                         <tr>
-                                           <td>
-                                               <div class="checkbox checkbox-primary">
-                                                   <input id="checkbox2" class="styled" type="checkbox" checked="">
-                                                   <label for="checkbox2">
-                                                    File 1
-                                                   </label>
-                                               </div>
+                                            <td>
+                                                <div class="checkbox checkbox-primary">
+                                                    <input id="checkbox2" class="styled" type="checkbox" checked="">
+                                                    <label for="checkbox2">
+                                                        File 1
+                                                    </label>
+                                                </div>
                                             </td>
                                             <td> Hình ảnh</td>
                                             <td><a class="btn btn-xs btn-danger" title="Xóa" ng-click="deleteNews(parentIndex, news.newses)"><i class="fa fa-times"></i></a></td>
@@ -383,7 +386,8 @@
                                                 <div class="checkbox checkbox-primary">
                                                     <input type="checkbox" class="styled styled-primary" id="singleCheckbox2" value="option2" checked="" aria-label="Single checkbox Two">
                                                     <label>File 2</label>
-                                                </div></td>
+                                                </div>
+                                            </td>
                                             <td> Layout</td>
                                             <td><a class="btn btn-xs btn-danger" title="Xóa" ng-click="deleteNews(parentIndex, news.newses)"><i class="fa fa-times"></i></a></td>
                                         </tr>
@@ -392,7 +396,8 @@
                                                 <div class="checkbox checkbox-primary">
                                                     <input type="checkbox" class="styled styled-primary" id="singleCheckbox2" value="option2" checked="" aria-label="Single checkbox Two">
                                                     <label>File 3</label>
-                                                </div></td>
+                                                </div>
+                                            </td>
                                             <td> HD môi giới</td>
                                             <td><a class="btn btn-xs btn-danger" title="Xóa" ng-click="deleteNews(parentIndex, news.newses)"><i class="fa fa-times"></i></a></td>
                                         </tr>
