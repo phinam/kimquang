@@ -1,7 +1,43 @@
 ﻿angular.module('indexApp')
-.controller('ProductCtrl', function ($scope, $rootScope, coreService, authoritiesService, alertFactory, dialogs, $filter, $state, $timeout, modalUtils, productService) {
+.controller('ProductCtrl', function ($scope, $rootScope, coreService,FileUploader, authoritiesService, alertFactory, dialogs, $filter, $state, $timeout, modalUtils, productService) {
     $rootScope.showModal = false;
     var titleHtml = '<input type="checkbox" ng-model="vm.selectAll" ng-click="vm.toggleAll(vm.selectAll, vm.selected)">';
+
+    var uploader = $scope.uploader = new FileUploader({
+        url: 'service.data/uploadFiles.aspx'
+    });
+
+    // FILTERS
+
+    uploader.filters.push({
+        name: 'customFilter',
+        fn: function (item /*{File|FileLikeObject}*/, options) {
+            return this.queue.length < 10;
+        }
+    });
+
+    uploader.onCompleteItem = function (fileItem, response, status, headers) {
+        console.log('onCompleteItem', fileItem, response, status, headers);
+    };
+
+    uploader.onAfterAddingAll = function (addedFileItems) {
+        // console.info('onAfterAddingAll', addedFileItems);
+        $rootScope.showModal = true;
+        uploader.uploadAll();
+    };
+    uploader.onSuccessItem = function (fileItem, response, status, headers) {
+        console.log('onSuccessItem', fileItem, response, status, headers);
+    };
+    uploader.onErrorItem = function (fileItem, response, status, headers) {
+        console.log('onErrorItem', fileItem, response, status, headers);
+    };
+
+    uploader.onCompleteAll = function () {
+        $rootScope.showModal = false;
+        console.log('onCompleteAll');
+    };
+
+
     $scope.gridInfo = {
         gridID: 'productgrid',
         table: null,
@@ -179,7 +215,6 @@
     //phu viet cho nay
     $scope.buildingDirectionIDSelectList =[]
     coreService.getListEx({ Code: "BUILDINGDIRECTION", Sys_ViewID: 17 }, function (data) {
-                console.log('BUILDINGDIRECTION', data);
         $scope.buildingDirectionIDSelectList = data[1];
     });
 
@@ -339,6 +374,7 @@
         Status: null,
         Sys_ViewID: 20
     };
+    $scope.listBuildingDirectionID = [];
 
     $scope.search = function (searchEntry) {
         $rootScope.showModal = true;
@@ -346,6 +382,15 @@
        
         searchEntry.UnAssignedName = tiengvietkhongdau(searchEntry.Name);
         searchEntry.UnAssignedStreet = tiengvietkhongdau(searchEntry.StreetName); //coreService.toASCi(entry.Address);
+        searchEntry.BuildingDirectionID = '';
+        if ($scope.listBuildingDirectionID.length > 0) {
+            var listBD = new Array();
+          
+            for (var i = 0; i < $scope.listBuildingDirectionID.length;i++) {
+                listBD.push($scope.listBuildingDirectionID[i].Value);
+            }
+            searchEntry.BuildingDirectionID = listBD.toString();
+        }
         for (var property in searchEntry) {
             if (searchEntry.hasOwnProperty(property)) {
                 if (searchEntry[property] == '' || searchEntry[property] == false || searchEntry[property] == null) {

@@ -394,3 +394,12 @@ border-color: #d2d6de;
 multiselect .dropdown .btn .caret{
 margin-top:8px;
 }
+
+.fileupload-buttonbar .btn, .fileupload-buttonbar .toggle {
+    margin-bottom: 5px;
+}
+.fileinput-button {
+    position: relative;
+    overflow: hidden;
+    display: inline-block;
+}
