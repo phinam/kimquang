@@ -20,7 +20,7 @@
                         <!--Column Left-->
                         <div class="col-md-6 col-sm-6">
 
-                           
+
                             <div class="form-group">
                                 <label for="Name" class="col-sm-4 control-label text-left-important">Tên tòa nhà</label>
                                 <div class="col-sm-8">
@@ -98,7 +98,7 @@
                                 <label for="BuildingDirectionID" class="col-sm-4 control-label text-left-important">Hướng tòa nhà</label>
                                 <div class="col-sm-8">
                                     <multiselect class="input-xlarge" multiple="true"
-                                                 ng-model="selectedCar"
+                                                 ng-model="listBuildingDirectionID"
                                                  options="c.Name for c in buildingDirectionIDSelectList"
                                                  change="selected()"></multiselect>
                                 </div>
@@ -173,7 +173,7 @@
 
                         </div>
 
-                     
+
 
                     </div>
                     <div class="box-footer clearfix">
@@ -203,9 +203,19 @@
             </div>
             <div class="box box-default">
                 <div class="box-body">
-                    <angular-grid-table grid-info="gridInfo" root-scope="this" list-right="listRight"></angular-grid-table>
-                    <button type="button" class="btn btn-primary" ng-click="exportFile('Excel',26)">Báo giá cơ bản</button>&nbsp;<button type="button" class="btn btn-primary" ng-click="exportFile('Excel',27)"></span>Báo giá chi tiết</button>
+                    <div class="col-md-12">
+                        <angular-grid-table grid-info="gridInfo" root-scope="this" list-right="listRight"></angular-grid-table>
+                    </div>
+                    <div class="col-md-6">
+                        <button type="button" class="btn btn-primary" ng-click="exportFile('Excel',26)">Báo giá cơ bản(excel)</button>&nbsp;<button type="button" class="btn btn-primary" ng-click="exportFile('Excel',27)"></span>Báo giá chi tiết(Excel)</button>
+
+                    </div>
+                    <div class="col-md-6 text-right">
+                        <button type="button" class="btn btn-primary" ng-click="exportFile('Excel',26)">Báo giá cơ bản(Pdf)</button>&nbsp;<button type="button" class="btn btn-primary" ng-click="exportFile('Excel',27)"></span>Báo giá chi tiết(Pdf)</button>
+
+                    </div>
                 </div>
+
             </div>
 
         </div>

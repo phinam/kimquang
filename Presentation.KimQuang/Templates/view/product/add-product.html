@@ -350,10 +350,16 @@
                             </select>
                         </div>
                         <div class="col-sm-5">
-                            <button type="button" class="btn btn-primary start col-xs-12" ng-disabled="!dataSelected.FileType" tabindex=" 55">
+                            <!--<button type="button" class="btn btn-primary start col-xs-12" ng-disabled="!dataSelected.FileType" tabindex=" 55">
                                 <i class="glyphicon glyphicon-upload"></i>
                                 <span>Thêm tài liệu</span>
-                            </button>
+                            </button>-->
+
+                            <span class="btn btn-success fileinput-button col-xs-12" ng-class="{disabled: disabled}" ng-disabled="!dataSelected.FileType" tabindex=" 55">
+                                <i class="glyphicon glyphicon-plus"></i>
+                                <span>Chọn file...</span>
+                                <input type="file" nv-file-select="" uploader="uploader" multiple>
+                            </span>
 
                         </div>
                     </div>
