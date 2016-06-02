@@ -373,18 +373,23 @@
                                         <tr>
                                             <th># Tên file</th>
                                             <th style="width: 100px">Loại</th>
-                                            <th style="width: 50px">Xóa</th>
+                                            <th style="width: 30px">Xem</th>
+                                            <th style="width: 30px">Xóa</th>
                                         </tr>
                                         <tr ng-repeat="f in arrFiles">
                                             <td>
                                                 <div class="checkbox checkbox-primary">
                                                     <input id="checkbox2" class="styled" type="checkbox" checked="">
-                                                    <label for="checkbox2">
+                                                    <label for="checkbox2" style=" white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 150px;">
                                                         {{f.fileName}}
                                                     </label>
                                                 </div>
                                             </td>
                                             <td> {{f.fileType}}</td>
+                                            <td><a class="btn btn-xs btn-danger" title="Xóa" href="../../Upload/{{f.fileName}}" download="{{f.fileName}}"><i class="fa fa-download"></i></a></td>
                                             <td><a class="btn btn-xs btn-danger" title="Xóa" ng-click="deleteFile($index,f)"><i class="fa fa-times"></i></a></td>
                                         </tr>
 
