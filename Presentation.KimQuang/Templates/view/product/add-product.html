@@ -367,7 +367,7 @@
                         <label for="Status" class="col-sm-3 control-label text-left-important">&nbsp;</label>
                         <div class="col-sm-9 ">
 
-                            <div class="box">
+                            <div class="box" ng-show="arrFiles.length>0">
                                 <div class="box-body no-padding">
                                     <table class="table table-condensed table-striped">
                                         <tr>
@@ -375,38 +375,19 @@
                                             <th style="width: 100px">Loại</th>
                                             <th style="width: 50px">Xóa</th>
                                         </tr>
-                                        <tr>
+                                        <tr ng-repeat="f in arrFiles">
                                             <td>
                                                 <div class="checkbox checkbox-primary">
                                                     <input id="checkbox2" class="styled" type="checkbox" checked="">
                                                     <label for="checkbox2">
-                                                        File 1
+                                                        {{f.fileName}}
                                                     </label>
                                                 </div>
                                             </td>
-                                            <td> Hình ảnh</td>
-                                            <td><a class="btn btn-xs btn-danger" title="Xóa" ng-click="deleteNews(parentIndex, news.newses)"><i class="fa fa-times"></i></a></td>
+                                            <td> {{f.fileType}}</td>
+                                            <td><a class="btn btn-xs btn-danger" title="Xóa" ng-click="deleteFile($index,f)"><i class="fa fa-times"></i></a></td>
                                         </tr>
-                                        <tr>
-                                            <td>
-                                                <div class="checkbox checkbox-primary">
-                                                    <input type="checkbox" class="styled styled-primary" id="singleCheckbox2" value="option2" checked="" aria-label="Single checkbox Two">
-                                                    <label>File 2</label>
-                                                </div>
-                                            </td>
-                                            <td> Layout</td>
-                                            <td><a class="btn btn-xs btn-danger" title="Xóa" ng-click="deleteNews(parentIndex, news.newses)"><i class="fa fa-times"></i></a></td>
-                                        </tr>
-                                        <tr>
-                                            <td>
-                                                <div class="checkbox checkbox-primary">
-                                                    <input type="checkbox" class="styled styled-primary" id="singleCheckbox2" value="option2" checked="" aria-label="Single checkbox Two">
-                                                    <label>File 3</label>
-                                                </div>
-                                            </td>
-                                            <td> HD môi giới</td>
-                                            <td><a class="btn btn-xs btn-danger" title="Xóa" ng-click="deleteNews(parentIndex, news.newses)"><i class="fa fa-times"></i></a></td>
-                                        </tr>
+
 
                                     </table>
                                 </div>
