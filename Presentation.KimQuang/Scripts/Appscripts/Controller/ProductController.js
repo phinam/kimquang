@@ -16,8 +16,17 @@
         }
     });
 
+     $scope.arrFiles = [];
+    //a.unshift(34);
+
     uploader.onCompleteItem = function (fileItem, response, status, headers) {
         console.log('onCompleteItem', fileItem, response, status, headers);
+        var fileType = "";
+        for (var i = 0; i < $scope.FileTypeSelectList.length; i++)
+            if ($scope.FileTypeSelectList[i].Value == $scope.dataSelected.FileType)
+                fileType = $scope.FileTypeSelectList[i].Name;
+        var item = { fileName: fileItem.file.name, fileType: fileType };
+        $scope.arrFiles.unshift(item);
     };
 
     uploader.onAfterAddingAll = function (addedFileItems) {
@@ -27,6 +36,8 @@
     };
     uploader.onSuccessItem = function (fileItem, response, status, headers) {
         console.log('onSuccessItem', fileItem, response, status, headers);
+       
+
     };
     uploader.onErrorItem = function (fileItem, response, status, headers) {
         console.log('onErrorItem', fileItem, response, status, headers);
@@ -36,7 +47,16 @@
         $rootScope.showModal = false;
         console.log('onCompleteAll');
     };
+    $scope.deleteFile = function (index, file) {
+        var dlg = dialogs.confirm('Xác nhận xóa file', 'Bạn muốn xóa file ' + file.fileName);
+        dlg.result.then(function (btn) {
+            $scope.arrFiles.splice(index, 1);
+        }, function (btn) {
+            //                        console.log('no');
+        });
 
+       
+    }
 
     $scope.gridInfo = {
         gridID: 'productgrid',
@@ -217,7 +237,7 @@
     coreService.getListEx({ Code: "BUILDINGDIRECTION", Sys_ViewID: 17 }, function (data) {
         $scope.buildingDirectionIDSelectList = data[1];
     });
-
+    $scope.FileTypeSelectList = [];
     coreService.getListEx({ Code: "FILETYPEUPLOAD", Sys_ViewID: 17 }, function (data) {
         //        console.log('FILETYPEUPLOAD', data);
         $scope.FileTypeSelectList = data[1];
