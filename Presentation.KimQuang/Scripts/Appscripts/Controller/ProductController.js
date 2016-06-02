@@ -1,8 +1,36 @@
 ﻿angular.module('indexApp')
 .controller('ProductCtrl', function ($scope, $rootScope, coreService,FileUploader, authoritiesService, alertFactory, dialogs, $filter, $state, $timeout, modalUtils, productService) {
     $rootScope.showModal = false;
-    var titleHtml = '<input type="checkbox" ng-model="vm.selectAll" ng-click="vm.toggleAll(vm.selectAll, vm.selected)">';
+    $scope.exportInfo = { fileType: 'pdf' ,viewId:25};
+    $scope.setExportInfo = function (fileType, viewId) {
+        $scope.exportInfo = { fileType: fileType, viewId: viewId };
 
+        console.log('$scope.exportInfo ', $scope.exportInfo);
+        $('#infoExportModal').modal('show');
+    }
+    $scope.exportFileDialog = function (obj, sysViewId) {
+        var selectedId = [];
+        var selectedItems = $rootScope.selectedItems;
+        for (var id in selectedItems) {
+            if (selectedItems.hasOwnProperty(id)) {
+                if (selectedItems[id]) {
+                    selectedId.push(id);
+                }
+            }
+        }
+        //exportType = "Excel";//"Excel|Pdf
+        //sysViewId = "26";// "26|27"
+        var languageId = "129";//"Excel|Pdf
+        var hiddenIframeId = "#hiddenDownloader";
+        coreApp.CallFunctionFromiFrame(hiddenIframeId, "RunExport", { listId: selectedId.toString(), exportType: $scope.exportInfo.fileType, sysViewId: $scope.exportInfo.viewId, languageId: languageId, custommerName: $scope.exportInfo.custommerName, employeeeName: $scope.exportInfo.employeeeName, employeeePhone: $scope.exportInfo.employeeePhone, employeeeEmail: $scope.exportInfo.employeeeEmail }, function () { }, 100);
+        //   thisObj._win.RunExport(_data);
+
+
+        $('#infoExportModal').modal('hide');
+       
+    }
+    var titleHtml = '<input type="checkbox" ng-model="vm.selectAll" ng-click="vm.toggleAll(vm.selectAll, vm.selected)">';
+    
     var uploader = $scope.uploader = new FileUploader({
         url: 'service.data/uploadFiles.aspx'
     });
@@ -444,6 +472,7 @@
 
     }
    
+  
 
     $scope.exportFile = function (exportType, sysViewId) {
         var selectedId = [];
