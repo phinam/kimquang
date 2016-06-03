@@ -1,14 +1,14 @@
 ﻿angular.module('indexApp')
 .controller('ProductCtrl', function ($scope, $rootScope, coreService, FileUploader, authoritiesService, alertFactory, dialogs, $filter, $state, $timeout, modalUtils, localStorageService) {
     $rootScope.showModal = false;
+
+    /*************************************Upload File*************************************/
+    $scope.arrFiles = [];
     $scope.exportInfo = localStorageService.get('authorizationData');
-    console.log($scope.exportInfo);
     $scope.setExportInfo = function (fileType, viewId) {
-        $scope.exportInfo.fileType=fileType;
+        $scope.exportInfo.fileType = fileType;
         $scope.exportInfo.viewId = viewId;
         $scope.exportInfo.addressTo = "Công Ty ABC";
-        //console.log('$scope.exportInfo ', $scope.exportInfo);
-      
         $('#infoExportModal').modal('show');
     }
     $scope.exportFileDialog = function (obj, sysViewId) {
@@ -21,34 +21,24 @@
                 }
             }
         }
-        //exportType = "Excel";//"Excel|Pdf
-        //sysViewId = "26";// "26|27"
         var languageId = "129";//"Excel|Pdf
         var hiddenIframeId = "#hiddenDownloader";
         coreApp.CallFunctionFromiFrame(hiddenIframeId, "RunExport", { listId: selectedId.toString(), exportType: $scope.exportInfo.fileType, sysViewId: $scope.exportInfo.viewId, languageId: languageId, addressTo: $scope.exportInfo.addressTo, fullName: $scope.exportInfo.FullName, telePhone: $scope.exportInfo.TelePhone, cellPhone: $scope.exportInfo.CellPhone, email: $scope.exportInfo.Email, position: $scope.exportInfo.Position }, function () { }, 100);
-        //   thisObj._win.RunExport(_data);
-
-
         $('#infoExportModal').modal('hide');
-       
+
     }
-    var titleHtml = '<input type="checkbox" ng-model="vm.selectAll" ng-click="vm.toggleAll(vm.selectAll, vm.selected)">';
-    
+
     var uploader = $scope.uploader = new FileUploader({
         url: 'service.data/uploadFiles.aspx'
     });
 
     // FILTERS
-
     uploader.filters.push({
         name: 'customFilter',
         fn: function (item /*{File|FileLikeObject}*/, options) {
             return this.queue.length < 10;
         }
     });
-
-     $scope.arrFiles = [];
-    //a.unshift(34);
 
     uploader.onCompleteItem = function (fileItem, response, status, headers) {
         console.log('onCompleteItem', fileItem, response, status, headers);
@@ -59,7 +49,6 @@
         var item = { fileName: fileItem.file.name, fileType: fileType };
         $scope.arrFiles.unshift(item);
     };
-
     uploader.onAfterAddingAll = function (addedFileItems) {
         // console.info('onAfterAddingAll', addedFileItems);
         $rootScope.showModal = true;
@@ -67,7 +56,7 @@
     };
     uploader.onSuccessItem = function (fileItem, response, status, headers) {
         console.log('onSuccessItem', fileItem, response, status, headers);
-       
+
 
     };
     uploader.onErrorItem = function (fileItem, response, status, headers) {
@@ -86,8 +75,10 @@
             //                        console.log('no');
         });
 
-       
+
     }
+    /********************************************************************END UPLOAD FILE***********************************************************/
+    var titleHtml = '<input type="checkbox" ng-model="vm.selectAll" ng-click="vm.toggleAll(vm.selectAll, vm.selected)">';
 
     $scope.gridInfo = {
         gridID: 'productgrid',
@@ -112,8 +103,8 @@
             { name: 'StreetName', heading: 'ĐƯỜNG', className: 'text-center pd-0 break-word' },
               { name: 'WardName', heading: 'PHƯỜNG', className: 'text-center pd-0 break-word' },
             { name: 'DistrictName', heading: 'QUẬN', className: 'text-center pd-0 break-word' },
-          
-        
+
+
             { name: 'Action1', heading: 'SỬA', width: '50px', className: 'text-center pd-0 break-word', type: controls.LIST_ICON, listAction: [{ classIcon: 'fa-pencil-square-o', action: 'view' }] },
             { name: 'Action2', heading: 'XÓA', width: '50px', className: 'text-center pd-0 break-word', type: controls.LIST_ICON, listAction: [{ classIcon: 'fa-times  text-danger', action: 'delete' }] }
         ],
@@ -264,7 +255,7 @@
     // $scope.launch('error');
 
     //phu viet cho nay
-    $scope.buildingDirectionIDSelectList =[]
+    $scope.buildingDirectionIDSelectList = []
     coreService.getListEx({ Code: "BUILDINGDIRECTION", Sys_ViewID: 17 }, function (data) {
         $scope.buildingDirectionIDSelectList = data[1];
     });
@@ -327,21 +318,20 @@
             });
         }
     })
+   
+    $scope.UpdateProductDocumment = function (productId) {
 
-    //var entry = { Name: 'thanh', WardID: 1, DistrictID: 1, Address: '537/7A Đường Tân Chánh Hiệp. P. Tân Chánh Hiệp. Q.12. TPHCM.' };
-    //entry.Action = 'INSERT';
-    //entry.Sys_ViewID = 19;
-    //coreService.actionEntry2(entry, function (data) {
-    //    console.log('InsertdataProduct', data)
-    //});
+
+    }
+
     $scope.actionEntry = function (act) {
         if (typeof act != 'undefined') {
             var entry = angular.copy($scope.dataSelected);
             entry.UnAssignedName = tiengvietkhongdau(entry.Name); //coreService.toASCi(entry.Name);
             entry.UnAssignedStreet = tiengvietkhongdau(entry.StreetName); //coreService.toASCi(entry.Address);
-            if (typeof entry.AvailableFrom!='undefined')
-            if (entry.AvailableFrom!='')
-                entry.AvailableFrom=  $filter('date')(entry.AvailableFrom, "yyyy-MM-dd");
+            if (typeof entry.AvailableFrom != 'undefined')
+                if (entry.AvailableFrom != '')
+                    entry.AvailableFrom = $filter('date')(entry.AvailableFrom, "yyyy-MM-dd");
 
 
             entry.Action = act;
@@ -365,6 +355,7 @@
                             entry.ID = data.Result;
                             $scope.gridInfo.data.unshift(entry);
                             dialogs.notify(data.Message.Name, data.Message.Description);
+                            $scope.UpdateProductDocumment(entry.ID);
                             break;
                         case 'UPDATE':
                             angular.forEach($scope.gridInfo.data, function (item, key) {
@@ -372,6 +363,9 @@
                                     $scope.gridInfo.data[key] = angular.copy(entry);
                                 }
                             });
+
+                            $scope.UpdateProductDocumment(entry.ID);
+
                             $state.go('productlist', '', { reload: true });
                             break;
                         case 'DELETE':
@@ -430,14 +424,14 @@
     $scope.search = function (searchEntry) {
         $rootScope.showModal = true;
 
-       
+
         searchEntry.UnAssignedName = tiengvietkhongdau(searchEntry.Name);
         searchEntry.UnAssignedStreet = tiengvietkhongdau(searchEntry.StreetName); //coreService.toASCi(entry.Address);
         searchEntry.BuildingDirectionID = '';
         if ($scope.listBuildingDirectionID.length > 0) {
             var listBD = new Array();
-          
-            for (var i = 0; i < $scope.listBuildingDirectionID.length;i++) {
+
+            for (var i = 0; i < $scope.listBuildingDirectionID.length; i++) {
                 listBD.push($scope.listBuildingDirectionID[i].Value);
             }
             searchEntry.BuildingDirectionID = listBD.toString();
@@ -465,38 +459,15 @@
         }
 
 
-       
+
     }
 
     if ($rootScope.searchEntryFilter != null && typeof $rootScope.searchEntryFilter != 'undefined' && $state.current.url == '/product-list') {
         $scope.searchEntry = $rootScope.searchEntryFilter;
-      //  console.log('$scope.searchEntry', $scope.searchEntry);
+        //  console.log('$scope.searchEntry', $scope.searchEntry);
         $scope.search($scope.searchEntry);
 
     }
-   
-  
-
-    $scope.exportFile = function (exportType, sysViewId) {
-        var selectedId = [];
-        var selectedItems = $rootScope.selectedItems;
-        for (var id in selectedItems) {
-            if (selectedItems.hasOwnProperty(id)) {
-                if (selectedItems[id]) {
-                    selectedId.push(id);
-                }
-            }
-        }
-       // debugger;
-        //exportType = "Excel";//"Excel|Pdf
-        //sysViewId = "26";// "26|27"
-        var languageId = "129";//"Excel|Pdf
-        var hiddenIframeId = "#hiddenDownloader";
-        coreApp.CallFunctionFromiFrame(hiddenIframeId, "RunExport", { listId: selectedId.toString(), exportType: exportType, sysViewId: sysViewId, languageId: languageId }, function () { }, 100);
-        //   thisObj._win.RunExport(_data);
-
-        console.log('selectedId', selectedId.toString());
-    };
 
     $scope.changeDistrict = function (districtID) {
         $scope.dataSelected.WardId = null;
@@ -562,207 +533,7 @@
         slug = slug.replace(/\@\-|\-\@|\@/gi, "");
         return slug;
     }
-    $scope.files = [];
-    $scope.upload = function () {
-        alert($scope.files.length + " files selected ... Write your Upload Code");
-
-    };
-
-    $("#uploadImage1").click(function () {
-        var finder = new CKFinder();
-        finder.resourceType = 'Images';
-        finder.startupPath = "Images:/Images/";
-        finder.startupFolderExpanded = true;
-        finder.selectActionFunction = function (fileUrl) {
-            $scope.dataSelected.Image1 = fileUrl;
-            $scope.$apply();
-        };
-        finder.popup();
-    });
-    $("#uploadLayout").click(function () {
-        var finder = new CKFinder();
-        //finder.resourceType = 'Office';
-        //finder.startupPath = "Office:/Layout";
-        finder.resourceType = 'Images';
-        finder.startupPath = "Images:/Product/Thumbnail/";
-        finder.startupFolderExpanded = true;
-        finder.selectActionFunction = function (fileUrl) {
-            $scope.dataSelected.Layout = fileUrl;
-            $scope.$apply();
-        };
-        finder.popup();
-    });
-    $("#uploadbrokeragecontract").click(function () {
-        var finder = new CKFinder();
-        finder.resourceType = 'Office';
-        finder.startupPath = "Images:/Product/Office/";
-        finder.startupFolderExpanded = true;
-        finder.selectActionFunction = function (fileUrl) {
-            $scope.dataSelected.Brokeragecontract = fileUrl;
-            $scope.$apply();
-        };
-        finder.popup();
-    });
-
-    $("#uploadleasescontract").click(function () {
-        var finder = new CKFinder();
-        finder.resourceType = 'Office';
-        finder.startupPath = "Images:/Product/Office/";
-        finder.startupFolderExpanded = true;
-        finder.selectActionFunction = function (fileUrl) {
-            $scope.dataSelected.LeasesContract = fileUrl;
-            $scope.$apply();
-        };
-        finder.popup();
-    });
-    $("#uploadbidcontracts").click(function () {
-        var finder = new CKFinder();
-        finder.resourceType = 'Images';
-        finder.startupPath = "Images:/Product/Image/";
-        finder.startupFolderExpanded = true;
-        finder.selectActionFunction = function (fileUrl) {
-            $scope.dataSelected.BidContracts = fileUrl;
-            $scope.$apply();
-        };
-        finder.popup();
-    });
-    $("#uploadproposal").click(function () {
-        var finder = new CKFinder();
-        finder.resourceType = 'Office';
-        finder.startupPath = "Images:/Product/Image/";
-        finder.startupFolderExpanded = true;
-        finder.selectActionFunction = function (fileUrl) {
-            $scope.dataSelected.Proposal = fileUrl;
-            $scope.$apply();
-        };
-        finder.popup();
-    });
-    $("#uploadortherpapers").click(function () {
-        var finder = new CKFinder();
-        finder.resourceType = 'Office';
-        finder.startupPath = "Images:/Product/Office/";
-        finder.startupFolderExpanded = true;
-        finder.selectActionFunction = function (fileUrl) {
-            $scope.dataSelected.Ortherpapers = fileUrl;
-            $scope.$apply();
-        };
-        finder.popup();
-    });
-    $scope.ChooseImage = function (objUpload) {
-
-        switch (objUpload) {
-            case 'image1':
-                // $("#uploadImage1").click();
-                $scope.openDialog();
-                break;
-            case 'layout':
-              //  $("#uploadLayout").click();
-                $scope.openDialog();
-                break;
-            case 'brokeragecontract':
-                $("#uploadbrokeragecontract").click();
-                break;
-          
-            case 'leasescontract':
-                $("#uploadleasescontract").click();
-                break;
-            case 'bidcontracts':
-                $("#uploadbidcontracts").click();
-                break;
-            case 'proposal':
-                $("#uploadproposal").click();
-                break;
-            case 'ortherpapers':
-                $("#uploadortherpapers").click();
-                break;
-        }
-    }
-
-    $scope.cars = [{ id: 1, name: 'Audi' }, { id: 2, name: 'BMW' }, { id: 1, name: 'Honda' }];
-    $scope.selectedCar = [];
-
- 
-})
-.controller('productDialogCtrl', function ($scope, $rootScope, $modalInstance, productService, $timeout, coreService, dialogs, $filter) {
-    $rootScope.showModal = true;
-    $timeout(function () {
-        console.log("$scope.dataSelected", $scope.dataSelected)
-        $rootScope.showModal = false;
-    }, 2000);
-
-    $scope.title = 'Chỉnh sửa sản phẩm';
-    $scope.refreshList = false;
-
-    $scope.cancel = function () {
-        $modalInstance.dismiss('Canceled');
-    }; // end cancel
-
-    $scope.save = function () {
-        var act = "UPDATE";
-        //console.log("save:data", $scope.dataSelected);
-        //console.log("save:projectService", projectService.dataSelected);
-        if ($scope.dataSelected.ID != undefined && $scope.dataSelected.ID > 0) act = "UPDATE";
-        $scope.actionConfirm(act);
-    }; // end save
-
-    $scope.actionConfirm = function (act) {
-        $scope.actionEntry(act);
-        //var dlg = dialogs.confirm('Confirmation', 'Confirmation required');
-        //dlg.result.then(function (btn) {
-        //    $scope.actionEntry(act);
-        //}, function (btn) {
-        //    //$scope.confirmed = 'You confirmed "No."';
-        //});
-    }
 
 
 
-
-    $scope.actionEntry = function (act) {
-        if (typeof act != 'undefined') {
-            var entry = angular.copy($scope.dataSelected);
-            entry.UnAssignedName = tiengvietkhongdau(entry.Name); //coreService.toASCi(entry.Name);
-            entry.UnAssignedAddress = tiengvietkhongdau(entry.Address); //coreService.toASCi(entry.Address);
-            entry.Action = act;
-            entry.Sys_ViewID = 19; //$scope.gridInfo.sysViewID;
-            entry.Description && (entry.Description = entry.Description.replace(/\n\r?/g, '<br />'));
-            //            console.log('entry', entry);
-
-            for (var property in entry) {
-                if (entry.hasOwnProperty(property)) {
-                    if (entry[property] == '') {
-                        delete entry[property];
-                    }
-                }
-            }
-            if (act == 'DELETE')
-                entry.ID = $scope.deleteId;
-
-            coreService.actionEntry2(entry, function (data) {
-                if (data.Success) {
-                    switch (act) {
-                        case 'INSERT':
-                            //                            entry.ID = data.Result;
-                            //                            $scope.gridInfo.data.unshift(entry);
-                            //                            dialogs.notify(data.Message.Name, data.Message.Description);
-                            break;
-                        case 'UPDATE':
-                            $modalInstance.close($scope.refreshList);
-                            break;
-                        case 'DELETE':
-                           
-                            break;
-                    }
-                    //                    $scope.reset();
-
-                }
-                //thong bao ket qua
-                //dialogs.notify(data.Message.Name, data.Message.Description);
-                $scope.$apply();
-
-            });
-        }
-    }
-
-    
 })
