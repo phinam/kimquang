@@ -18,7 +18,7 @@ namespace Service.Data.Excel
             {
                 string listId = Context.Request.Form["listId"];
                 if (String.IsNullOrEmpty(listId)) { return; }
-                string exportType = "";//"Excel|Pdf
+                string exportType = "", addressTo = "", fullName = "", telephone = "", email = "", cellPhone = "", position = "";//"Excel|Pdf
                 string sysViewId = "13";// "26|27"
                 string languageId = "129";//"Excel|Pdf
                 if (Context.Request.Form["exportType"] != null)
@@ -27,7 +27,41 @@ namespace Service.Data.Excel
                     sysViewId = Context.Request.Form["sysViewId"];
                 if (Context.Request.Form["languageId"] != null)
                     languageId = Context.Request.Form["languageId"];
-               
+                if (Context.Request.Form["exportType"] != null)
+                    exportType = Context.Request.Form["exportType"];
+                if (Context.Request.Form["sysViewID"] != null)
+                    sysViewId = Context.Request.Form["sysViewId"];
+                if (Context.Request.Form["languageId"] != null)
+                    languageId = Context.Request.Form["languageId"];
+
+                if (Context.Request.Form["addressTo"] != null)
+                    addressTo = Context.Request.Form["addressTo"];
+
+                if (Context.Request.Form["fullName"] != null)
+                    fullName = Context.Request.Form["fullName"];
+                if (Context.Request.Form["telephone"] != null)
+                    telephone = Context.Request.Form["telephone"];
+                if (Context.Request.Form["cellPhone"] != null)
+                    cellPhone = Context.Request.Form["cellPhone"];
+                if (Context.Request.Form["position"] != null)
+                    position = Context.Request.Form["position"];
+                if (Context.Request.Form["email"] != null)
+                    email = Context.Request.Form["email"];
+
+
+                CLogManager.WritePL("email", string.Format("email:{0},cellPhone:{1},telephone:{2},addressTo:{3},fullname:{4},position:{5},exportType:{6},sysViewId:{7}", email, cellPhone, telephone, addressTo,fullName, position, exportType, sysViewId));
+                /*
+                 languageId:129
+exportType:pdf
+sysViewId:26
+fullName:Lê Thuỳ Trâm
+addressTo:Công Ty ABC
+telePhone:(+84 8) 6790 847 
+cellPhone:0938.59.92.93
+email:jenny.kimquang@gmail.com
+position:Trưởng Phòng Kinh Doanh
+                 */
+
                 try
                 {
                     if (sysViewId.Equals( "13"))

@@ -7,15 +7,21 @@
     <script src="js/jquery-2.2.2.min.js"></script>
     <script type="text/javascript">
         function RunExport(pData) {
-            console.log(pData);
-            debugger;
            // var pData = JSON.stringify(data);
             //alert(f);
             $('#listId').val(pData.listId);
             $('#languageId').val(pData.languageId);// listId, languageId, exportType, sysViewId
             $('#exportType').val(pData.exportType);
             $('#sysViewId').val(pData.sysViewId);
+
+            $('#addressTo').val(pData.addressTo);
+            $('#fullName').val(pData.fullName);
+            $('#telePhone').val(pData.telePhone);
+            $('#cellPhone').val(pData.cellPhone);
+            $('#email').val(pData.email);
+            $('#position').val(pData.position);
             $('form').submit();
+            
         }
       
     </script>
@@ -27,6 +33,14 @@
          <input type="hidden" id="languageId" name="languageId" />
          <input type="hidden" id="exportType" name="exportType" />
          <input type="hidden" id="sysViewId" name="sysViewId" />
+
+        <input type="hidden" id="fullName" name="fullName" />
+         <input type="hidden" id="addressTo" name="addressTo" />
+        <input type="hidden" id="telePhone" name="telePhone" />
+         <input type="hidden" id="cellPhone" name="cellPhone" />
+         <input type="hidden" id="email" name="email" />
+         <input type="hidden" id="position" name="position" />
+        
     </div>
     </form>
 </body>
