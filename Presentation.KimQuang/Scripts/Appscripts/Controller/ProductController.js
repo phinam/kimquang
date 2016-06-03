@@ -6,8 +6,8 @@
     $scope.setExportInfo = function (fileType, viewId) {
         $scope.exportInfo.fileType=fileType;
         $scope.exportInfo.viewId = viewId;
-
-        console.log('$scope.exportInfo ', $scope.exportInfo);
+        $scope.exportInfo.addressTo = "Công Ty ABC";
+        //console.log('$scope.exportInfo ', $scope.exportInfo);
       
         $('#infoExportModal').modal('show');
     }
@@ -25,7 +25,7 @@
         //sysViewId = "26";// "26|27"
         var languageId = "129";//"Excel|Pdf
         var hiddenIframeId = "#hiddenDownloader";
-        coreApp.CallFunctionFromiFrame(hiddenIframeId, "RunExport", { listId: selectedId.toString(), exportType: $scope.exportInfo.fileType, sysViewId: $scope.exportInfo.viewId, languageId: languageId, custommerName: $scope.exportInfo.custommerName, fullName: $scope.exportInfo.FullName, telePhone: $scope.exportInfo.TelePhone, cellPhone: $scope.exportInfo.CellPhone, email: $scope.exportInfo.Email, position: $scope.exportInfo.position }, function () { }, 100);
+        coreApp.CallFunctionFromiFrame(hiddenIframeId, "RunExport", { listId: selectedId.toString(), exportType: $scope.exportInfo.fileType, sysViewId: $scope.exportInfo.viewId, languageId: languageId, addressTo: $scope.exportInfo.addressTo, fullName: $scope.exportInfo.FullName, telePhone: $scope.exportInfo.TelePhone, cellPhone: $scope.exportInfo.CellPhone, email: $scope.exportInfo.Email, position: $scope.exportInfo.Position }, function () { }, 100);
         //   thisObj._win.RunExport(_data);
 
 
