@@ -1,11 +1,14 @@
 ﻿angular.module('indexApp')
-.controller('ProductCtrl', function ($scope, $rootScope, coreService,FileUploader, authoritiesService, alertFactory, dialogs, $filter, $state, $timeout, modalUtils, productService) {
+.controller('ProductCtrl', function ($scope, $rootScope, coreService, FileUploader, authoritiesService, alertFactory, dialogs, $filter, $state, $timeout, modalUtils, localStorageService) {
     $rootScope.showModal = false;
-    $scope.exportInfo = { fileType: 'pdf' ,viewId:25};
+    $scope.exportInfo = localStorageService.get('authorizationData');
+    console.log($scope.exportInfo);
     $scope.setExportInfo = function (fileType, viewId) {
-        $scope.exportInfo = { fileType: fileType, viewId: viewId };
+        $scope.exportInfo.fileType=fileType;
+        $scope.exportInfo.viewId = viewId;
 
         console.log('$scope.exportInfo ', $scope.exportInfo);
+      
         $('#infoExportModal').modal('show');
     }
     $scope.exportFileDialog = function (obj, sysViewId) {
@@ -22,7 +25,7 @@
         //sysViewId = "26";// "26|27"
         var languageId = "129";//"Excel|Pdf
         var hiddenIframeId = "#hiddenDownloader";
-        coreApp.CallFunctionFromiFrame(hiddenIframeId, "RunExport", { listId: selectedId.toString(), exportType: $scope.exportInfo.fileType, sysViewId: $scope.exportInfo.viewId, languageId: languageId, custommerName: $scope.exportInfo.custommerName, employeeeName: $scope.exportInfo.employeeeName, employeeePhone: $scope.exportInfo.employeeePhone, employeeeEmail: $scope.exportInfo.employeeeEmail }, function () { }, 100);
+        coreApp.CallFunctionFromiFrame(hiddenIframeId, "RunExport", { listId: selectedId.toString(), exportType: $scope.exportInfo.fileType, sysViewId: $scope.exportInfo.viewId, languageId: languageId, custommerName: $scope.exportInfo.custommerName, fullName: $scope.exportInfo.FullName, telePhone: $scope.exportInfo.TelePhone, cellPhone: $scope.exportInfo.CellPhone, email: $scope.exportInfo.Email, position: $scope.exportInfo.position }, function () { }, 100);
         //   thisObj._win.RunExport(_data);
 
 
@@ -484,6 +487,7 @@
                 }
             }
         }
+       // debugger;
         //exportType = "Excel";//"Excel|Pdf
         //sysViewId = "26";// "26|27"
         var languageId = "129";//"Excel|Pdf
