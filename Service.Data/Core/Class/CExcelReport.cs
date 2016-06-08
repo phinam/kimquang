@@ -136,7 +136,13 @@ namespace Service.Data.Core.Class
             {
                 title = ds.Tables[1];
             }
-            return new CExcelTemplateUtils().ExportTemplate(templatePath,title,data);
+            string exportType = CXmlUtils.GetXmlNodeValue(InputValue, "RequestParams/@ExportType");
+            bool isExportPdf = false;
+            if(exportType.Equals("pdf",StringComparison.OrdinalIgnoreCase))
+            {
+                isExportPdf = true;
+            }
+            return new CExcelTemplateUtils().ExportTemplate(templatePath,title,data,1,isExportPdf);
         }
     }
 }

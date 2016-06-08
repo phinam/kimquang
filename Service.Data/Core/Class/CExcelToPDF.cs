@@ -1,5 +1,7 @@
-﻿using System;
+﻿using PMSA.Framework.Log;
+using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Web;
 
@@ -15,6 +17,16 @@ namespace Service.Data.Core.Class
     ///     
     ///   Install Plugin Save PDF and XPS from Microsoft office site
     ///     https://www.microsoft.com/en-us/download/details.aspx?id=7
+    /// Error Fix:
+    ///   Open Error:
+    ///         There are several possible reasons:
+    ///            • The file name or path does not exist
+    ///            • The file is being used by another program.
+    ///            • The workbook you are trying to save has the same name as a currently open workbook.
+    ///   Fix: For Windows 2008 Server x64: Create the following directory:
+    ///             C:\Windows\SysWOW64\config\systemprofile\Desktop
+    ///        For Windows 2008 Server x86: Create the following directory:
+    ///             C:\Windows\System32\config\systemprofile\Desktop
     /// </summary>
     public class CExcelToPDF
     {
@@ -25,8 +37,8 @@ namespace Service.Data.Core.Class
             {
                 return false;
             }
-
-            // Create COM Objects
+            
+                // Create COM Objects
             Microsoft.Office.Interop.Excel.Application excelApplication;
             Microsoft.Office.Interop.Excel.Workbook excelWorkbook;
 
@@ -40,7 +52,7 @@ namespace Service.Data.Core.Class
             excelApplication.DisplayAlerts = false;
 
             // Open the workbook that you wish to export to PDF
-            excelWorkbook = excelApplication.Workbooks.Open(workbookPath);
+            excelWorkbook = excelApplication.Workbooks.Open(workbookPath,null,true);
 
             // If the workbook failed to open, stop, clean up, and bail out
             if (excelWorkbook == null)

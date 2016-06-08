@@ -64,33 +64,40 @@ position:Trưởng Phòng Kinh Doanh
 
                 try
                 {
-                    if (sysViewId.Equals( "13"))
+                    string contentType = "application/Excel";
+                    string filename = ".xlsx";
+                    if(exportType.Equals("pdf",StringComparison.OrdinalIgnoreCase))
                     {
-                        string inputValue = string.Format("<InputValue UserID=\"2\" /><RequestParams ListID=\"{0}\" ListProductId=\"{0}\" LanguageID=\"{1}\" ExportType=\"{2}\" start=\"0\"  length=\"1\"  Sys_ViewID=\"{3}\" />", listId, languageId, exportType, sysViewId);
-                        DataSet data = new CCoreService().GetContextDataSet("", inputValue);
-
-                        ExcelPlusExport(data.Tables[0], Context);
-                        Response.Cookies["iscompleteexport"].Value = "true";
+                        contentType = "application/pdf";
+                        filename = ".pdf";
                     }
-                    else if(sysViewId.Equals("26"))
+                    string input = string.Format("<RequestParams ListID=\"{0}\" ListProductId=\"{0}\" LanguageID=\"{1}\" ExportType=\"{2}\" start=\"0\"  length=\"1\"  Sys_ViewID=\"{3}\" ", listId, languageId, exportType, sysViewId);
+                    input += string.Format(" FullName=\"{0}\" AddressTo=\"{1}\"",HtmlEncode( fullName), HtmlEncode(addressTo));
+                    input += string.Format(" TelePhone=\"{0}\" CellPhone=\"{1}\" Email=\"{2}\" Position=\"{3}\"", HtmlEncode(telephone), HtmlEncode(cellPhone), HtmlEncode(email), HtmlEncode(position));
+                    input += "/>";
+                    if (sysViewId.Equals("26"))
                     {
-                        string inputValue = string.Format("<InputValue UserID=\"2\" /><RequestParams ListID=\"{0}\" ListProductId=\"{0}\" LanguageID=\"{1}\" ExportType=\"{2}\" start=\"0\"  length=\"1\"  Sys_ViewID=\"{3}\" />", listId, languageId, exportType, sysViewId);
+                        string inputValue = input;// string.Format("<InputValue UserID=\"2\" /><RequestParams ListID=\"{0}\" ListProductId=\"{0}\" LanguageID=\"{1}\" ExportType=\"{2}\" start=\"0\"  length=\"1\"  Sys_ViewID=\"{3}\" />", listId, languageId, exportType, sysViewId);
                         string template = AppDomain.CurrentDomain.BaseDirectory + "\\_Template\\Excel\\Template_BaoGiaCoBan.xlsx";
                         string result = new CExcelReport().ExportReport("", inputValue, template);
-                        WriteResponse(result);
+                        filename = "BaogiaCoban" + DateTime.Now.ToString("yyyyMMddHHmmssfff") + filename;
+                        WriteResponse(contentType, filename,result);
                     }
                     else if (sysViewId.Equals("27"))
                     {
-                        string inputValue = string.Format("<InputValue UserID=\"2\" /><RequestParams ListID=\"{0}\" ListProductId=\"{0}\" LanguageID=\"{1}\" ExportType=\"{2}\" start=\"0\"  length=\"1\"  Sys_ViewID=\"{3}\" />", listId, languageId, exportType, sysViewId);
+                        string inputValue = input;// string.Format("<InputValue UserID=\"2\" /><RequestParams ListID=\"{0}\" ListProductId=\"{0}\" LanguageID=\"{1}\" ExportType=\"{2}\" start=\"0\"  length=\"1\"  Sys_ViewID=\"{3}\" />", listId, languageId, exportType, sysViewId);
                         string template = AppDomain.CurrentDomain.BaseDirectory + "\\_Template\\Excel\\Template_BaoGiaChiTiet.xlsx";
                         string result = new CExcelReport().ExportReport("", inputValue, template);
-                        WriteResponse(result);
+                        filename = "BaogiaChitiet" + DateTime.Now.ToString("yyyyMMddHHmmssfff") + filename;
+                        WriteResponse(contentType, filename, result);
                     }
                     //Export(sData);
 
                 }
                 catch (Exception ex)
                 {
+                    CLogManager.WriteSL("ExportTemplate", ex.ToString());
+                    Console.WriteLine(ex.ToString());
                     Response.Cookies["iscompleteexport"].Value = "false";
                     Response.Write(ex.ToString());
                     Response.End();
@@ -159,22 +166,23 @@ position:Trưởng Phòng Kinh Doanh
             }
         }
 
-        private void WriteResponse(string dataInBase64)
+        private void WriteResponse(string contentType,string filename, string dataInBase64)
         {
-            if(dataInBase64.StartsWith("00-"))
+            CLogManager.WriteSL("WriteResponse", dataInBase64.Substring(0,100));
+            if (dataInBase64.StartsWith("00-"))
             {
                 dataInBase64 = dataInBase64.Remove(0, 3);
             }
             if (!string.IsNullOrEmpty(dataInBase64))
             {
                 byte[] buffer = PMSA.Framework.Utils.CBinaryUtils.Base64ToBinary(dataInBase64);
-                string fileName = string.Format("ExportData_{0}.xlsx", DateTime.Now.ToString("yyyyMMddHHmmss"));
+                string fileName = filename;// string.Format("ExportData_{0}.xlsx", DateTime.Now.ToString("yyyyMMddHHmmss"));
                 Response.Clear();
                 Response.ClearHeaders();
                 Response.ClearContent();
                 Response.AddHeader("content-disposition", "attachment; filename=" + fileName);
-                Response.AddHeader("Content-Type", "application/Excel");
-                Response.ContentType = "application/vnd.xls";
+                Response.AddHeader("Content-Type", contentType);
+                Response.ContentType = contentType;// "application/vnd.xls";
                 Response.AddHeader("Content-Length", buffer.Length.ToString());
                 byte[] bufferwriter = new byte[1024];
                 int srcOffset = 0;
@@ -189,6 +197,17 @@ position:Trưởng Phòng Kinh Doanh
                 //Response.End();
                 //File.Delete(filePath);
             }
+        }
+
+        private string HtmlEncode(string str)
+        { 
+
+            str = str.Replace("&", "&amp;");
+            str = str.Replace("\"", "&qout;");
+            str = str.Replace("'", "&#39;");
+            str = str.Replace("<", "&lt;");
+            str = str.Replace(">", "&gt;");
+            return str;
         }
     }
 }

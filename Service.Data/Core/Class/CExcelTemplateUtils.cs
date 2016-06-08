@@ -152,18 +152,23 @@ namespace Service.Data.Core.Class
             DeleteDefineRow(worksheet, def);
             string newFile2 = AppDomain.CurrentDomain.BaseDirectory + "\\_Template\\Excel\\SaveAs" + Guid.NewGuid().ToString() + ".xlsx";
             pck.SaveAs(new FileInfo(newFile2));
+            pck.Stream.Flush();
+            pck.Stream.Close();
             mixExcel.CloseStream();
-
+            
             //delete tempfile
             File.Delete(newFile);
 
             //pck.Stream.Flush();
             //pck.Stream.Close();
-            isExportPdf = true;
+            //isExportPdf = true;
             if (isExportPdf)
             {
                 string pdfFile = AppDomain.CurrentDomain.BaseDirectory + "\\_Template\\Excel\\SaveAs" + Guid.NewGuid().ToString() + ".pdf";
+                FileInfo f = new FileInfo(newFile2);
+                newFile2 = f.FullName;
                 CExcelToPDF.ExportWorkbookToPdf(newFile2, pdfFile);
+                File.Delete(newFile2);
                 newFile2 = pdfFile;
             }
 
@@ -173,7 +178,7 @@ namespace Service.Data.Core.Class
                 byte[] binaryData = new byte[fs.Length];
                 long bytesRead = fs.Read(binaryData, 0, (int)fs.Length);
                 fs.Close();
-                //File.Delete(newFile2);
+                File.Delete(newFile2);
                 string base64Data = Convert.ToBase64String(binaryData);
                 string result = String.Format("00-{0}", base64Data);
 
@@ -362,16 +367,20 @@ namespace Service.Data.Core.Class
                 {
                     if (ws.Cells[row, col].Value == null) continue;
                     string value = ws.Cells[row, col].Value.ToString();
-                    if (value.Contains("{{") && value.Contains("}}"))
-                    {
-                        string colname = value.Substring(value.IndexOf("{{") + 2, value.IndexOf("}}") - value.IndexOf("{{") - 2);
-                        for (int i = 0; i < title.Columns.Count; i++)
+                    while (value.Contains("{{") && value.Contains("}}"))
+                    { 
+                        if (value.Contains("{{") && value.Contains("}}"))
                         {
-                            if (title.Columns[i].ColumnName.Equals(colname, StringComparison.OrdinalIgnoreCase))
+                            string colname = value.Substring(value.IndexOf("{{") + 2, value.IndexOf("}}") - value.IndexOf("{{") - 2);
+                            for (int i = 0; i < title.Columns.Count; i++)
                             {
-                                //gan gia tri
-                                value = value.Replace("{{" + colname + "}}", title.Rows[0][i].ToString());
-                                ws.Cells[row, col].Value = value;
+                                if (title.Columns[i].ColumnName.Equals(colname, StringComparison.OrdinalIgnoreCase))
+                                {
+                                    //gan gia tri   
+                                    value = value.Replace("{{" + colname + "}}", title.Rows[0][i].ToString());
+                                    //ws.Cells[row, col].Value = value;
+                                    ws.SetValue(row, col, value);
+                                }
                             }
                         }
                     }
