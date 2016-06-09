@@ -2,7 +2,7 @@
 
 <!-- Main content -->
 <section class="content">
-    <div class="row " ng-init="init()">
+    <div class="row " ng-controller="ProductCtrl" ng-init="init()">
         <input type=" text" class="form-control hidden" id="ID" name="ID" placeholder="ID" ng-model="dataSelected.ID" ng-change="changeText()" />
         <form class="form-horizontal row" name="addProductForm" novalidate="">
             <div class="col-md-12 col-sm-12">
@@ -160,7 +160,7 @@
                         <div class="col-sm-6 ">
                             <input type=" text" class="form-control" id="ContactMgntName" name="ContactMgntName" tabindex="22" ng-model="dataSelected.ContactMgntName" placeholder="Số điện thoại - Tên" />
                         </div>
-                       
+
                         <div class="col-sm-3 ">
                             <input type=" text" class="form-control" id="ContactMgntEmail" name="ContactMgntEmail" tabindex="24" ng-model="dataSelected.ContactMgntEmail" placeholder="Email" />
                         </div>
