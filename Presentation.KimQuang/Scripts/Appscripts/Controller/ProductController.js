@@ -8,7 +8,8 @@
     $scope.setExportInfo = function (fileType, viewId) {
         $scope.exportInfo.fileType = fileType;
         $scope.exportInfo.viewId = viewId;
-        $scope.exportInfo.addressTo = "Công Ty ABC";
+        $scope.exportInfo.viewId = viewId;
+        $scope.exportInfo.fileName = "FILE-BAO-GIA";
         $('#infoExportModal').modal('show');
     }
     $scope.exportFileDialog = function (obj, sysViewId) {
@@ -23,7 +24,7 @@
         }
         var languageId = "129";//"Excel|Pdf
         var hiddenIframeId = "#hiddenDownloader";
-        coreApp.CallFunctionFromiFrame(hiddenIframeId, "RunExport", { listId: selectedId.toString(), exportType: $scope.exportInfo.fileType, sysViewId: $scope.exportInfo.viewId, languageId: languageId, addressTo: $scope.exportInfo.addressTo, fullName: $scope.exportInfo.FullName, telePhone: $scope.exportInfo.TelePhone, cellPhone: $scope.exportInfo.CellPhone, email: $scope.exportInfo.Email, position: $scope.exportInfo.Position }, function () { }, 100);
+        coreApp.CallFunctionFromiFrame(hiddenIframeId, "RunExport", { listId: selectedId.toString(), exportType: $scope.exportInfo.fileType, sysViewId: $scope.exportInfo.viewId, languageId: languageId, addressTo: $scope.exportInfo.addressTo, fullName: $scope.exportInfo.FullName, telePhone: $scope.exportInfo.TelePhone, cellPhone: $scope.exportInfo.CellPhone, email: $scope.exportInfo.Email, position: $scope.exportInfo.Position, fileName: $scope.exportInfo.fileName }, function () { }, 100);
         $('#infoExportModal').modal('hide');
 
     }
@@ -92,21 +93,21 @@
             { name: 'Name', heading: 'TÊN', className: 'text-center pd-0 break-word' },
              { name: 'AreaDescription', heading: 'DIỆN TÍCH TRỐNG', className: 'text-center pd-0 break-word' },
              { name: 'PriceDescription', heading: 'LƯU Ý GIÁ', className: 'text-center pd-0 break-word' },
-             { name: 'HirePrice', heading: 'GIÁ THUÊ', className: 'text-center pd-0 break-word' },
+             { name: 'HirePrice', heading: 'GIÁ THUÊ', className: 'text-center pd-0 break-word', width: '60px' },
              { name: 'HireManagermentFee', heading: 'PQL', className: 'text-center pd-0 break-word' },
              { name: 'TotalPrice', heading: 'GIÁ TỐNG(M2)', className: 'text-center pd-0 break-word' },
              { name: 'HireTotalAmount', heading: 'GIÁ TỐNG(DT)', className: 'text-center pd-0 break-word' },
              { name: 'HireFinalPrice', heading: 'GIÁ CHỐT', className: 'text-center pd-0 break-word' },
-             { name: 'BasicInfo', heading: 'THÔNG TIN CƠ BẢN', width: '350px', className: 'text-left pd-10 break-word' },
-             { name: 'Contact', heading: 'LIÊN HỆ', width: '152px', className: 'text-left pd-10 break-word' },
+             { name: 'BasicInfo', heading: 'THÔNG TIN CƠ BẢN', width: '450px', className: 'text-left pd-10 break-word' },
+             { name: 'Contact', heading: 'LIÊN HỆ', width: '10px', className: 'text-left pd-10 break-word' },
             { name: 'HomeNumber', heading: 'SỐ NHÀ', className: 'text-center pd-0 break-word' },
             { name: 'StreetName', heading: 'ĐƯỜNG', className: 'text-center pd-0 break-word' },
               { name: 'WardName', heading: 'PHƯỜNG', className: 'text-center pd-0 break-word' },
             { name: 'DistrictName', heading: 'QUẬN', className: 'text-center pd-0 break-word' },
 
 
-            { name: 'Action1', heading: 'SỬA', width: '50px', className: 'text-center pd-0 break-word', type: controls.LIST_ICON, listAction: [{ classIcon: 'fa-pencil-square-o', action: 'view' }] },
-            { name: 'Action2', heading: 'XÓA', width: '50px', className: 'text-center pd-0 break-word', type: controls.LIST_ICON, listAction: [{ classIcon: 'fa-times  text-danger', action: 'delete' }] }
+            { name: 'Action1', heading: 'SỬA', width: '30px', className: 'text-center pd-0 break-word', type: controls.LIST_ICON, listAction: [{ classIcon: 'fa-pencil-square-o', action: 'view' }] },
+            { name: 'Action2', heading: 'XÓA', width: '30px', className: 'text-center pd-0 break-word', type: controls.LIST_ICON, listAction: [{ classIcon: 'fa-times  text-danger', action: 'delete' }] }
         ],
         data: [],
         sysViewID: 20,
@@ -303,8 +304,9 @@
     $scope.$watch('productId', function (newVal, oldVal) {
         if (typeof newVal != 'undefined') {
             $rootScope.showModal = true;
+            console.log(' $scope.productId', $scope.productId);
             coreService.getListEx({ ProductID: $scope.productId, Sys_ViewID: 20 }, function (data) {
-                console.log('ProductID', data);
+                   console.log('ProductID', data);
                 convertStringtoNumber(data[1], 'DistrictID');
                 convertStringtoNumber(data[1], 'WardID');
                 convertStringtoNumber(data[1], 'AreaPerFloor');
@@ -313,14 +315,37 @@
 
                 $scope.dataSelected = data[1][0];
                 $rootScope.showModal = false;
-                $scope.$apply();
+               $scope.$apply();
                 //console.log('ProductID after', data[1]);
+            });
+
+            coreService.getListEx({ ProductID: $scope.productId, Sys_ViewID: 29 }, function (data) {
+               
+                $scope.arrFiles = data[1];
+                console.log(' $scope.arrFiles ', $scope.arrFiles)
+                $scope.$apply();
             });
         }
     })
    
     $scope.UpdateProductDocumment = function (productId) {
 
+        var arrDocument = new Array();
+        var log = null;
+        angular.forEach($scope.arrFiles, function(f, key) {
+            arrDocument.push({Name:f.fileName, FileType:f.fileType})
+        }, log);
+        if (arrDocument.length == 0) return;
+        var entry = {
+            Action: 'INSERT',
+            ProductID:productId,
+            Sys_ViewID:29,
+            Item:arrDocument
+        }
+        coreService.actionEntry2(entry, function (data) {
+            console.log(data);
+            debugger;
+        });
 
     }
 
@@ -468,6 +493,11 @@
         $scope.search($scope.searchEntry);
 
     }
+
+    $scope.otherFeeType = [{ ID: 1, Name: 'Có' },
+    { ID: 2, Name: 'Không' },
+    { ID: 3, Name: 'Thương lượng' },///thương lượng/24/7
+    { ID: 4, Name: '24/7' }]
 
     $scope.changeDistrict = function (districtID) {
         $scope.dataSelected.WardId = null;
