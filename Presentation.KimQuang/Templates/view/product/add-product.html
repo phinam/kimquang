@@ -60,7 +60,14 @@
                             <input type=" text" class="form-control" id="AreaDescription" name="AreaDescription" tabindex="7" ng-model="dataSelected.AreaDescription" placeholder="Mô tả diện tích net diện tích cross" ng-change="changeText()" />
                         </div>
                         <div class="col-sm-4">
-                            <input type="text" class="form-control" ng-model="dataSelected.NetCross" tabindex="8" placeholder="Net/Gross">
+                            <div class="radio radio-primary radio-inline">
+                                <input type="radio" id="inlineRadio1" value="option1" name="radioInline" checked="">
+                                <label for="inlineRadio1"> Gross </label>
+                            </div>
+                            <div class="radio radio-primary radio-inline">
+                                <input type="radio" id="inlineRadio2" value="option2" name="radioInline">
+                                <label for="inlineRadio2"> Net </label>
+                            </div>
                         </div>
                     </div>
                     <div class="form-group">
@@ -228,32 +235,48 @@
 
                     <div class="form-group">
                         <label for="PackingBikePosition" class="col-sm-3 control-label text-left-important">Phí xe máy</label>
-                        <div class="col-sm-3 ">
-                            <input type=" text" class="form-control" id="PackingBikePosition" name="PackingBikePosition" tabindex="35" ng-model="dataSelected.PackingBikePosition" placeholder="Vị trí" title="Vị trí" />
+                        <div class="col-sm-5 ">
+                            <input type=" text" class="form-control" id="PackingBikePosition" name="PackingBikePosition" tabindex="35" ng-model="dataSelected.PackingBikePosition" placeholder="Vị trí/Số lượng " title=" vị trí" />
                         </div>
                         <div class="col-sm-3 ">
-                            <input type=" text" class="form-control" id="PackingBikeFee" name="PackingBikeCount" tabindex="36" ng-model="dataSelected.PackingBikeFee" placeholder="Số lượng" title="Số lượng" />
+                            <input type=" text" class="form-control" id="PackingBikeFee" name="PackingBikeCount" tabindex="36" ng-model="dataSelected.PackingBikeFee" placeholder="Giá tiền " title="Số lượng" />
                         </div>
-                        <div class="col-sm-3 ">
-                            <input type=" text" class="form-control" id="PackingBikeFee" name="PackingBikeFee" tabindex="37" ng-model="dataSelected.PackingBikeFee" placeholder="Giá tiền" title="Giá tiền" />
+                        <div class="col-sm-1 ">
+                            <div class="checkbox checkbox-primary">
+                                <input class="styled styled" id="checkbox10" type="checkbox" checked="">
+                                <label for="checkbox10">
+                                    &nbsp;
+                                </label>
+                            </div>
                         </div>
                     </div>
                     <div class="form-group">
                         <label for="PackingCarPosition" class="col-sm-3 control-label text-left-important">Phí ô tô</label>
-                        <div class="col-sm-3 ">
-                            <input type=" text" class="form-control" id="PackingCarPosition" name="PackingCarPosition" tabindex="38" ng-model="dataSelected.PackingCarPosition" placeholder="Vị trí" title="Vị trí" />
+                        <div class="col-sm-5 ">
+                            <input type=" text" class="form-control" id="PackingCarPosition" name="PackingCarPosition" tabindex="38" ng-model="dataSelected.PackingCarPosition" placeholder="Vị trí/Số lượng" title="Vị trí/Số lượng" />
                         </div>
                         <div class="col-sm-3 ">
-                            <input type=" text" class="form-control" id="PackingCarCount" name="PackingCarCount" tabindex="39" ng-model="dataSelected.PackingCarCount" placeholder="Số lượng" title="Số lượng" />
+                            <input type=" text" class="form-control" id="PackingCarCount" name="PackingCarCount" tabindex="39" ng-model="dataSelected.PackingCarCount" placeholder="Giá tiền" title="Số lượng" />
                         </div>
-                        <div class="col-sm-3 ">
-                            <input type=" text" class="form-control" id="PackingCarFee" name="PackingCarFee" tabindex="40" ng-model="dataSelected.PackingCarFee" placeholder="Giá tiền" title="Giá tiền" />
+                        <div class="col-sm-1 ">
+                            <div class="checkbox checkbox-primary">
+                                <input class="styled styled" id="checkbox11" type="checkbox" checked="">
+                                <label for="checkbox11">
+                                    &nbsp;
+                                </label>
+                            </div>
                         </div>
                     </div>
                     <div class="form-group">
                         <label for="PriceDescription" class="col-sm-3 control-label text-left-important">Phí ngoài giờ</label>
-                        <div class="col-sm-9 ">
-                            <input type=" text" class="form-control" id="OtherFee" name="OtherFee" tabindex="40" ng-model="dataSelected.OtherFee" />
+                        <div class="col-sm-6 ">
+                            <input type=" text" class="form-control" id="OtherFee" name="OtherFee" tabindex="40" ng-model="dataSelected.OtherFee" placeholder="0.05usd/1hr, tính từ 6h tối" />
+                        </div>
+                        <div class="col-sm-3 ">
+                            <select class="form-control" ng-model="dataSelected.DistrictID" tabindex="17"
+                                    ng-options="item.ID as item.Name for item in otherFeeType"
+                                <option value="">-- Chọn loại</option>
+                            </select>
                         </div>
                     </div>
                     <div class="form-group">
