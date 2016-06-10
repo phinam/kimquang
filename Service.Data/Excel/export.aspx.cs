@@ -47,21 +47,13 @@ namespace Service.Data.Excel
                     position = Context.Request.Form["position"];
                 if (Context.Request.Form["email"] != null)
                     email = Context.Request.Form["email"];
+
+                ///SUA CHU FILE NAM HOA NHE NAM
                 if (Context.Request.Form["fileName"] != null)
                     fileName = Context.Request.Form["fileName"];
 
                // CLogManager.WritePL("email", string.Format("email:{0},cellPhone:{1},telephone:{2},addressTo:{3},fullname:{4},position:{5},exportType:{6},sysViewId:{7}", email, cellPhone, telephone, addressTo,fullName, position, exportType, sysViewId));
-                /*
-                 languageId:129
-exportType:pdf
-sysViewId:26
-fullName:Lê Thuỳ Trâm
-addressTo:Công Ty ABC
-telePhone:(+84 8) 6790 847 
-cellPhone:0938.59.92.93
-email:jenny.kimquang@gmail.com
-position:Trưởng Phòng Kinh Doanh
-                 */
+               
 
                 try
                 {
