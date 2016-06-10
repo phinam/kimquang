@@ -61,12 +61,12 @@
                         </div>
                         <div class="col-sm-4">
                             <div class="radio radio-primary radio-inline">
-                                <input type="radio" id="inlineRadio1" value="option1" name="radioInline" checked="">
-                                <label for="inlineRadio1"> Gross </label>
+                                <input type="radio" id="inlineRadiGross"  name="radioInline" ng-checked="dataSelected.AreaNetCross==0" ng-model="dataSelected.AreaNetCross" value="0">
+                                <label for="inlineRadiGross"> Gross </label>
                             </div>
                             <div class="radio radio-primary radio-inline">
-                                <input type="radio" id="inlineRadio2" value="option2" name="radioInline">
-                                <label for="inlineRadio2"> Net </label>
+                                <input type="radio" id="inlineRadioNet"  name="radioInline" ng-checked="dataSelected.AreaNetCross==1" ng-model="dataSelected.AreaNetCross" value="1">
+                                <label for="inlineRadioNet"> Net </label>
                             </div>
                         </div>
                     </div>
@@ -243,7 +243,7 @@
                         </div>
                         <div class="col-sm-1 ">
                             <div class="checkbox checkbox-primary">
-                                <input class="styled styled" id="checkbox10" type="checkbox" checked="">
+                                <input class="styled styled" id="checkbox10" type="checkbox" ng-checked="dataSelected.HavePackingBike=='1'" ng-model="dataSelected.HavePackingBike" ng-true-value="'1'">
                                 <label for="checkbox10">
                                     &nbsp;
                                 </label>
@@ -260,7 +260,7 @@
                         </div>
                         <div class="col-sm-1 ">
                             <div class="checkbox checkbox-primary">
-                                <input class="styled styled" id="checkbox11" type="checkbox" checked="">
+                                <input class="styled styled" id="checkbox11" type="checkbox" ng-checked="dataSelected.HavePackingCar=='1'" ng-model="dataSelected.HavePackingCar" ng-true-value="'1'">
                                 <label for="checkbox11">
                                     &nbsp;
                                 </label>
@@ -378,7 +378,7 @@
                                 <span>Thêm tài liệu</span>
                             </button>-->
 
-                            <span class="btn btn-success fileinput-button col-xs-12" ng-class="{disabled: disabled}" ng-disabled="!dataSelected.FileType" tabindex=" 55">
+                            <span class="btn btn-primary fileinput-button col-xs-12" ng-class="{disabled: disabled}" ng-disabled="!dataSelected.FileType" tabindex=" 55">
                                 <i class="glyphicon glyphicon-plus"></i>
                                 <span>Chọn file...</span>
                                 <input type="file" nv-file-select="" uploader="uploader" multiple>
