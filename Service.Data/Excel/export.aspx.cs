@@ -18,7 +18,7 @@ namespace Service.Data.Excel
             {
                 string listId = Context.Request.Form["listId"];
                 if (String.IsNullOrEmpty(listId)) { return; }
-                string exportType = "", addressTo = "", fullName = "", telephone = "", email = "", cellPhone = "", position = "";//"Excel|Pdf
+                string exportType = "", addressTo = "", fullName = "", telephone = "", email = "", cellPhone = "", position = "", fileName = "";//"Excel|Pdf
                 string sysViewId = "13";// "26|27"
                 string languageId = "129";//"Excel|Pdf
                 if (Context.Request.Form["exportType"] != null)
@@ -47,9 +47,10 @@ namespace Service.Data.Excel
                     position = Context.Request.Form["position"];
                 if (Context.Request.Form["email"] != null)
                     email = Context.Request.Form["email"];
+                if (Context.Request.Form["fileName"] != null)
+                    fileName = Context.Request.Form["fileName"];
 
-
-                CLogManager.WritePL("email", string.Format("email:{0},cellPhone:{1},telephone:{2},addressTo:{3},fullname:{4},position:{5},exportType:{6},sysViewId:{7}", email, cellPhone, telephone, addressTo,fullName, position, exportType, sysViewId));
+               // CLogManager.WritePL("email", string.Format("email:{0},cellPhone:{1},telephone:{2},addressTo:{3},fullname:{4},position:{5},exportType:{6},sysViewId:{7}", email, cellPhone, telephone, addressTo,fullName, position, exportType, sysViewId));
                 /*
                  languageId:129
 exportType:pdf
@@ -73,7 +74,7 @@ position:Trưởng Phòng Kinh Doanh
                     }
                     string input = string.Format("<RequestParams ListID=\"{0}\" ListProductId=\"{0}\" LanguageID=\"{1}\" ExportType=\"{2}\" start=\"0\"  length=\"1\"  Sys_ViewID=\"{3}\" ", listId, languageId, exportType, sysViewId);
                     input += string.Format(" FullName=\"{0}\" AddressTo=\"{1}\"",HtmlEncode( fullName), HtmlEncode(addressTo));
-                    input += string.Format(" TelePhone=\"{0}\" CellPhone=\"{1}\" Email=\"{2}\" Position=\"{3}\"", HtmlEncode(telephone), HtmlEncode(cellPhone), HtmlEncode(email), HtmlEncode(position));
+                    input += string.Format(" TelePhone=\"{0}\" CellPhone=\"{1}\" Email=\"{2}\" Position=\"{3}\"  FileName=\"{4}\"", HtmlEncode(telephone), HtmlEncode(cellPhone), HtmlEncode(email), HtmlEncode(position), HtmlEncode(filename));
                     input += "/>";
                     if (sysViewId.Equals("26"))
                     {

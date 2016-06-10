@@ -20,6 +20,8 @@
             $('#cellPhone').val(pData.cellPhone);
             $('#email').val(pData.email);
             $('#position').val(pData.position);
+            $('#fileName').val(pData.fileName);
+            
             $('form').submit();
             
         }
@@ -40,7 +42,7 @@
          <input type="hidden" id="cellPhone" name="cellPhone" />
          <input type="hidden" id="email" name="email" />
          <input type="hidden" id="position" name="position" />
-        
+         <input type="hidden" id="fileName" name="fileName" />
     </div>
     </form>
 </body>
