@@ -394,24 +394,27 @@
                                 <div class="box-body no-padding">
                                     <table class="table table-condensed table-striped">
                                         <tr>
-                                            <th># Tên file</th>
+                                            <th style="width: 10px">#</th>
+                                            <th>Tên file</th>
                                             <th style="width: 100px">Loại</th>
                                             <th style="width: 30px">Xem</th>
                                             <th style="width: 30px">Xóa</th>
                                         </tr>
                                         <tr ng-repeat="f in arrFiles">
                                             <td>
-                                                <div class="checkbox checkbox-primary">
-                                                    <input id="checkbox2" class="styled" type="checkbox" checked="">
-                                                    <label for="checkbox2" style=" white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  max-width: 150px;">
-                                                        {{f.fileName}}
+                                                <div class="checkbox checkbox-primary" style="padding-top:2px!important; min-height:0px!important">
+                                                    <input id="cboDocumment{{$index}}" class="styled" type="checkbox" ng-true-value="'1'" ng-false-value="'0'" ng-model="f.default" ng-checked="f.default=='1'">
+                                                    <label for="cboDocumment{{$index}}">
+                                                        &nbsp;
                                                     </label>
                                                 </div>
                                             </td>
-                                            <td> {{f.fileType}}</td>
+                                            <td style=" white-space: nowrap;  overflow: hidden;  text-overflow: ellipsis;  max-width: 150px;">
+                                                {{f.default}}      {{f.fileName}}
+                                            </td>
+                                            <td>
+                                                {{f.fileType}}
+                                            </td>
                                             <td><a class="btn btn-xs btn-danger" title="Xóa" href="../../Upload/{{f.fileName}}" download="{{f.fileName}}"><i class="fa fa-download"></i></a></td>
                                             <td><a class="btn btn-xs btn-danger" title="Xóa" ng-click="deleteFile($index,f)"><i class="fa fa-times"></i></a></td>
                                         </tr>
@@ -453,36 +456,8 @@
                     </div>
 
                 </div>
-                <!--<div class="col-sm-12 col-md-8 col-md-offset-2">
-                    <right-action theme-button="themeButton" full-action="false"></right-action>
-                </div>-->
 
 
-                <div ng-hide="true">
-
-                    <input type="text" ng-hide="true" ng-model="dataSelected.Image1" />
-                    <button id="uploadImage1" ng-hide="true"></button>
-                    <input type="text" ng-hide="true" ng-model="dataSelected.Layout" />
-                    <button id="uploadLayout" ng-hide="true"></button>
-
-                    <input type="text" ng-hide="true" ng-model="dataSelected.Brokeragecontract" />
-                    <button id="uploadbrokeragecontract" ng-hide="true"></button>
-
-
-
-                    <input type="text" ng-hide="true" ng-model="dataSelected.LeasesContract" />
-                    <button id="uploadleasescontract" ng-hide="true"></button>
-
-                    <input type="text" ng-hide="true" ng-model="dataSelected.BidContracts" />
-                    <button id="uploadbidcontracts" ng-hide="true"></button>
-
-                    <input type="text" ng-hide="true" ng-model="dataSelected.Proposal" />
-                    <button id="uploadproposal" ng-hide="true"></button>
-
-
-                    <input type="text" ng-hide="true" ng-model="dataSelected.Ortherpapers" />
-                    <button id="uploadortherpapers" ng-hide="true"></button>
-                </div>
         </form>
     </div>
 </section>
