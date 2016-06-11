@@ -42,7 +42,6 @@
     });
 
     uploader.onCompleteItem = function (fileItem, response, status, headers) {
-        console.log('onCompleteItem', fileItem, response, status, headers);
         var fileType = "";
         for (var i = 0; i < $scope.FileTypeSelectList.length; i++)
             if ($scope.FileTypeSelectList[i].Value == $scope.dataSelected.FileType)
@@ -304,9 +303,8 @@
     $scope.$watch('productId', function (newVal, oldVal) {
         if (typeof newVal != 'undefined') {
             $rootScope.showModal = true;
-            console.log(' $scope.productId', $scope.productId);
             coreService.getListEx({ ProductID: $scope.productId, Sys_ViewID: 20 }, function (data) {
-                   console.log('ProductID', data);
+                //       console.log('ProductID', data);
                 convertStringtoNumber(data[1], 'DistrictID');
                 convertStringtoNumber(data[1], 'WardID');
                 convertStringtoNumber(data[1], 'AreaPerFloor');
@@ -315,36 +313,57 @@
 
                 $scope.dataSelected = data[1][0];
                 $rootScope.showModal = false;
-               $scope.$apply();
+                $scope.$apply();
                 //console.log('ProductID after', data[1]);
             });
 
             coreService.getListEx({ ProductID: $scope.productId, Sys_ViewID: 29 }, function (data) {
-               
                 $scope.arrFiles = data[1];
                 console.log(' $scope.arrFiles ', $scope.arrFiles)
                 $scope.$apply();
             });
+
         }
     })
-   
+
+    $scope.calculateHirePrice = function () {
+        if ($scope.dataSelected.HireManagermentFee == null || $scope.dataSelected.HirePrice == null)
+            return;
+        if(isNaN($scope.dataSelected.HireManagermentFee)==true||isNaN($scope.dataSelected.HirePrice)==true)
+            return;
+        var totalPrice = ($scope.dataSelected.HireManagermentFee * 1 + $scope.dataSelected.HirePrice * 1) * 1.1;
+        $scope.dataSelected.TotalPrice = totalPrice.toFixed(1);
+
+        if ($scope.dataSelected.AvailableArea == null)
+            return;
+        var arrTotalAmount = $scope.dataSelected.AvailableArea.split(' ');
+        var totalAmount="";
+        for (var i = 0; i < arrTotalAmount.length; i++) {
+            if(isNaN(arrTotalAmount[i])==false){
+                var temp = (totalPrice * (arrTotalAmount[i] * 1)).toFixed(1);
+                totalAmount += temp + " ";
+            }
+
+        }
+        $scope.dataSelected.HireTotalAmount = totalAmount.trim();
+    }
+
     $scope.UpdateProductDocumment = function (productId) {
 
         var arrDocument = new Array();
         var log = null;
-        angular.forEach($scope.arrFiles, function(f, key) {
-            arrDocument.push({Name:f.fileName, FileType:f.fileType})
+        angular.forEach($scope.arrFiles, function (f, key) {
+            arrDocument.push({ Name: f.fileName, FileType: f.fileType, Default: f.default })
         }, log);
         if (arrDocument.length == 0) return;
         var entry = {
             Action: 'INSERT',
-            ProductID:productId,
-            Sys_ViewID:29,
-            Item:arrDocument
+            ProductID: productId,
+            Sys_ViewID: 29,
+            Item: arrDocument
         }
         coreService.actionEntry2(entry, function (data) {
-            console.log(data);
-            debugger;
+            //console.log(data);
         });
 
     }
