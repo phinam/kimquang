@@ -5,6 +5,10 @@ using System.Linq;
 using System.Web;
 using OfficeOpenXml;
 using System.Data;
+using System.Drawing;
+using System.Configuration;
+using PMSA.Framework.Log;
+
 namespace Service.Data.Core.Class
 {
     public class CExcelTemplateUtils
@@ -227,7 +231,15 @@ namespace Service.Data.Core.Class
 
             for (int i = 0; i < def.definedColumnField.Count; i++)
             {
-                ws.Cells[def.definedColumnField[i].address + rowIndex.address].Value = row[def.definedColumnField[i].value];
+                if (def.definedDataRowIndex[i].value.StartsWith("Image:", StringComparison.OrdinalIgnoreCase))
+                {
+                    string fieldName = def.definedDataRowIndex[i].value.Split(':')[1];
+                    ApplyImageCell(ws, def.definedColumnField[i].address + rowIndex.address, def.definedDataRowIndex[i].value, row[fieldName].ToString());
+                }
+                else if (row.Table.Columns.Contains(def.definedDataRowIndex[i].value))
+                {
+                    ws.Cells[def.definedColumnField[i].address + rowIndex.address].Value = row[def.definedColumnField[i].value];
+                }
             }
 
         }
@@ -236,10 +248,16 @@ namespace Service.Data.Core.Class
           
             for (int i = 0; i < def.definedDataRowIndex.Count; i++)
             {
-                if (row.Table.Columns.Contains(def.definedDataRowIndex[i].value))
+                if(def.definedDataRowIndex[i].value.StartsWith("Image:",StringComparison.OrdinalIgnoreCase))
+                {
+                    string fieldName = def.definedDataRowIndex[i].value.Split(':')[1];
+                    ApplyImageCell(ws, col.address + def.definedDataRowIndex[i].address, def.definedDataRowIndex[i].value, row[fieldName].ToString());
+                }
+                else if (row.Table.Columns.Contains(def.definedDataRowIndex[i].value))
                 {
                     ws.Cells[col.address + def.definedDataRowIndex[i].address].Value = row[def.definedDataRowIndex[i].value];
                 }
+
             }
 
         }
@@ -317,7 +335,7 @@ namespace Service.Data.Core.Class
             def.definedColumnField = new List<CExcelCellValue>();
             //duyet qua cac o tren dong [Row] de tim column
             //for tu A-Z
-            for (int i = 66; i<=90; i ++)
+            for (int i = 65; i<=90; i ++)
             {
                 ExcelRange cell = worksheet.Cells[""+(char)i + def.definedRowIndex];
                 if(cell.Value != null && cell.Value.ToString().Length>0)
@@ -328,8 +346,10 @@ namespace Service.Data.Core.Class
             }
             def.definedDataRowIndex = new List<CExcelCellValue>();
             //Tim i
-            for (int i = def.definedRowIndex+1; i < 100; i++)
+            for (int i = 2; i < 100; i++)
             {
+                if (i == def.definedRowIndex) continue;
+
                 ExcelRange aiCell = worksheet.Cells[i,def.definedColumnIndex];
                 if (aiCell.Value != null && aiCell.Value.ToString().Equals("i", StringComparison.OrdinalIgnoreCase))
                 {
@@ -367,8 +387,10 @@ namespace Service.Data.Core.Class
                 {
                     if (ws.Cells[row, col].Value == null) continue;
                     string value = ws.Cells[row, col].Value.ToString();
-                    while (value.Contains("{{") && value.Contains("}}"))
-                    { 
+                    int replaceNum = 0;
+                    while (replaceNum<10 && value.Contains("{{") && value.Contains("}}"))
+                    {
+                        replaceNum++;
                         if (value.Contains("{{") && value.Contains("}}"))
                         {
                             string colname = value.Substring(value.IndexOf("{{") + 2, value.IndexOf("}}") - value.IndexOf("{{") - 2);
@@ -387,6 +409,58 @@ namespace Service.Data.Core.Class
                     
                 }
             }
+        }
+
+        private void ApplyImageCell(ExcelWorksheet ws,string cellAddress, string format,string filename)
+        {
+            CLogManager.WriteSL("ApplyImageCell", "Cell:" + cellAddress + " format:" + format + " file:" + filename);
+            try
+            {
+                if (!File.Exists(filename))
+                {
+                    filename = Path.Combine(ConfigurationManager.AppSettings["UploadDirectory"], "NoImageAvailable.png");
+                }
+                if (File.Exists(filename))
+                {
+
+                    Image image = Image.FromFile(filename);
+                    var picture = ws.Drawings.AddPicture("FrontImage_"+ cellAddress, image);
+                    picture.From.Column = GetColIndex(cellAddress)-1;// colIndex;
+                    picture.From.Row = GetRowIndex(cellAddress)-1;// rowIndex;
+                    picture.SetSize(220, 220);
+                    // 2x2 px space for better alignment
+                    picture.From.ColumnOff = Pixel2MTU(5);
+                    picture.From.RowOff = Pixel2MTU(5);
+                }
+                else
+                {
+                    CLogManager.WriteSL("ApplyImageCell", "File not found:" + filename);
+                }
+            }
+            catch(Exception ex)
+            {
+                CLogManager.WriteSL("ApplyImageCell-Ex", ex.ToString());
+            }
+            
+        }
+        public int Pixel2MTU(int pixels)
+        {
+            int mtus = pixels * 9525;
+            return mtus;
+        }
+        
+        private int GetRowIndex(string address)
+        {
+            string rowName = address.Substring(1);
+           
+            return int.Parse(rowName);
+        }
+        private int GetColIndex(string address)
+        {
+            char colName = address[0];
+            int colIndex = colName - 64;
+            return colIndex;
+
         }
     }
     public class CExcelTemplateDefinition

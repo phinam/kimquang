@@ -52,37 +52,50 @@ namespace Service.Data.Excel
                 if (Context.Request.Form["fileName"] != null)
                     fileName = Context.Request.Form["fileName"];
 
+                if (string.IsNullOrEmpty(fileName)) fileName = "NONAME";
+
                // CLogManager.WritePL("email", string.Format("email:{0},cellPhone:{1},telephone:{2},addressTo:{3},fullname:{4},position:{5},exportType:{6},sysViewId:{7}", email, cellPhone, telephone, addressTo,fullName, position, exportType, sysViewId));
                
 
                 try
                 {
                     string contentType = "application/Excel";
-                    string filename = ".xlsx";
+                    //string filename = ".xlsx";
                     if(exportType.Equals("pdf",StringComparison.OrdinalIgnoreCase))
                     {
                         contentType = "application/pdf";
-                        filename = ".pdf";
+                        if(!fileName.EndsWith(".pdf",StringComparison.OrdinalIgnoreCase))
+                        {
+                            fileName += ".pdf";
+                        }
+                        
+                    }
+                    else
+                    {
+                        if (!fileName.EndsWith(".xlsx", StringComparison.OrdinalIgnoreCase))
+                        {
+                            fileName += ".xlsx";
+                        }
                     }
                     string input = string.Format("<RequestParams ListID=\"{0}\" ListProductId=\"{0}\" LanguageID=\"{1}\" ExportType=\"{2}\" start=\"0\"  length=\"1\"  Sys_ViewID=\"{3}\" ", listId, languageId, exportType, sysViewId);
                     input += string.Format(" FullName=\"{0}\" AddressTo=\"{1}\"",HtmlEncode( fullName), HtmlEncode(addressTo));
-                    input += string.Format(" TelePhone=\"{0}\" CellPhone=\"{1}\" Email=\"{2}\" Position=\"{3}\"  FileName=\"{4}\"", HtmlEncode(telephone), HtmlEncode(cellPhone), HtmlEncode(email), HtmlEncode(position), HtmlEncode(filename));
+                    input += string.Format(" TelePhone=\"{0}\" CellPhone=\"{1}\" Email=\"{2}\" Position=\"{3}\"  FileName=\"{4}\"", HtmlEncode(telephone), HtmlEncode(cellPhone), HtmlEncode(email), HtmlEncode(position), HtmlEncode(fileName));
                     input += "/>";
                     if (sysViewId.Equals("26"))
                     {
                         string inputValue = input;// string.Format("<InputValue UserID=\"2\" /><RequestParams ListID=\"{0}\" ListProductId=\"{0}\" LanguageID=\"{1}\" ExportType=\"{2}\" start=\"0\"  length=\"1\"  Sys_ViewID=\"{3}\" />", listId, languageId, exportType, sysViewId);
                         string template = AppDomain.CurrentDomain.BaseDirectory + "\\_Template\\Excel\\Template_BaoGiaCoBan.xlsx";
                         string result = new CExcelReport().ExportReport("", inputValue, template);
-                        filename = "BaogiaCoban" + DateTime.Now.ToString("yyyyMMddHHmmssfff") + filename;
-                        WriteResponse(contentType, filename,result);
+                        //filename = "BaogiaCoban" + DateTime.Now.ToString("yyyyMMddHHmmssfff") + filename;
+                        WriteResponse(contentType, fileName, result);
                     }
                     else if (sysViewId.Equals("27"))
                     {
                         string inputValue = input;// string.Format("<InputValue UserID=\"2\" /><RequestParams ListID=\"{0}\" ListProductId=\"{0}\" LanguageID=\"{1}\" ExportType=\"{2}\" start=\"0\"  length=\"1\"  Sys_ViewID=\"{3}\" />", listId, languageId, exportType, sysViewId);
                         string template = AppDomain.CurrentDomain.BaseDirectory + "\\_Template\\Excel\\Template_BaoGiaChiTiet.xlsx";
                         string result = new CExcelReport().ExportReport("", inputValue, template);
-                        filename = "BaogiaChitiet" + DateTime.Now.ToString("yyyyMMddHHmmssfff") + filename;
-                        WriteResponse(contentType, filename, result);
+                        //filename = "BaogiaChitiet" + DateTime.Now.ToString("yyyyMMddHHmmssfff") + filename;
+                        WriteResponse(contentType, fileName, result);
                     }
                     //Export(sData);
 
