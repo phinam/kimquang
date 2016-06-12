@@ -416,3 +416,10 @@ margin-top:8px;
     -webkit-box-shadow: 0 3px 9px rgba(0,0,0,.5);
     box-shadow: 0 3px 9px rgba(0,0,0,.5);
 }
+
+.ui-menu .ui-menu-item{
+    background-color:#ccc;
+    margin-left:-15px;
+    list-style:none;
+
+}
