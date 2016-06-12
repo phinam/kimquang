@@ -73,7 +73,7 @@
                     <div class="form-group">
                         <label for="PriceDescription" class="col-sm-3 control-label text-left-important">Tầng</label>
                         <div class="col-sm-5 ">
-                            <input type=" text" class="form-control" id="FloorArea" name="AvailableFloor" tabindex="9" ng-model="dataSelected.AvailableFloor" placeholder="Tầng trệt tầng 11"  />
+                            <input type=" text" class="form-control" id="FloorArea" name="AvailableFloor" tabindex="9" ng-model="dataSelected.AvailableFloor" placeholder="B1,B2,B3,G, M hoặc 1,2" floor-input />
                         </div>
                         <div class="col-sm-4">
                             <div class="input-group ">
@@ -99,7 +99,7 @@
                     <div class="form-group">
                         <label for="HirePrice" class="col-sm-3 control-label text-left-important">Giá thuê</label>
                         <div class="col-sm-3 ">
-                            <input type=" text" class="form-control" id="HirePrice" name="HirePrice" tabindex="13" ng-model="dataSelected.HirePrice" ng-change="calculateHirePrice()" />
+                            <input type=" text" class="form-control" id="HirePrice" name="HirePrice" tabindex="13" ng-model="dataSelected.HirePrice" />
                         </div>
                         <div class="col-sm-3 ">
                             <input type=" text" class="form-control" id="HireManagermentFee" name="HireManagermentFee" tabindex="14" ng-model="dataSelected.HireManagermentFee" placeholder="Phí quản lý" ng-change="calculateHirePrice()" />

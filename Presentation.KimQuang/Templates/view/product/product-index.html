@@ -24,7 +24,7 @@
                             <div class="form-group">
                                 <label for="Name" class="col-sm-4 control-label text-left-important">Tên tòa nhà</label>
                                 <div class="col-sm-8">
-                                    <input type="text" class="form-control" id="Name" name="Name" ng-model="searchEntry.Name" placeholder="">
+                                    <input type="text" class="form-control" id="Name" name="Name" ng-model="searchEntry.Name" placeholder="" tabindex="1">
                                 </div>
                             </div>
                             <div class="form-group">
@@ -32,7 +32,7 @@
                                 <div class="col-sm-8">
                                     <select class="form-control" ng-model="searchEntry.DistrictID"
                                             ng-options="item.ID as item.Name for item in districtSelectList"
-                                            ng-change="changeDistrict(searchEntry.DistrictID)">
+                                            ng-change="changeDistrict(searchEntry.DistrictID)" tabindex="2">
                                         <option value="">-- Chọn Quận/Huyện</option>
                                     </select>
                                 </div>
@@ -42,7 +42,7 @@
                                 <div class="col-sm-8">
                                     <select class="form-control" ng-model="searchEntry.WardID"
                                             ng-options="item.ID as item.Name for item in wardSelectList | filterDistrictID:searchEntry.DistrictID"
-                                            ng-disabled="searchEntry.DistrictID == null || searchEntry.DistrictID == ''">
+                                            ng-disabled="searchEntry.DistrictID == null || searchEntry.DistrictID == ''" tabindex="3">
                                         <option value="">
                                             -- Tất cả
                                         </option>
@@ -59,26 +59,26 @@
                             <div class="form-group">
                                 <label for="AvailableAreaFrom" class="col-sm-4 control-label text-left-important">Diện tích trống</label>
                                 <div class="col-sm-4">
-                                    <input type="text" class="form-control" id="AvailableAreaFrom" name="AvailableAreaFrom" ng-model="searchEntry.AvailableAreaFrom" placeholder="Diện tích trống từ">
+                                    <input type="text" class="form-control" id="AvailableAreaFrom" name="AvailableAreaFrom" ng-model="searchEntry.AvailableAreaFrom" placeholder="Diện tích trống từ" tabindex="5">
                                 </div>
                                 <div class="col-sm-4">
-                                    <input type="text" class="form-control" id="AvailableAreaTo" name="AvailableAreaTo" ng-model="searchEntry.AvailableAreaTo" placeholder="Diện tích trống đến">
+                                    <input type="text" class="form-control" id="AvailableAreaTo" name="AvailableAreaTo" ng-model="searchEntry.AvailableAreaTo" placeholder="Diện tích trống đến" tabindex="6">
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label for="PriceFrom" class="col-sm-4 control-label text-left-important">Giá thuê</label>
                                 <div class="col-sm-4">
-                                    <input type="text" class="form-control" id="PriceFrom" name="PriceFrom" ng-model="searchEntry.PriceFrom" placeholder="Giá thuê từ">
+                                    <input type="text" class="form-control" id="PriceFrom" name="PriceFrom" ng-model="searchEntry.PriceFrom" placeholder="Giá thuê từ" tabindex="7">
                                 </div>
                                 <div class="col-sm-4">
-                                    <input type="text" class="form-control" id="PriceTo" name="PriceTo" ng-model="searchEntry.PriceTo" placeholder="Giá thuê đến">
+                                    <input type="text" class="form-control" id="PriceTo" name="PriceTo" ng-model="searchEntry.PriceTo" placeholder="Giá thuê đến" tabindex="8">
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label for="PriceFrom" class="col-sm-4 control-label text-left-important">Thời gian trống</label>
                                 <div class="col-sm-4">
                                     <div class="input-group input-group-sm">
-                                        <input type="text" class="form-control text-center col-sm-10" datepicker-popup="{{'dd-MM-yyyy'}}" ng-model="searchEntry.AvailableFrom" is-open="openedDD1" close-text="Close" id="txtOpenedDD1" ng-click="openedDD1=true" placeholder="Thời gian trống từ" />
+                                        <input type="text" class="form-control text-center col-sm-10" tabindex="9" datepicker-popup="{{'dd-MM-yyyy'}}" ng-model=" searchEntry.AvailableFrom" is-open="openedDD1" close-text="Close" id="txtOpenedDD1" ng-click="openedDD1=true" placeholder="Thời gian trống từ" />
                                         <span class="input-group-btn">
                                             <button type="button" class="btn btn-default" ng-click="openedDD1=true"><i class="glyphicon glyphicon-calendar"></i></button>
                                         </span>
@@ -86,7 +86,7 @@
                                 </div>
                                 <div class="col-sm-4">
                                     <div class="input-group input-group-sm">
-                                        <input type="text" class="form-control text-center col-sm-10" datepicker-popup="{{'dd-MM-yyyy'}}" ng-model="searchEntry.AvailableTo" is-open="openedDD2" close-text="Close" id="txtOpenedDD2" ng-click="openedDD2=true" placeholder="Thời gian trống đến" />
+                                        <input type="text" class="form-control text-center col-sm-10" tabindex="10" datepicker-popup="{{'dd-MM-yyyy'}}" ng-model="searchEntry.AvailableTo" is-open="openedDD2" close-text="Close" id="txtOpenedDD2" ng-click="openedDD2=true" placeholder="Thời gian trống đến" />
                                         <span class="input-group-btn">
                                             <button type="button" class="btn btn-default" ng-click="openedDD2=true"><i class="glyphicon glyphicon-calendar"></i></button>
                                         </span>
@@ -100,16 +100,16 @@
                                     <multiselect class="input-xlarge" multiple="true"
                                                  ng-model="listBuildingDirectionID"
                                                  options="c.Name for c in buildingDirectionIDSelectList"
-                                                 change="selected()"></multiselect>
+                                                 change="selected()" tabindex="11"></multiselect>
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label for="PriceDescription" class="col-sm-4 control-label text-left-important">Hướng văn phòng</label>
                                 <div class="col-sm-8 ">
                                     <multiselect class="input-xlarge" multiple="true"
-                                                 ng-model="searchEntry.OfficeDirectionID"
+                                                 ng-model="searchEntry.listOfficeDirectionID"
                                                  options="c.Name for c in buildingDirectionIDSelectList"
-                                                 change="selected()"></multiselect>
+                                                 change="selected()" tabindex="12"></multiselect>
 
                                 </div>
                             </div>
@@ -118,40 +118,85 @@
                         <div class="col-md-6 col-sm-6">
                             <div class="form-group">
                                 <label for="inputPassword3" class="col-sm-4 control-label">Diện tích sàn</label>
-                                <div class="col-sm-8">
-                                    <input type="text" class="form-control" ng-model="searchEntry.AvailableFloor" tabindex="4">
+                                <div class="col-sm-4">
+                                    <input type="text" class="form-control" id="FloorAreaFrom" name="FloorAreaFrom" ng-model="searchEntry.FloorAreaFrom" placeholder="Từ" tabindex="13">
+                                </div>
+                                <div class="col-sm-4">
+                                    <input type="text" class="form-control" id="FloorAreaTo" name="FloorAreaTo" ng-model="searchEntry.FloorAreaTo" placeholder="Đến" tabindex="14">
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label for="inputPassword3" class="col-sm-4 control-label">Ưu tiên</label>
-                                <div class="col-sm-8">
-                                    <input type="number" class="form-control" ng-model="searchEntry.PriorityLevel" tabindex="4">
+
+                                <div class="col-sm-4">
+                                    <input type="text" class="form-control" id="PriorityLevelFrom" name="PriorityLevelFrom" ng-model="searchEntry.PriorityLevelFrom" placeholder="Từ" tabindex="15">
                                 </div>
+                                <div class="col-sm-4">
+                                    <input type="text" class="form-control" id="PriorityLevelTo" name="PriorityLevelTo" ng-model="searchEntry.PriorityLevelTo" placeholder="Đến" tabindex="16">
+                                </div>
+
                             </div>
 
                             <div class="form-group">
                                 <label for="inputPassword3" class="col-sm-4 control-label">Hạng văn phòng</label>
                                 <div class="col-sm-8">
-                                    <input type="text" class="form-control" ng-model="searchEntry.OfficeRank" tabindex="4">
+                                    <multiselect class="input-xlarge" multiple="true"
+                                                 ng-model="searchEntry.listOfficeRankingID"
+                                                 options="c.Name for c in officeRankingSelectList"
+                                                 change="selected()" tabindex="17"></multiselect>
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label for="inputPassword3" class="col-sm-4 control-label">Năm hoàn thành</label>
-                                <div class="col-sm-8">
-                                    <input type="text" class="form-control" ng-model="searchEntry.CompleteTime" tabindex="4">
+                                <div class="col-sm-4">
+                                    <div class="input-group input-group-sm">
+                                        <input type="text" class="form-control text-center col-sm-10" tabindex="18" datepicker-popup="{{'dd-MM-yyyy'}}" ng-model="searchEntry.YearFrom" is-open="openedYearFrom" close-text="Close" id="txtopenedYearFrom" ng-click="openedYearFrom=true" placeholder="Từ " />
+                                        <span class="input-group-btn">
+                                            <button type="button" class="btn btn-default" ng-click="openedYearFrom=true"><i class="glyphicon glyphicon-calendar"></i></button>
+                                        </span>
+                                    </div>
+                                </div>
+                                <div class="col-sm-4">
+                                    <div class="input-group input-group-sm">
+                                        <input type="text" class="form-control text-center col-sm-10" tabindex="19" datepicker-popup="{{'dd-MM-yyyy'}}" ng-model="searchEntry.YearTo" is-open="openedYearTo" close-text="Close" id="txtopenedYearTo" ng-click="openedYearTo=true" placeholder="Đến" />
+                                        <span class="input-group-btn">
+                                            <button type="button" class="btn btn-default" ng-click="openedYearTo=true"><i class="glyphicon glyphicon-calendar"></i></button>
+                                        </span>
+                                    </div>
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label for="inputPassword3" class="col-sm-4 control-label">Ngày cập nhật</label>
-                                <div class="col-sm-8">
-                                    <input type="text" class="form-control" ng-model="searchEntry.LastUpdatedDateTime" tabindex="4">
+
+                                <div class="col-sm-4">
+                                    <div class="input-group input-group-sm">
+                                        <input type="text" class="form-control text-center col-sm-10" tabindex="20" datepicker-popup="{{'dd-MM-yyyy'}}" ng-model="searchentry.LastUpdatedDateTimeFrom" is-open="openedLastUpdatedDateTimeFrom" close-text="Close" id="txtopenedLastUpdatedDateTimeFrom" ng-click="openedLastUpdatedDateTimeFrom=true" placeholder="Từ " />
+                                        <span class="input-group-btn">
+                                            <button type="button" class="btn btn-default" ng-click="openedLastUpdatedDateTimeFrom=true"><i class="glyphicon glyphicon-calendar"></i></button>
+                                        </span>
+                                    </div>
                                 </div>
+                                <div class="col-sm-4">
+                                    <div class="input-group input-group-sm">
+                                        <input type="text" class="form-control text-center col-sm-10" tabindex="21" datepicker-popup="{{'dd-MM-yyyy'}}" ng-model=" searchentry.LastUpdatedDateTimeTo" is-open="openedLastUpdatedDateTimeTo" close-text="Close" id="txtopenedLastUpdatedDateTimeTo" ng-click="openedLastUpdatedDateTimeTo=true" placeholder="Đến" />
+                                        <span class="input-group-btn">
+                                            <button type="button" class="btn btn-default" ng-click="openedYearTo=true"><i class="glyphicon glyphicon-calendar"></i></button>
+                                        </span>
+                                    </div>
+                                </div>
+
                             </div>
                             <div class="form-group">
                                 <label for="inputPassword3" class="col-sm-4 control-label">Tầng</label>
-                                <div class="col-sm-8">
-                                    <input type="text" class="form-control" ng-model="searchEntry.AvailableFloor" tabindex="4">
+                                <div class="col-sm-4 ">
+                                    <input type="text" class="form-control text-center col-sm-10" tabindex="22" ng-model="dataSelected.AvailableFloorFrom" placeholder="Từ" floor-input />
                                 </div>
+
+                                <div class="col-sm-4 ">
+                                    <input type="text" class="form-control text-center col-sm-10" tabindex="23" ng-model="dataSelected.AvailableFloorTo" placeholder="Đến" floor-input />
+                                </div>
+
+
                             </div>
                             <div class="form-group">
                                 <label for="inputPassword3" class="col-sm-4 control-label">Chỗ giữ ôtô</label>
@@ -165,7 +210,7 @@
                                         <label for="HavePackingCarNo"> Không </label>
                                     </div>
                                     <div class="radio radio-info radio-inline">
-                                        <input type="radio" id="HavePackingCarNoYes" name="radioHavePackingCar" ng-model="searchEntry.HavePackingCar" value="100" checked="true"/>
+                                        <input type="radio" id="HavePackingCarNoYes" name="radioHavePackingCar" ng-model="searchEntry.HavePackingCar" value="100" checked="true" />
                                         <label for="HavePackingCarNoYes"> Không xác định </label>
                                     </div>
                                 </div>
@@ -181,9 +226,15 @@
                             </div>
                             <div class="form-group">
                                 <label for="inputPassword3" class="col-sm-4 control-label">Độ cao trần</label>
-                                <div class="col-sm-8">
-                                    <input type="text" class="form-control" ng-model="searchEntry.CeilingHeight" tabindex="4">
+
+                                <div class="col-sm-4">
+                                    <input type="text" class="form-control" id="CeilingHeightFrom" name="CeilingHeightFrom" ng-model="searchEntry.CeilingHeightFrom" placeholder="Từ" tabindex="30">
                                 </div>
+                                <div class="col-sm-4">
+                                    <input type="text" class="form-control" id="CeilingHeightTo" name="CeilingHeightTo" ng-model="searchEntry.CeilingHeightTo" placeholder="Đến" tabindex="31">
+                                </div>
+
+
                             </div>
 
                         </div>
