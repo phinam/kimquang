@@ -255,15 +255,20 @@
     // $scope.launch('error');
 
     //phu viet cho nay
-    $scope.buildingDirectionIDSelectList = []
-    coreService.getListEx({ Code: "BUILDINGDIRECTION", Sys_ViewID: 17 }, function (data) {
-        $scope.buildingDirectionIDSelectList = data[1];
-    });
+    $scope.buildingDirectionIDSelectList = [];
     $scope.FileTypeSelectList = [];
-    coreService.getListEx({ Code: "FILETYPEUPLOAD", Sys_ViewID: 17 }, function (data) {
-        //        console.log('FILETYPEUPLOAD', data);
-        $scope.FileTypeSelectList = data[1];
+    $scope.officeRankingSelectList = [];
+    $scope.floorList = [];
+    coreService.getListEx({ Code: "BUILDINGDIRECTION|FILETYPEUPLOAD|OFFICERANKING|FLOOR", Sys_ViewID: 16 }, function (data) {
+        $scope.buildingDirectionIDSelectList = data[1];
+        $scope.FileTypeSelectList = data[2];
+        $scope.officeRankingSelectList = data[3];
+        for (var i = 0; i < data[4].length; i++)
+            $scope.floorList.push(data[4][i].Name);
+       // console.log($scope.floorList);
     });
+
+
 
 
     //phu viet cho nay
@@ -329,24 +334,28 @@
     $scope.calculateHirePrice = function () {
         if ($scope.dataSelected.HireManagermentFee == null || $scope.dataSelected.HirePrice == null)
             return;
-        if(isNaN($scope.dataSelected.HireManagermentFee)==true||isNaN($scope.dataSelected.HirePrice)==true)
+        if (isNaN($scope.dataSelected.HireManagermentFee) == true || isNaN($scope.dataSelected.HirePrice) == true)
             return;
         var totalPrice = ($scope.dataSelected.HireManagermentFee * 1 + $scope.dataSelected.HirePrice * 1) * 1.1;
-        $scope.dataSelected.TotalPrice = totalPrice.toFixed(1);
+        //  $scope.dataSelected.TotalPrice = totalPrice.toFixed(1);
+
+        $scope.dataSelected.TotalPrice = $filter('number')(totalPrice, 1);
+
 
         if ($scope.dataSelected.AvailableArea == null)
             return;
         var arrTotalAmount = $scope.dataSelected.AvailableArea.split(' ');
-        var totalAmount="";
+        var totalAmount = "";
         for (var i = 0; i < arrTotalAmount.length; i++) {
-            if(isNaN(arrTotalAmount[i])==false){
+            if (isNaN(arrTotalAmount[i]) == false) {
                 var temp = (totalPrice * (arrTotalAmount[i] * 1)).toFixed(1);
-                totalAmount += temp + " ";
+                totalAmount += $filter('number')(temp, 1) + "  ";
             }
 
         }
         $scope.dataSelected.HireTotalAmount = totalAmount.trim();
     }
+
 
     $scope.UpdateProductDocumment = function (productId) {
 
@@ -373,9 +382,32 @@
             var entry = angular.copy($scope.dataSelected);
             entry.UnAssignedName = tiengvietkhongdau(entry.Name); //coreService.toASCi(entry.Name);
             entry.UnAssignedStreet = tiengvietkhongdau(entry.StreetName); //coreService.toASCi(entry.Address);
+            try{
             if (typeof entry.AvailableFrom != 'undefined')
                 if (entry.AvailableFrom != '')
                     entry.AvailableFrom = $filter('date')(entry.AvailableFrom, "yyyy-MM-dd");
+            if (typeof entry.AvailableTo != 'undefined')
+                if (entry.AvailableTo != '')
+                    entry.AvailableTo = $filter('date')(entry.AvailableTo, "yyyy-MM-dd");
+            if (typeof entry.YearFrom != 'undefined')
+                if (entry.YearFrom != '')
+                    entry.YearFrom = $filter('date')(entry.YearFrom, "yyyy-MM-dd");
+            if (typeof entry.YearTo != 'undefined')
+                if (entry.YearTo != '')
+                    entry.YearTo = $filter('date')(entry.YearTo, "yyyy-MM-dd");
+            if (typeof entry.LastUpdatedDateTimeFrom != 'undefined')
+                if (entry.LastUpdatedDateTimeFrom != '')
+                    entry.LastUpdatedDateTimeFrom = $filter('date')(entry.LastUpdatedDateTimeFrom, "yyyy-MM-dd");
+            if (typeof entry.LastUpdatedDateTimeTo != 'undefined')
+                if (entry.LastUpdatedDateTimeTo != '')
+                    entry.LastUpdatedDateTimeTo = $filter('date')(entry.LastUpdatedDateTimeTo, "yyyy-MM-dd");
+            //if (typeof entry.AvailableFrom != 'undefined')
+            //    if (entry.AvailableFrom != '')
+            //        entry.AvailableFrom = $filter('date')(entry.AvailableFrom, "yyyy-MM-dd");
+            }
+            catch (ex) {
+
+            }
 
 
             entry.Action = act;
@@ -464,7 +496,7 @@
         Sys_ViewID: 20
     };
     $scope.listBuildingDirectionID = [];
-
+    $scope.listOfficeDirectionID = [];
     $scope.search = function (searchEntry) {
         $rootScope.showModal = true;
 
@@ -480,6 +512,17 @@
             }
             searchEntry.BuildingDirectionID = listBD.toString();
         }
+
+        searchEntry.OfficeDirectionID = '';
+        if ($scope.listOfficeDirectionID.length > 0) {
+            var listOBD = new Array();
+
+            for (var i = 0; i < $scope.listOfficeDirectionID.length; i++) {
+                listOBD.push($scope.listOfficeDirectionID[i].Value);
+            }
+            searchEntry.OfficeDirectionID = listOBD.toString();
+        }
+
         for (var property in searchEntry) {
             if (searchEntry.hasOwnProperty(property)) {
                 if (searchEntry[property] == '' || searchEntry[property] == false || searchEntry[property] == null) {
@@ -521,6 +564,33 @@
     $scope.changeDistrict = function (districtID) {
         $scope.dataSelected.WardId = null;
         $scope.wardSelectList = $filter('filterDistrictID')($scope.tempWardSelectList, districtID);
+    }
+
+    function converDatetoDB(obj) {
+        var entry = angular.copy($scope.steps);
+        angular.forEach(entry, function (item, key) {
+            if (item.IntendStartDate instanceof Date) {
+                item.IntendStartDate = $filter('date')(item.IntendStartDate, "yyyy-MM-dd");
+            }
+            else
+                item.IntendStartDate = "";
+            if (item.CompleteDate instanceof Date) {
+                item.CompleteDate = $filter('date')(item.CompleteDate, "yyyy-MM-dd");
+            }
+            else
+                item.CompleteDate = "";
+            if (item.IntendEndDate instanceof Date) {
+                item.IntendEndDate = $filter('date')(item.IntendEndDate, "yyyy-MM-dd");
+            }
+            else
+                item.IntendEndDate = "";
+            if (item.StartDate instanceof Date) {
+                item.StartDate = $filter('date')(item.StartDate, "yyyy-MM-dd");
+            }
+            else
+                item.StartDate = "";
+        });
+        return entry;
     }
 
     function convertStringtoNumber(array, fieldName) {

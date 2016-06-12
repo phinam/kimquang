@@ -481,6 +481,43 @@ angular.module('indexApp')
         }
     }
 })
+.directive('numberInput', function ($filter, $browser) {
+    return {
+        require: 'ngModel',
+        link: function ($scope, $element, $attrs, ngModelCtrl) {
+            var listener = function () {
+                var value = $element.val().replace(/,/g, '')
+                $element.val($filter('number')(value, false))
+            }
+
+            // This runs when we update the text field
+            ngModelCtrl.$parsers.push(function (viewValue) {
+                return viewValue.replace(/,/g, '');
+            })
+
+            // This runs when the model gets updated on the scope directly and keeps our view in sync
+            ngModelCtrl.$render = function () {
+                $element.val($filter('number')(ngModelCtrl.$viewValue, false))
+            }
+
+            $element.bind('change', listener)
+            $element.bind('keydown', function (event) {
+                var key = event.keyCode
+                // If the keys include the CTRL, SHIFT, ALT, or META keys, or the arrow keys, do nothing.
+                // This lets us support copy and paste too
+                if (key == 91 || (15 < key && key < 19) || (37 <= key && key <= 40))
+                    return
+                $browser.defer(listener) // Have to do this or changes don't get picked up properly
+            })
+
+            $element.bind('paste cut', function () {
+                $browser.defer(listener)
+            })
+        }
+
+    }
+})
+
 .directive('ngFileModel', ['$parse', function ($parse) {
     return {
         restrict: 'A',
@@ -513,7 +550,70 @@ angular.module('indexApp')
             });
         }
     };
-}]);
+}])
+.directive('floorComplete', function ($timeout) {
+    return function (scope, iElement, iAttrs) {
+        iElement.autocomplete({
+            source: scope[iAttrs.uiItems],
+            select: function () {
+                $timeout(function () {
+                    iElement.trigger('input');
+                }, 0);
+            }
+        });
+    };
+})
+.directive('floorInput', function () {
+    return {
+        link: function (scope, el, attr) {
+            el.bind("keypress", function (e) {
+                //ignore all characters that are not numbers, except backspace, delete, left arrow and right arrow
+
+
+
+
+                // allow backspace, tab, delete, enter, arrows, numbers and keypad numbers ONLY
+                // home, end, period, and numpad decimal
+
+                var curentData = el.val();
+                if (curentData == '') {
+                    if (e.which != 77 && e.which != 109 && e.which != 98 && e.which != 66 && e.which != 103 && e.which != 71 && e.which != 8 && e.which != 0 && (e.which < 48 || e.which > 57)) {
+                        //display error message
+                        e.preventDefault();
+                        return false;
+                    }
+
+                }
+                else
+                    if (isNaN(curentData))
+                        if (e.which != 8 && e.which != 0 && (e.which < 48 || e.which > 57)) {
+                            //display error message
+                            e.preventDefault();
+                            return false;
+                        }
+
+                // e.preventDefault();
+            });
+        }
+    };
+})
+.directive('datetimez', function () {
+    return {
+        restrict: 'A',
+        require: 'ngModel',
+        link: function (scope, element, attrs, ngModelCtrl) {
+            element.datetimepicker({
+                format: "MM-yyyy",
+                viewMode: "months",
+                minViewMode: "months",
+                pickTime: false,
+            }).on('changeDate', function (e) {
+                ngModelCtrl.$setViewValue(e.date);
+                scope.$apply();
+            });
+        }
+    };
+});
 
 
 

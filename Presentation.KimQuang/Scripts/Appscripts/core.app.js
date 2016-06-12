@@ -72,6 +72,102 @@ var coreApp;
                 return ret;
             }
         },
+        parseDate: function (val, culture) {
+            if (typeof culture == 'undefined') {
+                culture = 'vi-VN';
+            }
+            var ret = val;
+            if (val) {
+                ret = $.parseDate(val, 'd', culture);
+            }
+            return ret;
+        },
+        parseFloat: function (val, culture) {
+            var ret = val;
+            if (val) {
+                if (typeof culture == 'undefined') {
+                    culture = 'vi-VN';
+                }
+                ret = $.parseFloat(val, "n", culture);
+
+                if (isNaN(ret)) {
+                    ret = 0;
+                }
+            }
+
+            return ret;
+        },
+
+        formatNumber: function (number, culture, displayScale, displayDecimal, zeroOrEmptyDisplayTo) {
+            var val = number;
+            if (typeof number != 'undefined') {
+                if (typeof culture == 'undefined') culture = coreApp.systemConfig.culture;
+                if (typeof displayScale == 'undefined') displayScale = 1;
+                if (typeof displayDecimal == 'undefined') displayDecimal = 0;
+
+                number = parseFloat(number);
+
+                if (!isNaN(number)) {
+                    if (number == 0 && typeof zeroOrEmptyDisplayTo != 'undefined') {
+                        val = zeroOrEmptyDisplayTo;
+                    }
+                    else {
+                        val = formatScale(number, displayScale, displayDecimal, culture);
+                    }
+                }
+                else if (typeof zeroOrEmptyDisplayTo != 'undefined') {
+                    val = zeroOrEmptyDisplayTo;
+                }
+
+                function formatScale(value, displayScale, displayDecimal, culture) {
+                    value = value * displayScale;
+                    $.preferCulture(culture);
+
+                    var numValue = $.parseFloat(value, "n", 'en-US');
+                    return $.format(numValue, "n" + displayDecimal);
+                }
+            }
+            return val;
+        },
+        formatDate: function (val, format, culture) {
+            var ret = val;
+            if (val != "") {
+                if (typeof culture == 'undefined') culture = coreApp.systemConfig.culture;
+                if (typeof format == 'undefined') format = "d";
+                if (typeof val == "string") val = coreApp.getDate(val);
+                ret = $.format(val, format, culture);
+            }
+            return ret;
+        },
+        formatTime: function (val, format, culture) {
+            var ret = val;
+            if (val != "") {
+                if (typeof culture == 'undefined') culture = coreApp.systemConfig.culture;
+                if (typeof format == 'undefined') format = "d";
+                if (typeof val == "string") val = coreApp.getDate(val);
+
+                ret = $.format(val, 'hh:mm:ss', culture);
+            }
+            return ret;
+        },
+        formatDateTime: function (val, format, culture) {
+            var ret = val;
+            if (val != "") {
+                if (typeof culture == 'undefined') culture = coreApp.systemConfig.culture;
+                if (typeof format == 'undefined') format = "dd/MM/yyyy HH:mm:ss";
+                if (typeof val == "string") val = coreApp.getDate(val);
+
+                ret = $.format(val, format, culture);
+            }
+            return ret;
+        },
+        formatEntryTime: function (val) {
+            var ret = val;
+            if (val) {
+                ret = val.split('.')[0];
+            }
+            return ret;
+        },
         callAjax: function (options, callback) {
             if (options) {
                 var defOptions = {
