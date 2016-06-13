@@ -104,9 +104,7 @@
               { name: 'WardName', heading: 'PHƯỜNG', className: 'text-center pd-0 break-word' },
             { name: 'DistrictName', heading: 'QUẬN', className: 'text-center pd-0 break-word' },
 
-
-            { name: 'Action1', heading: 'SỬA', width: '30px', className: 'text-center pd-0 break-word', type: controls.LIST_ICON, listAction: [{ classIcon: 'fa-pencil-square-o', action: 'view' }] },
-            { name: 'Action2', heading: 'XÓA', width: '30px', className: 'text-center pd-0 break-word', type: controls.LIST_ICON, listAction: [{ classIcon: 'fa-times  text-danger', action: 'delete' }] }
+            { name: 'Action1', heading: 'THAO TÁC', width: '100px', className: 'text-center pd-0 break-word', type: controls.LIST_ICON, listAction: [{ classIcon: 'fa-files-o text-primary', action: 'copy' }, { classIcon: 'fa-pencil-square-o', action: 'view' }, { classIcon: 'fa fa-times  text-danger', action: 'delete' }] }
         ],
         data: [],
         sysViewID: 20,
@@ -121,12 +119,11 @@
             switch (act) {
                 case 'view':
                     //                    console.log('row', row);
-                    $state.transitionTo('editproduct', { productId: row.ID || row });
-                    // day neu em nhan vieư em data cua view , hoac neu em can update thi row la object data em dung de show len man hinh, ok ko
-                    //                    alert('xem console view:' + act);
-                    //coreService.getListEx({ ProductID: row.ID, Sys_ViewID: 19 }, function (data) {
-                    //    console.log('ProductID', data)
-                    //});
+                    $state.transitionTo('editproduct', { productId: row.ID || row, isCopy: 0 });
+                    break;
+                case 'copy':
+                    //                    console.log('row', row);
+                    $state.transitionTo('editproduct', { productId: row.ID || row, isCopy: 1 });
                     break;
                 case 'delete':
                     console.log('row', row);
@@ -265,7 +262,7 @@
         $scope.officeRankingSelectList = data[3];
         for (var i = 0; i < data[4].length; i++)
             $scope.floorList.push(data[4][i].Name);
-       // console.log($scope.floorList);
+        // console.log($scope.floorList);
     });
 
 
@@ -382,28 +379,29 @@
             var entry = angular.copy($scope.dataSelected);
             entry.UnAssignedName = tiengvietkhongdau(entry.Name); //coreService.toASCi(entry.Name);
             entry.UnAssignedStreet = tiengvietkhongdau(entry.StreetName); //coreService.toASCi(entry.Address);
-            try{
-            if (typeof entry.AvailableFrom != 'undefined')
-                if (entry.AvailableFrom != '')
-                    entry.AvailableFrom = $filter('date')(entry.AvailableFrom, "yyyy-MM-dd");
-            if (typeof entry.AvailableTo != 'undefined')
-                if (entry.AvailableTo != '')
-                    entry.AvailableTo = $filter('date')(entry.AvailableTo, "yyyy-MM-dd");
-            if (typeof entry.YearFrom != 'undefined')
-                if (entry.YearFrom != '')
-                    entry.YearFrom = $filter('date')(entry.YearFrom, "yyyy-MM-dd");
-            if (typeof entry.YearTo != 'undefined')
-                if (entry.YearTo != '')
-                    entry.YearTo = $filter('date')(entry.YearTo, "yyyy-MM-dd");
-            if (typeof entry.LastUpdatedDateTimeFrom != 'undefined')
-                if (entry.LastUpdatedDateTimeFrom != '')
-                    entry.LastUpdatedDateTimeFrom = $filter('date')(entry.LastUpdatedDateTimeFrom, "yyyy-MM-dd");
-            if (typeof entry.LastUpdatedDateTimeTo != 'undefined')
-                if (entry.LastUpdatedDateTimeTo != '')
-                    entry.LastUpdatedDateTimeTo = $filter('date')(entry.LastUpdatedDateTimeTo, "yyyy-MM-dd");
-            //if (typeof entry.AvailableFrom != 'undefined')
-            //    if (entry.AvailableFrom != '')
-            //        entry.AvailableFrom = $filter('date')(entry.AvailableFrom, "yyyy-MM-dd");
+            try {
+              
+                if (typeof entry.AvailableFrom != 'undefined')
+                    if (entry.AvailableFrom != '')
+                        entry.AvailableFrom = $filter('date')(entry.AvailableFrom, "yyyy-MM-dd");
+                if (typeof entry.AvailableTo != 'undefined')
+                    if (entry.AvailableTo != '')
+                        entry.AvailableTo = $filter('date')(entry.AvailableTo, "yyyy-MM-dd");
+                if (typeof entry.YearFrom != 'undefined')
+                    if (entry.YearFrom != '')
+                        entry.YearFrom = $filter('date')(entry.YearFrom, "yyyy-MM-dd");
+                if (typeof entry.YearTo != 'undefined')
+                    if (entry.YearTo != '')
+                        entry.YearTo = $filter('date')(entry.YearTo, "yyyy-MM-dd");
+                if (typeof entry.LastUpdatedDateTimeFrom != 'undefined')
+                    if (entry.LastUpdatedDateTimeFrom != '')
+                        entry.LastUpdatedDateTimeFrom = $filter('date')(entry.LastUpdatedDateTimeFrom, "yyyy-MM-dd");
+                if (typeof entry.LastUpdatedDateTimeTo != 'undefined')
+                    if (entry.LastUpdatedDateTimeTo != '')
+                        entry.LastUpdatedDateTimeTo = $filter('date')(entry.LastUpdatedDateTimeTo, "yyyy-MM-dd");
+                if (typeof entry.ModifyDateTime != 'undefined')
+                    if (entry.ModifyDateTime != '')
+                        entry.ModifyDateTime = $filter('date')(entry.ModifyDateTime, "yyyy-MM-dd");
             }
             catch (ex) {
 
@@ -497,8 +495,15 @@
     };
     $scope.listBuildingDirectionID = [];
     $scope.listOfficeDirectionID = [];
+    $scope.listOfficeRankingID = [];
+    $scope.listOrtherFeeType = [];
+
     $scope.search = function (searchEntry) {
         $rootScope.showModal = true;
+
+
+
+
 
 
         searchEntry.UnAssignedName = tiengvietkhongdau(searchEntry.Name);
@@ -514,14 +519,63 @@
         }
 
         searchEntry.OfficeDirectionID = '';
+       
         if ($scope.listOfficeDirectionID.length > 0) {
             var listOBD = new Array();
-
             for (var i = 0; i < $scope.listOfficeDirectionID.length; i++) {
                 listOBD.push($scope.listOfficeDirectionID[i].Value);
             }
+           
             searchEntry.OfficeDirectionID = listOBD.toString();
         }
+        searchEntry.OfficeRankingID = '';
+        if ($scope.listOfficeRankingID.length > 0) {
+            var listOF = new Array();
+            for (var i = 0; i < $scope.listOfficeRankingID.length; i++) {
+                listOF.push($scope.listOfficeRankingID[i].Value);
+            }
+            searchEntry.OfficeRankingID = listOF.toString();
+        }
+      
+        searchEntry.OrtherFeeTypeID = '';
+        if ($scope.listOrtherFeeType.length > 0) {
+            var listOFT = new Array();
+            for (var i = 0; i < $scope.listOrtherFeeType.length; i++) {
+                listOFT.push($scope.listOrtherFeeType[i].Value);
+            }
+            searchEntry.OrtherFeeTypeID = listOFT.toString();
+        }
+       
+       
+
+        try {
+
+            if (typeof searchEntry.AvailableFrom != 'undefined')
+                if (searchEntry.AvailableFrom != '')
+                    searchEntry.AvailableFrom = $filter('date')(searchEntry.AvailableFrom, "yyyy-MM-dd");
+            if (typeof searchEntry.AvailableTo != 'undefined')
+                if (searchEntry.AvailableTo != '')
+                    searchEntry.AvailableTo = $filter('date')(searchEntry.AvailableTo, "yyyy-MM-dd");
+            if (typeof searchEntry.YearFrom != 'undefined')
+                if (searchEntry.YearFrom != '')
+                    searchEntry.YearFrom = $filter('date')(searchEntry.YearFrom, "yyyy-MM-dd");
+            if (typeof searchEntry.YearTo != 'undefined')
+                if (searchEntry.YearTo != '')
+                    searchEntry.YearTo = $filter('date')(searchEntry.YearTo, "yyyy-MM-dd");
+            if (typeof searchEntry.LastUpdatedDateTimeFrom != 'undefined')
+                if (searchEntry.LastUpdatedDateTimeFrom != '')
+                    searchEntry.LastUpdatedDateTimeFrom = $filter('date')(searchEntry.LastUpdatedDateTimeFrom, "yyyy-MM-dd");
+            if (typeof searchEntry.LastUpdatedDateTimeTo != 'undefined')
+                if (searchEntry.LastUpdatedDateTimeTo != '')
+                    searchEntry.LastUpdatedDateTimeTo = $filter('date')(searchEntry.LastUpdatedDateTimeTo, "yyyy-MM-dd");
+            if (typeof searchEntry.ModifyDateTime != 'undefined')
+                if (searchEntry.ModifyDateTime != '')
+                    searchEntry.ModifyDateTime = $filter('date')(searchEntry.ModifyDateTime, "yyyy-MM-dd");
+        }
+        catch (ex) {
+
+        }
+
 
         for (var property in searchEntry) {
             if (searchEntry.hasOwnProperty(property)) {

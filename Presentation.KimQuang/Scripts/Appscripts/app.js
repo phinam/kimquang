@@ -76,7 +76,7 @@ app.config(function ($stateProvider, $urlRouterProvider, $locationProvider) {
             templateUrl: '/Templates/view/product/add-product.html',
             controller: function ($scope, $stateParams) {
                 $scope.productId = $stateParams.productId;
-                console.log(' $scope.buildingDirectionIDSelectList', $scope.buildingDirectionIDSelectList);
+                $scope.isCopy = $stateParams.isCopy;
             }
         })
          .state('importproduct', {

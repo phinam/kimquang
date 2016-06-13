@@ -107,7 +107,7 @@
                                 <label for="PriceDescription" class="col-sm-4 control-label text-left-important">Hướng văn phòng</label>
                                 <div class="col-sm-8 ">
                                     <multiselect class="input-xlarge" multiple="true"
-                                                 ng-model="searchEntry.listOfficeDirectionID"
+                                                 ng-model="listOfficeDirectionID"
                                                  options="c.Name for c in buildingDirectionIDSelectList"
                                                  change="selected()" tabindex="12"></multiselect>
 
@@ -141,7 +141,7 @@
                                 <label for="inputPassword3" class="col-sm-4 control-label">Hạng văn phòng</label>
                                 <div class="col-sm-8">
                                     <multiselect class="input-xlarge" multiple="true"
-                                                 ng-model="searchEntry.listOfficeRankingID"
+                                                 ng-model="listOfficeRankingID"
                                                  options="c.Name for c in officeRankingSelectList"
                                                  change="selected()" tabindex="17"></multiselect>
                                 </div>
@@ -170,7 +170,7 @@
 
                                 <div class="col-sm-4">
                                     <div class="input-group input-group-sm">
-                                        <input type="text" class="form-control text-center col-sm-10" tabindex="20" datepicker-popup="{{'dd-MM-yyyy'}}" ng-model="searchentry.LastUpdatedDateTimeFrom" is-open="openedLastUpdatedDateTimeFrom" close-text="Close" id="txtopenedLastUpdatedDateTimeFrom" ng-click="openedLastUpdatedDateTimeFrom=true" placeholder="Từ " />
+                                        <input type="text" class="form-control text-center col-sm-10" tabindex="20" datepicker-popup="{{'dd-MM-yyyy'}}" ng-model="searchEntry.LastUpdatedDateTimeFrom" is-open="openedLastUpdatedDateTimeFrom" close-text="Close" id="txtopenedLastUpdatedDateTimeFrom" ng-click="openedLastUpdatedDateTimeFrom=true" placeholder="Từ " />
                                         <span class="input-group-btn">
                                             <button type="button" class="btn btn-default" ng-click="openedLastUpdatedDateTimeFrom=true"><i class="glyphicon glyphicon-calendar"></i></button>
                                         </span>
@@ -178,7 +178,7 @@
                                 </div>
                                 <div class="col-sm-4">
                                     <div class="input-group input-group-sm">
-                                        <input type="text" class="form-control text-center col-sm-10" tabindex="21" datepicker-popup="{{'dd-MM-yyyy'}}" ng-model=" searchentry.LastUpdatedDateTimeTo" is-open="openedLastUpdatedDateTimeTo" close-text="Close" id="txtopenedLastUpdatedDateTimeTo" ng-click="openedLastUpdatedDateTimeTo=true" placeholder="Đến" />
+                                        <input type="text" class="form-control text-center col-sm-10" tabindex="21" datepicker-popup="{{'dd-MM-yyyy'}}" ng-model=" searchEntry.LastUpdatedDateTimeTo" is-open="openedLastUpdatedDateTimeTo" close-text="Close" id="txtopenedLastUpdatedDateTimeTo" ng-click="openedLastUpdatedDateTimeTo=true" placeholder="Đến" />
                                         <span class="input-group-btn">
                                             <button type="button" class="btn btn-default" ng-click="openedYearTo=true"><i class="glyphicon glyphicon-calendar"></i></button>
                                         </span>
