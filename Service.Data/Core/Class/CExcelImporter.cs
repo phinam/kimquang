@@ -118,7 +118,7 @@ namespace Service.Data.Core.Class
                 }
                 else
                 {
-                    return "Code\n01-\\Product\\Error\\" + fileName;
+                    return "Code\n01-//Product//Error//" + fileName;
                 }
             }
             catch(Exception ex)
