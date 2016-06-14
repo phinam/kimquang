@@ -171,7 +171,7 @@ namespace Service.Data.Core.Class
                 string pdfFile = AppDomain.CurrentDomain.BaseDirectory + "\\_Template\\Excel\\SaveAs" + Guid.NewGuid().ToString() + ".pdf";
                 FileInfo f = new FileInfo(newFile2);
                 newFile2 = f.FullName;
-                CExcelToPDF.ExportWorkbookToPdf(newFile2, pdfFile);
+              //  CExcelToPDF.ExportWorkbookToPdf(newFile2, pdfFile);
                 File.Delete(newFile2);
                 newFile2 = pdfFile;
             }
