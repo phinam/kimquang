@@ -106,23 +106,24 @@ namespace Service.Data.Core.Class
                 {
                     Directory.CreateDirectory(tempFile);
                 }
-                tempFile = tempFile+"/" + Guid.NewGuid().ToString() + DateTime.Now.ToString("yyyyMMddHHmmss") + ".xlsx";
+                string fileName = Guid.NewGuid().ToString() + DateTime.Now.ToString("yyyyMMddHHmmss") + ".xlsx";
+                tempFile = tempFile+"/" + fileName;
                 //Khi xong thi luu file con lai vao temp
                 pck.SaveAs(new System.IO.FileInfo(tempFile));
                 mixExcel.CloseStream();
 
                 if (isAllOk)
                 {
-                    return "00-OK";
+                    return "Code\n00-OK";
                 }
                 else
                 {
-                    return "01-" + tempFile;
+                    return "Code\n01-\\Product\\Error\\" + fileName;
                 }
             }
             catch(Exception ex)
             {
-                return "02-" + ex.Message;
+                return "Code\n02-" + ex.Message;
             }
         }
 
@@ -241,9 +242,10 @@ namespace Service.Data.Core.Class
                 System.Data.DataSet ds = new CCoreDao().ExecuteAction(ClientKey, inputValue);
                 if (ds == null || ds.Tables.Count < 2) return false;
                 if (ds.Tables[1].Rows.Count == 0) return false;
-                if (!ds.Tables[1].Columns.Contains("Result")) return false;
-                var result = ds.Tables[1].Rows[0]["Result"];
+                if (!ds.Tables[0].Columns.Contains("Result")) return false;
+                var result = ds.Tables[0].Rows[0]["Result"];
                 if (result == null || result.ToString() == "0") return false;
+
                 return true;
             }
             catch

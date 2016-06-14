@@ -60,8 +60,8 @@ namespace Service.Data.Core
         public string ImportProductExcel(string ClientKey,string InputValue)
         {
             InputValue = HtmlDecode(InputValue);
-            string uploadPath = System.Configuration.ConfigurationManager.AppSettings["UploadDirectory"];
-            string fileName = CXmlUtils.GetXmlNodeValue(InputValue,"RequestParams/@Filename");
+            string uploadPath = System.Configuration.ConfigurationManager.AppSettings["CKFilderRootDir"];
+            string fileName = CXmlUtils.GetXmlNodeValue(InputValue, "InputValue/@Filename");
             fileName = System.IO.Path.Combine(uploadPath, fileName);
 
             return  new CExcelImporter().ImportExcel(ClientKey, fileName);

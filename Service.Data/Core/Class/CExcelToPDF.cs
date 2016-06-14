@@ -17,7 +17,9 @@ namespace Service.Data.Core.Class
     ///     
     ///   Install Plugin Save PDF and XPS from Microsoft office site
     ///     https://www.microsoft.com/en-us/download/details.aspx?id=7
+    ///   
     /// Error Fix:
+    ///   Set Application Pool User to Window Login user
     ///   Open Error:
     ///         There are several possible reasons:
     ///            • The file name or path does not exist
