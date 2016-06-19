@@ -219,7 +219,7 @@
                                 <label for="inputPassword3" class="col-sm-4 control-label">Phí ngoài giờ</label>
                                 <div class="col-sm-8">
                                     <multiselect class="input-xlarge" multiple="true"
-                                                 ng-model="listOrtherFeeType"
+                                                 ng-model="listOtherFeeType"
                                                  options="c.Name for c in otherFeeType"
                                                  change="selected()"></multiselect>
                                 </div>
@@ -265,7 +265,9 @@
                     Kết quả
                 </h3>
                 <!-- tools box -->
-
+                <div class="pull-right box-tools">
+                    <button class="btn btn-default btn-sm" data-widget="collapse" title="Rút gọn"><i class="fa fa-minus"></i></button>
+                </div><!-- /. tools -->
             </div>
             <div class="box box-default">
                 <div class="box-body">
