@@ -3,20 +3,21 @@
 <!-- Main content -->
 <section class="content overflow-x-scroll">
     <div class="row ng-scope" ng-init="init()">
-        <form class="form-horizontal row" name="addProductForm" novalidate="">
-            <div class="col-md-12 col-sm-12">
-                <div class="box box-default box-solid">
-                    <div class="box-header with-border">
-                        <i class="fa fa-search"></i>
-                        <h3 class="box-title text-uppercase">
-                            Thông tin tìm kiếm
-                        </h3>
-                        <!-- tools box -->
-                        <div class="pull-right box-tools">
-                            <button class="btn btn-default btn-sm" data-widget="collapse" title="Rút gọn"><i class="fa fa-minus"></i></button>
-                        </div><!-- /. tools -->
-                    </div>
-                    <div class="box-body">
+
+        <div class="col-md-12 col-sm-12">
+            <div class="box box-default box-solid">
+                <div class="box-header with-border">
+                    <i class="fa fa-search"></i>
+                    <h3 class="box-title text-uppercase">
+                        Thông tin tìm kiếm
+                    </h3>
+                    <!-- tools box -->
+                    <div class="pull-right box-tools">
+                        <button class="btn btn-default btn-sm" data-widget="collapse" title="Rút gọn"><i class="fa fa-minus"></i></button>
+                    </div><!-- /. tools -->
+                </div>
+                <div class="box-body">
+                    <form class="form-horizontal row" name="addProductForm" novalidate="">
                         <!--Column Left-->
                         <div class="col-md-6 col-sm-6">
 
@@ -239,37 +240,33 @@
 
                         </div>
 
+                    </form>
 
-
-                    </div>
-                    <div class="box-footer clearfix">
-                        <div class="row">
-                            <div class="col-md-12 form-horizontal">
-                                <div class="col-md-4  col-md-offset-4">
-                                    <div class="form-group">
-                                        <input type="button" class="form-control btn-primary" ng-click="search(searchEntry)" value="TÌM KIẾM">
-                                    </div>
+                </div>
+                <div class="box-footer clearfix">
+                    <div class="row">
+                        <div class="col-md-12 form-horizontal">
+                            <div class="col-md-4  col-md-offset-4">
+                                <div class="form-group">
+                                    <input type="button" class="form-control btn-primary" ng-click="search(searchEntry)" value="TÌM KIẾM">
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <!-- Navigator part -->
                 </div>
+                <!-- Navigator part -->
             </div>
-
-        </form>
-        <div class="box box-default box-solid">
-            <div class="box-header with-border box-info">
-                <i class="fa fa-list-ol"></i>
-                <h3 class="box-title text-uppercase">
-                    Kết quả
-                </h3>
-                <!-- tools box -->
-                <div class="pull-right box-tools">
-                    <button class="btn btn-default btn-sm" data-widget="collapse" title="Rút gọn"><i class="fa fa-minus"></i></button>
-                </div><!-- /. tools -->
-            </div>
-            <div class="box box-default">
+            <div class="box box-default box-solid">
+                <div class="box-header with-border box-info">
+                    <i class="fa fa-list-ol"></i>
+                    <h3 class="box-title text-uppercase">
+                        Kết quả
+                    </h3>
+                    <!-- tools box -->
+                    <div class="pull-right box-tools">
+                        <button class="btn btn-default btn-sm" data-widget="collapse" title="Rút gọn"><i class="fa fa-minus"></i></button>
+                    </div><!-- /. tools -->
+                </div>
                 <div class="box-body">
                     <div class="col-md-12">
                         <angular-grid-table grid-info="gridInfo" root-scope="this" list-right="listRight"></angular-grid-table>
@@ -284,10 +281,11 @@
 
                     </div>
                 </div>
-
             </div>
-
         </div>
+
+
+
         <div class="modal fade " id="infoExportModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
