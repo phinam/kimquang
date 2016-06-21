@@ -8,18 +8,16 @@ app.config(function ($stateProvider, $urlRouterProvider, $locationProvider) {
     $urlRouterProvider.otherwise('/welcome');
 
     $stateProvider
+        //User
+         .state('groupuser', {
+             url: '/groupuser',
+             templateUrl: '/Templates/view/user/groupuser-index.html',
+             controller: 'UserGroupCtrl'
+         })
              .state('account', {
                  url: '/account',
-                 templateUrl: '/Templates/view/account/account-index.html'
-                 //,resolve: {
-                 //    "check": function (accessFac, $location) {   //, $route, localStorageService function to be resolved, accessFac and $location Injected
-                 //        if (accessFac.checkPermission()) {    //check if the user has permission -- This happens before the page loads
-                 //            // return true;
-                 //        } else {
-                 //            window.location.href = '/index.html';			//redirect user to home if it does not have permission.
-                 //        }
-                 //    }
-                 //}
+                 templateUrl: '/Templates/view/account/account-index.html',
+                 controller: 'UserCtrl'
              })
         .state('assigncustomer', {
             url: '/assign-customer',

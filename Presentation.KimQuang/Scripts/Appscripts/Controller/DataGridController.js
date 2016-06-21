@@ -11,6 +11,7 @@ function dataGridsCtrl(DTOptionsBuilder, DTColumnDefBuilder, DTColumnBuilder, $s
     vm.selected = {};
     vm.selectAll = false;
     $rootScope.selectedItems = {};
+    $rootScope.hasSelectedItems = {};
 
     vm.dtOptions = DTOptionsBuilder.newOptions()
     .withOption('ajax', function (data, callback, settings) {
@@ -44,14 +45,17 @@ function dataGridsCtrl(DTOptionsBuilder, DTColumnDefBuilder, DTColumnBuilder, $s
                         totalRow = pData[2][0].TotalRow;
 
                         angular.forEach(data, function (item, key) {
+//                            console.log(item.ID, item.Cheked);
                             if (item.hasOwnProperty('Cheked')) {
                                 if (item.Cheked === "1") {
                                     item.Cheked = true;
+                                    $rootScope.selectedItems[item.ID] = true;
                                 } else {
                                     item.Cheked = false;
                                 }
                             }
                         });
+//                        console.log('$rootScope.selectedItems', $rootScope.selectedItems);
                         //                        console.log('pData', pData);
                     }
 
@@ -60,7 +64,7 @@ function dataGridsCtrl(DTOptionsBuilder, DTColumnDefBuilder, DTColumnBuilder, $s
                 recordsFiltered: totalRow,
                 data: data
             });
-          $rootScope.showModal = false;
+            $rootScope.showModal = false;
         }, function errorCallback(response) {
             console.log('error', response);
         })
@@ -75,21 +79,21 @@ function dataGridsCtrl(DTOptionsBuilder, DTColumnDefBuilder, DTColumnBuilder, $s
         .withOption("searching", true)
         .withOption("autowidth", false)
         .withOption('fnRowCallback', function (nRow, aData, iDisplayIndex, iDisplayIndexFull) {
+            if ($scope.gridInfo.sysViewID != 7) return;
+
             $compile(nRow)($scope);
             // Unbind first in order to avoid any duplicate handler (see https://github.com/l-lin/angular-datatables/issues/87)
-          //  debugger;
 
             $('td', nRow).unbind('click');
             $('td', nRow).bind('click', function () {
                 $scope.$apply(function () {
                     if ($scope.gridInfo.sysViewID == 7)
                         vm.setData(aData);
-                    //                    vm.someClickHandler(aData);
                 });
             });
             return nRow;
             //$('td', nRow).attr('nowrap', 'nowrap');
-            //return nRow;
+            //return nRow;    
         })
         .withOption('createdRow', function (row, data, dataIndex) {
             // Recompiling so we can bind Angular directive to the DT
@@ -104,15 +108,18 @@ function dataGridsCtrl(DTOptionsBuilder, DTColumnDefBuilder, DTColumnBuilder, $s
         })
     //  .withLanguageSource('Scripts/plugins/datatables/LanguageSource.json');
     vm.someClickHandler = function (info) {
-        console.log('info', info);
+//        console.log('info', info);
         vm.message = info.id + ' - ' + info.firstName;
     }
-    vm.setData = function (item, col) {
+
+    vm.setData = function (item) {
+//        console.log('item', item);
         var row = angular.copy(item);
         if (angular.isFunction(vm.rootScope.setData)) {
-            vm.rootScope.setData(row, col);
+            vm.rootScope.setData(row);
         }
     }
+
     function convertStringtoNumber(array, fieldName) {
         angular.forEach(array, function (item, key) {
             if (!isNaN(item[fieldName]) && item[fieldName] != '')
@@ -242,7 +249,8 @@ function dataGridsCtrl(DTOptionsBuilder, DTColumnDefBuilder, DTColumnBuilder, $s
             case controls.LIST_ICON:
                 col.notSortable();
                 col.renderWith(function (data, type, full, meta) {
-                    var result = '{{vm.listRight | json}}';
+//                    var result = '{{vm.listRight | json}}';
+                    var result = '';
                     angular.forEach(field.listAction, function (value, key) {
                         result += '<a href="" ng-click="vm.actionClick(' + full.ID + ",\'" + value.action + '\',this)" ng-hide="listRight.IsDelete == \'False\' && \'' + value.action + '\' == \'delete\'">' +
                             '<i  class="fa ' + value.classIcon + '">&nbsp;&nbsp;' + '</i>' +
@@ -256,7 +264,15 @@ function dataGridsCtrl(DTOptionsBuilder, DTColumnDefBuilder, DTColumnBuilder, $s
                 col.notSortable();
                 col.renderWith(function (data, type, full, meta) {
                     var result = '';
-                    vm.selected[full.ID] = false;
+                    vm.selected[full.ID] = null; //false
+                    if ($rootScope.hasSelectedItems[full.ID]) { //$rootScope.selectedItems[full.ID] || 
+                        vm.selected[full.ID] = true;
+                        full.Cheked = true;
+//                        console.log('$rootScope.selectedItems[full.ID]', $rootScope.selectedItems[full.ID]);
+//                        console.log('full.Cheked', full.Cheked);
+                    }
+
+                    
                     angular.forEach(field.listAction, function (value, key) {
                         result += '<input type="checkbox" ng-model="vm.selected[' + full.ID + ']" ng-checked="' + full.Cheked + '" ng-click="vm.toggleOne(vm.selected)">';
                     });
@@ -280,14 +296,20 @@ function dataGridsCtrl(DTOptionsBuilder, DTColumnDefBuilder, DTColumnBuilder, $s
             }
         }
         $rootScope.selectedItems = selectedItems;
+
+        $rootScope.hasSelectedItems = angular.extend($rootScope.hasSelectedItems, $rootScope.selectedItems);
+//        console.log('$rootScope.hasSelectedItems', $rootScope.hasSelectedItems);
     }
 
     vm.toggleOne = function (selectedItems) {
+//        console.log('selectedItems', selectedItems);
         for (var id in selectedItems) {
             if (selectedItems.hasOwnProperty(id)) {
-                if (!selectedItems[id]) {
+                if (!selectedItems[id] ||selectedItems[id] == null) {
                     vm.selectAll = false;
                     $rootScope.selectedItems = selectedItems;
+                    $rootScope.hasSelectedItems = angular.extend($rootScope.hasSelectedItems, $rootScope.selectedItems);
+//                    console.log('$rootScope.hasSelectedItems', $rootScope.hasSelectedItems);
                     return;
                 }
             }

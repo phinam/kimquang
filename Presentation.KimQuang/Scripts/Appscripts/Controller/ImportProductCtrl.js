@@ -318,21 +318,23 @@
     $scope.ChooseImage = function (objUpload) {
         $("#uploadproposal").click();
     }
-    $scope.importAction = function () {
+     $scope.importAction = function () {
         var entry = {
             ClientKey: 1,
             Filename: $scope.files
         }
-        //    $rootScope.showModal = true;
+         $rootScope.showModal = true;
         $scope.errorFile = '';
+
         coreService.callServer('core/TemplateService.asmx', 'ImportProductExcel', entry, function (data) {
             $rootScope.showModal = false;
             var pData = data[0][0];
-            if (pData.ID.indexOf("00")!=-1)
+            if (pData.Code.indexOf("00")==0)
                 dialogs.notify("Import thành công", "Import thành công");
-            else if (pData.ID.indexOf("01") != -1) {
+            else if (pData.Code.indexOf("01") != -1) {
                 dialogs.notify("Import còn dòng lỗi", "Import còn dòng lỗi. Nhân vào nút download bên dưới để downf ile lỗi về điều chỉnh");
-                $scope.errorFile = pData.Name;
+                $scope.errorFile = pData.Code.replace('01-', '');
+                $scope.errorFile = $scope.errorFile.replace('\\','/')
             }
             else {
                 dialogs.notify("Import không thành công", "Import không thành công");

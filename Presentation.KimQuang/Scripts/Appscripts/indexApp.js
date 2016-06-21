@@ -577,7 +577,7 @@ angular.module('indexApp')
 
                 var curentData = el.val();
                 if (curentData == '') {
-                    if (e.which != 77 && e.which != 109 && e.which != 98 && e.which != 66 && e.which != 103 && e.which != 71 && e.which != 8 && e.which != 0 && (e.which < 48 || e.which > 57)) {
+                    if (e.which != 89 && e.which != 121 && e.which != 84 && e.which != 116 && e.which != 77 && e.which != 109 && e.which != 98 && e.which != 66 && e.which != 103 && e.which != 71 && e.which != 8 && e.which != 0 && (e.which < 48 || e.which > 57)) {
                         //display error message
                         e.preventDefault();
                         return false;

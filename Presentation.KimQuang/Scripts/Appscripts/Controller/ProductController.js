@@ -91,14 +91,15 @@
              { name: 'PriorityLevel', heading: 'UT', className: 'text-center pd-0 break-word' },
             { name: 'Name', heading: 'TÊN', className: 'text-center pd-0 break-word' },
              { name: 'AreaDescription', heading: 'DIỆN TÍCH TRỐNG', className: 'text-center pd-0 break-word' },
+             { name: 'AvailableFloor', heading: 'T', className: 'text-center pd-0 break-word', width: '20px' },
              { name: 'PriceDescription', heading: 'LƯU Ý GIÁ', className: 'text-center pd-0 break-word' },
              { name: 'HirePrice', heading: 'GIÁ THUÊ', className: 'text-center pd-0 break-word', width: '60px' },
              { name: 'HireManagermentFee', heading: 'PQL', className: 'text-center pd-0 break-word' },
              { name: 'TotalPrice', heading: 'GIÁ TỐNG(M2)', className: 'text-center pd-0 break-word' },
              { name: 'HireTotalAmount', heading: 'GIÁ TỐNG(DT)', className: 'text-center pd-0 break-word' },
              { name: 'HireFinalPrice', heading: 'GIÁ CHỐT', className: 'text-center pd-0 break-word' },
-             { name: 'BasicInfo', heading: 'THÔNG TIN CƠ BẢN', width: '450px', className: 'text-left pd-10 break-word' },
-             { name: 'Contact', heading: 'LIÊN HỆ', width: '10px', className: 'text-left pd-10 break-word' },
+             { name: 'BasicInfo', heading: 'THÔNG TIN CƠ BẢN', width: '400px', className: 'text-left pd-10 break-word' },
+             { name: 'Contact', heading: 'LIÊN HỆ', width: '100px', className: 'text-left pd-10 break-word' },
             { name: 'HomeNumber', heading: 'SỐ NHÀ', className: 'text-center pd-0 break-word' },
             { name: 'StreetName', heading: 'ĐƯỜNG', className: 'text-center pd-0 break-word' },
               { name: 'WardName', heading: 'PHƯỜNG', className: 'text-center pd-0 break-word' },
@@ -496,7 +497,7 @@
     $scope.listBuildingDirectionID = [];
     $scope.listOfficeDirectionID = [];
     $scope.listOfficeRankingID = [];
-    $scope.listOrtherFeeType = [];
+    $scope.listOtherFeeType = [];
 
     $scope.search = function (searchEntry) {
         $rootScope.showModal = true;
@@ -537,13 +538,13 @@
             searchEntry.OfficeRankingID = listOF.toString();
         }
       
-        searchEntry.OrtherFeeTypeID = '';
-        if ($scope.listOrtherFeeType.length > 0) {
+        searchEntry.OtherFeeTypeID = '';
+        if ($scope.listOtherFeeType.length > 0) {
             var listOFT = new Array();
-            for (var i = 0; i < $scope.listOrtherFeeType.length; i++) {
-                listOFT.push($scope.listOrtherFeeType[i].Value);
+            for (var i = 0; i < $scope.listOtherFeeType.length; i++) {
+                listOFT.push($scope.listOtherFeeType[i].Value);
             }
-            searchEntry.OrtherFeeTypeID = listOFT.toString();
+            searchEntry.OtherFeeTypeID = listOFT.toString();
         }
        
        
