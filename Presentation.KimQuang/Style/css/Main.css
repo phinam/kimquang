@@ -119,9 +119,6 @@ table#AreaGrid tbody td {
         right: 0px;
     }
 
-.dataTables_wrapper tr td {
-    cursor: pointer;
-}
 
 
 
@@ -421,5 +418,18 @@ margin-top:8px;
     background-color:#ccc;
     margin-left:-15px;
     list-style:none;
+
+}
+.dataTables_wrapper tr th {
+    min-height:32px;
+}
+
+.dataTables_wrapper tr td{
+    min-height:32px;    
+    cursor: pointer;
+}
+
+table.table-bordered.dataTable tbody th, table.table-bordered.dataTable tbody td {
+    min-height:32px;
 
 }
