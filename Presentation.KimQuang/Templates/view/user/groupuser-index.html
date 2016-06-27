@@ -102,14 +102,14 @@
                                 <div class="box-body">
                                     <div class="col-md-12 text-center" style="zoom:1.5">
                                         <div class="checkbox checkbox-inline checkbox-primary">
-                                            <input class="styled styled" id="cbDistrictDeneyAll" type="checkbox" ng-checked="dataSelected.HavePackingBike=='1'" ng-model="dataSelected.HavePackingBike" ng-true-value="'1'">
+                                            <input class="styled styled" id="cbDistrictDeneyAll" type="checkbox" ng-checked="dataSelected.AllowAll=='1' && dataSelected.DenyAll!='1' " ng-model=" dataselected.DenyAll" ng-true-value="'1'">
                                             <label for="cbDistrictDeneyAll" class=" text-bold">
                                                 Allow All
                                             </label>
                                         </div>
 
                                         <div class="checkbox checkbox-inline checkbox-primary">
-                                            <input class="styled styled" id="checkbox10" type="checkbox" ng-checked="dataSelected.Deny=='1'" ng-model="dataSelected.Deny" ng-true-value="'1'">
+                                            <input class="styled styled" id="checkbox10" type="checkbox" ng-checked="dataSelected.DenyAll=='1' && dataSelected.AllowAll!='1' " ng-model="dataSelected.DenyAll" ng-true-value="'1'">
                                             <label for="checkbox10" class="text-bold">
                                                 Deny All
                                             </label>
