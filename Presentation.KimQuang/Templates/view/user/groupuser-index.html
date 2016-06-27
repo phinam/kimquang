@@ -3,113 +3,151 @@
 <section class="content overflow-x-scroll">
     <div class="row " ng-init="init()">
 
-        <div class="col-md-12 col-sm-12">
-            <div class="box box-default box-solid">
-                <div class="box-header with-border">
-                    <i class="fa fa-search"></i>
-                    <h3 class="box-title text-uppercase">
-                        Thông tin chi tiết
-                    </h3>
-                    <!-- tools box -->
-                    <div class="pull-right box-tools">
-                        <button class="btn btn-default btn-sm" data-widget="collapse" title="Rút gọn"><i class="fa fa-minus"></i></button>
-                    </div><!-- /. tools -->
-                </div>
-                <div class="box-body">
-                    <form class="form-horizontal row" name="addProductForm" novalidate="">
-                        <!--Column Left-->
-                        <div class="col-md-6 col-sm-6  col-sm-offset-3">
 
+        <div class="col-md-12">
+            <div id="exTab3" class="container col-md-12">
+                <ul class="nav nav-pills">
+                    <li >
+                        <a href="#1b" data-toggle="tab">Thông tin nhóm</a>
+                    </li>
+                    <li class="active">
+                        <a href="#2b" data-toggle="tab">Dữ liệu</a>
+                    </li>
+                    <li>
+                        <a href="#3b" data-toggle="tab">Dữ liệu</a>
+                    </li>
+                    <li>
+                        <a href="#4a" data-toggle="tab">Khác</a>
+                    </li>
+                </ul>
 
-                            <div class="form-group">
-                                <label for="inputEmail3" class="col-sm-3 control-label">Tên đăng nhập</label>
-                                <div class="col-sm-9 padding-right-19">
-                                    <input ng-model="dataSeleted.UserName" type="text" class="form-control" id="inputEmail3" placeholder="Tên đăng nhập" ng-change="changeText()"></input>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label for="inputPassword3" class="col-sm-3 control-label">Mậu khẩu</label>
-                                <div class="col-sm-9 padding-right-19 " ng-hide="dataSeleted.ID!=0">
-                                    <input ng-model="dataSeleted.Password" type="password" class="form-control" id="inputPassword3" placeholder="Password">
+                <div class="tab-content clearfix">
+                    <div class="tab-pane " id="1b">
+                        <form class="form-horizontal row" name="addProductForm" novalidate="">
+                            <!--Column Left-->
+                            <div class="col-md-4  ">
+                                <div class="form-group">
+                                    <label for="inputEmail3" class="col-sm-12 control-label text-center">NHÓM</label>
                                 </div>
 
-                                <div class="col-sm-7" ng-hide="dataSeleted.ID==0">
-                                    <input ng-model="dataSeleted.Password" type="text" class="form-control" id="Password1" placeholder="Password">
-                                </div>
-                                <div class="col-sm-2 padding-right-19 pull-right" ng-hide="dataSeleted.ID==0">
-                                    <button class="btn pull-right" ng-class="themeButton" ng-click="resetPassword()">
-                                        <span>Reset  </span>
-
-                                    </button>
+                                <div class="form-group">
+                                    <label for="inputEmail3" class="col-sm-3 control-label">Tên nhóm</label>
+                                    <div class="col-sm-9 padding-right-19">
+                                        <input ng-model="dataSeleted.Name" type="text" class="form-control" id="inputEmail3" placeholder="Tên đăng nhập" ng-change="changeText()"></input>
+                                    </div>
                                 </div>
 
-                            </div>
-                            <div class="form-group">
-                                <label for="inputEmail3" class="col-sm-3 control-label">Họ tên</label>
-                                <div class="col-sm-9 padding-right-19">
-                                    <input ng-model="dataSeleted.FullName" type="text" class="form-control" id="inputEmail3" placeholder="Họ tên" ng-change="changeText()"></input>
+                                <div class="form-group">
+                                    <label for="inputEmail3" class="col-sm-3 control-label">Mô tả</label>
+                                    <div class="col-sm-9 padding-right-19">
+                                        <input ng-model="dataSeleted.Description" type="text" class="form-control" id="inputEmail3" placeholder="Email" ng-change="changeText()"></input>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="employee" class="col-sm-3 control-label">Tình trạng</label>
+                                    <div class="col-sm-9 padding-right-19">
+                                        <ui-select ng-model="dataSeleted.Status" theme="selectize" ng-disabled="disabled" title="Choose a employee">
+                                            <ui-select-match placeholder="Chọn trạng thái cho tài khoản...">{{$select.selected.Name}}</ui-select-match>
+                                            <ui-select-choices repeat="item.ID as item in employeelist | filter: $select.search">
+                                                <span ng-bind-html="item.Name | highlight: $select.search"></span>
+                                            </ui-select-choices>
+                                        </ui-select>
+                                        </ui-select>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="employee" class="col-sm-3 control-label">&nbsp;</label>
+                                    <div class="col-sm-4">
+                                        <button class="form-control btn-primary" ng-click="AddNewGroup()">Thêm mới </button>
+                                    </div>
+                                    <div class="col-sm-5 pull-right">
+                                        <button class="form-control btn-primary pull-right">Reset </button>
+                                    </div>
                                 </div>
                             </div>
-                            <div class="form-group">
-                                <label for="inputEmail3" class="col-sm-3 control-label">Chức vụ</label>
-                                <div class="col-sm-9 padding-right-19">
-                                    <input ng-model="dataSeleted.Position" type="text" class="form-control" id="inputEmail3" placeholder="Họ tên" ng-change="changeText()"></input>
+
+                            <div class="col-md-8">
+                                <div class="form-group">
+                                    <label for="inputEmail3" class="col-sm-12 control-label text-center">&nbsp;</label>
+                                </div>
+                                <div class="form-group" ng-repeat="role in roles">
+                                    <label for="inputEmail3" class="col-sm-3 control-label text-center">{{role.viewName}}</label>
+                                    <div class="col-sm-9">
+                                        <div class="checkbox checkbox-primary checkbox-inline" ng-repeat="act in role.Action">
+                                            <input class=" styled styled" id="{{act}}{{$index}}" type="checkbox" ng-checked="act.HasPermision=='1'" ng-model="act.HasPermision" ng-true-value="'1'">
+                                            <label for="{{act}}{{$index}}">
+                                                {{act.ActionName}}
+                                            </label>
+                                        </div>
+
+
+                                    </div>
                                 </div>
                             </div>
-                            <div class="form-group">
-                                <label for="inputEmail3" class="col-sm-3 control-label">Điện thoại bàn</label>
-                                <div class="col-sm-9 padding-right-19">
-                                    <input ng-model="dataSeleted.Telephone" type="text" class="form-control" id="inputEmail3" placeholder="Điện thoại" ng-change="changeText()"></input>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label for="inputEmail3" class="col-sm-3 control-label">ĐTDD</label>
-                                <div class="col-sm-9 padding-right-19">
-                                    <input ng-model="dataSeleted.CellPhone" type="text" class="form-control" id="inputEmail3" placeholder="Điện thoại" ng-change="changeText()"></input>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label for="inputEmail3" class="col-sm-3 control-label">Email</label>
-                                <div class="col-sm-9 padding-right-19">
-                                    <input ng-model="dataSeleted.Email" type="text" class="form-control" id="inputEmail3" placeholder="Email" ng-change="changeText()"></input>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label for="employee" class="col-sm-3 control-label">Tình trạng</label>
-                                <div class="col-sm-9 padding-right-19">
-                                    <ui-select ng-model="dataSeleted.Status" theme="selectize" ng-disabled="disabled" title="Choose a employee">
-                                        <ui-select-match placeholder="Chọn trạng thái cho tài khoản...">{{$select.selected.Name}}</ui-select-match>
-                                        <ui-select-choices repeat="item.ID as item in employeelist | filter: $select.search">
-                                            <span ng-bind-html="item.Name | highlight: $select.search"></span>
-                                        </ui-select-choices>
-                                    </ui-select>
-                                    </ui-select>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label for="employee" class="col-sm-3 control-label">&nbsp;</label>
-                                <div class="col-sm-4">
-                                    <button class="form-control btn-primary ">Thêm mới </button>
-                                </div>
-                                <div class="col-sm-5 pull-right">
-                                    <button class="form-control btn-primary pull-right">Reset </button>
-                                </div>
-                            </div>
+
+                        </form>
+                    </div>
+                    <div class="tab-pane active" id="2b">
+
+                        <div class="col-md-4">
+
+                            <table class="table table-condensed table-striped ">
+                                <tr>
+                                    <th style="width: 10px">#</th>
+                                    <th>Khu vực</th>
+                                    <th style="text-align:center" >Cho phép</th>
+                                    <th style="text-align:center">Từ chối</th>
+                                </tr>
+                                <tr ng-repeat="f in districtList" ng-if="$index<8">
+                                    <td></td>
+                                    <td style=" white-space: nowrap;  overflow: hidden;  text-overflow: ellipsis;  max-width: 150px;">
+                                        {{f.Name}}
+                                    </td>
+
+                                    <td>
+                                        <div class="checkbox checkbox-primary  text-center " style=" padding-top:2px!important; margin-top: 2px;
+    margin-bottom: 2px;">
+                                            <input id="cboDocumment{{$index}}" class="styled" type="checkbox" ng-true-value="'1'" ng-false-value="'0'" ng-model="f.default" ng-checked="f.default=='1'">
+                                            <label for="cboDocumment{{$index}}">
+                                                &nbsp;
+                                            </label>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="checkbox checkbox-primary  text-center " style=" padding-top:2px!important; margin-top: 2px;
+    margin-bottom: 2px;">
+                                            <input id="cboDocumment{{$index}}" class="styled" type="checkbox" ng-true-value="'0'" ng-false-value="'1'" ng-model="f.default" ng-checked="f.default=='1'">
+                                            <label for="cboDocumment{{$index}}">
+                                                &nbsp;
+                                            </label>
+                                        </div>
+                                    </td>
+                                </tr>
+
+
+                            </table>
                         </div>
-
-
-
-                    </form>
-
+                    </div>
+                    <div class="tab-pane" id="3b">
+                        <h3>We applied clearfix to the tab-content to rid of the gap between the tab and the content</h3>
+                    </div>
+                    <div class="tab-pane" id="4b">
+                        <h3>We use css to change the background color of the content to be equal to the tab</h3>
+                    </div>
                 </div>
 
-                <!-- Navigator part -->
+
+
             </div>
+
+        </div>
+        <div class="col-md-12 col-sm-12">
+
             <div class="box box-default box-solid">
                 <div class="box-header with-border box-info">
                     <i class="fa fa-list-ol"></i>
                     <h3 class="box-title text-uppercase">
-                        Danh sách tài khoản
+                        Danh sách nhóm
                     </h3>
                     <!-- tools box -->
                     <div class="pull-right box-tools">
@@ -125,9 +163,10 @@
             </div>
         </div>
 
+
+
+
     </div>
-
-
 </section>
 
 <script>
