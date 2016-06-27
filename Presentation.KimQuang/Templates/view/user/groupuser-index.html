@@ -7,7 +7,7 @@
         <div class="col-md-12">
             <div id="exTab3" class="container col-md-12">
                 <ul class="nav nav-pills">
-                    <li >
+                    <li>
                         <a href="#1b" data-toggle="tab">Thông tin nhóm</a>
                     </li>
                     <li class="active">
@@ -88,45 +88,157 @@
                         </form>
                     </div>
                     <div class="tab-pane active" id="2b">
+                        <div class="col-md-12" style="margin-top:10px">
 
-                        <div class="col-md-4">
-
-                            <table class="table table-condensed table-striped ">
-                                <tr>
-                                    <th style="width: 10px">#</th>
-                                    <th>Khu vực</th>
-                                    <th style="text-align:center" >Cho phép</th>
-                                    <th style="text-align:center">Từ chối</th>
-                                </tr>
-                                <tr ng-repeat="f in districtList" ng-if="$index<8">
-                                    <td></td>
-                                    <td style=" white-space: nowrap;  overflow: hidden;  text-overflow: ellipsis;  max-width: 150px;">
-                                        {{f.Name}}
-                                    </td>
-
-                                    <td>
-                                        <div class="checkbox checkbox-primary  text-center " style=" padding-top:2px!important; margin-top: 2px;
-    margin-bottom: 2px;">
-                                            <input id="cboDocumment{{$index}}" class="styled" type="checkbox" ng-true-value="'1'" ng-false-value="'0'" ng-model="f.default" ng-checked="f.default=='1'">
-                                            <label for="cboDocumment{{$index}}">
-                                                &nbsp;
+                            <div class="box box-solid box-primary">
+                                <div class="box-header with-border">
+                                    <h3 class="box-title">Phân quyền theo khu vực</h3>
+                                    <div class="box-tools pull-right">
+                                        <div class="box-tools pull-right">
+                                            <button class="btn btn-box-tool" data-widget="collapse" data-toggle="tooltip" title="Collapse"><i class="fa fa-minus"></i></button>
+                                        </div>
+                                    </div><!-- /.box-tools -->
+                                </div><!-- /.box-header -->
+                                <div class="box-body">
+                                    <div class="col-md-12 text-center" style="zoom:1.5">
+                                        <div class="checkbox checkbox-inline checkbox-primary">
+                                            <input class="styled styled" id="cbDistrictDeneyAll" type="checkbox" ng-checked="dataSelected.HavePackingBike=='1'" ng-model="dataSelected.HavePackingBike" ng-true-value="'1'">
+                                            <label for="cbDistrictDeneyAll" class=" text-bold">
+                                                Allow All
                                             </label>
                                         </div>
-                                    </td>
-                                    <td>
-                                        <div class="checkbox checkbox-primary  text-center " style=" padding-top:2px!important; margin-top: 2px;
-    margin-bottom: 2px;">
-                                            <input id="cboDocumment{{$index}}" class="styled" type="checkbox" ng-true-value="'0'" ng-false-value="'1'" ng-model="f.default" ng-checked="f.default=='1'">
-                                            <label for="cboDocumment{{$index}}">
-                                                &nbsp;
+
+                                        <div class="checkbox checkbox-inline checkbox-primary">
+                                            <input class="styled styled" id="checkbox10" type="checkbox" ng-checked="dataSelected.Deny=='1'" ng-model="dataSelected.Deny" ng-true-value="'1'">
+                                            <label for="checkbox10" class="text-bold">
+                                                Deny All
                                             </label>
                                         </div>
-                                    </td>
-                                </tr>
 
 
-                            </table>
+                                    </div>
+
+                                    <div class="col-md-4">
+
+                                        <table class="table table-condensed table-striped ">
+                                            <tr>
+                                                <th style="width: 10px">#</th>
+                                                <th>Khu vực</th>
+                                                <th style="text-align:center">Cho phép</th>
+                                                <th style="text-align:center">Từ chối</th>
+                                            </tr>
+                                            <tr ng-repeat="f in districtList" ng-if="$index<8">
+                                                <td></td>
+                                                <td style=" white-space: nowrap;  overflow: hidden;  text-overflow: ellipsis;  max-width: 150px;">
+                                                    {{f.Name}}
+                                                </td>
+
+                                                <td>
+                                                    <div class="checkbox checkbox-primary  text-center " style=" padding-top:2px!important; margin-top: 2px;
+    margin-bottom: 2px;">
+                                                        <input id="cboDocumment{{$index}}" class="styled" type="checkbox" ng-true-value="'1'" ng-false-value="'0'" ng-model="f.default" ng-checked="f.default=='1'">
+                                                        <label for="cboDocumment{{$index}}">
+                                                            &nbsp;
+                                                        </label>
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <div class="checkbox checkbox-primary  text-center " style=" padding-top:2px!important; margin-top: 2px;
+    margin-bottom: 2px;">
+                                                        <input id="cboDocumment{{$index}}" class="styled" type="checkbox" ng-true-value="'0'" ng-false-value="'1'" ng-model="f.default" ng-checked="f.default=='1'">
+                                                        <label for="cboDocumment{{$index}}">
+                                                            &nbsp;
+                                                        </label>
+                                                    </div>
+                                                </td>
+                                            </tr>
+
+
+                                        </table>
+                                    </div>
+                                    <div class="col-md-4">
+
+                                        <table class="table table-condensed table-striped ">
+                                            <tr>
+                                                <th style="width: 10px">#</th>
+                                                <th>Khu vực</th>
+                                                <th style="text-align:center">Cho phép</th>
+                                                <th style="text-align:center">Từ chối</th>
+                                            </tr>
+                                            <tr ng-repeat="f in districtList" ng-if="$index>=8 &&$index<16">
+                                                <td></td>
+                                                <td style=" white-space: nowrap;  overflow: hidden;  text-overflow: ellipsis;  max-width: 150px;">
+                                                    {{f.Name}}
+                                                </td>
+
+                                                <td>
+                                                    <div class="checkbox checkbox-primary  text-center " style=" padding-top:2px!important; margin-top: 2px;
+    margin-bottom: 2px;">
+                                                        <input id="cboDocumment{{$index}}" class="styled" type="checkbox" ng-true-value="'1'" ng-false-value="'0'" ng-model="f.default" ng-checked="f.default=='1'">
+                                                        <label for="cboDocumment{{$index}}">
+                                                            &nbsp;
+                                                        </label>
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <div class="checkbox checkbox-primary  text-center " style=" padding-top:2px!important; margin-top: 2px;
+    margin-bottom: 2px;">
+                                                        <input id="cboDocumment{{$index}}" class="styled" type="checkbox" ng-true-value="'0'" ng-false-value="'1'" ng-model="f.default" ng-checked="f.default=='1'">
+                                                        <label for="cboDocumment{{$index}}">
+                                                            &nbsp;
+                                                        </label>
+                                                    </div>
+                                                </td>
+                                            </tr>
+
+
+                                        </table>
+                                    </div>
+                                    <div class="col-md-4">
+
+                                        <table class="table table-condensed table-striped ">
+                                            <tr>
+                                                <th style="width: 10px">#</th>
+                                                <th>Khu vực</th>
+                                                <th style="text-align:center">Cho phép</th>
+                                                <th style="text-align:center">Từ chối</th>
+                                            </tr>
+                                            <tr ng-repeat="f in districtList" ng-if="$index>=16">
+                                                <td></td>
+                                                <td style=" white-space: nowrap;  overflow: hidden;  text-overflow: ellipsis;  max-width: 150px;">
+                                                    {{f.Name}}
+                                                </td>
+
+                                                <td>
+                                                    <div class="checkbox checkbox-primary  text-center " style=" padding-top:2px!important; margin-top: 2px;
+    margin-bottom: 2px;">
+                                                        <input id="cboDocumment{{$index}}" class="styled" type="checkbox" ng-true-value="'1'" ng-false-value="'0'" ng-model="f.default" ng-checked="f.default=='1'">
+                                                        <label for="cboDocumment{{$index}}">
+                                                            &nbsp;
+                                                        </label>
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <div class="checkbox checkbox-primary  text-center " style=" padding-top:2px!important; margin-top: 2px;
+    margin-bottom: 2px;">
+                                                        <input id="cboDocumment{{$index}}" class="styled" type="checkbox" ng-true-value="'0'" ng-false-value="'1'" ng-model="f.default" ng-checked="f.default=='1'">
+                                                        <label for="cboDocumment{{$index}}">
+                                                            &nbsp;
+                                                        </label>
+                                                    </div>
+                                                </td>
+                                            </tr>
+
+
+                                        </table>
+                                    </div>
+
+                                </div><!-- /.box-body -->
+                            </div><!-- /.box -->
                         </div>
+
+
+
                     </div>
                     <div class="tab-pane" id="3b">
                         <h3>We applied clearfix to the tab-content to rid of the gap between the tab and the content</h3>
