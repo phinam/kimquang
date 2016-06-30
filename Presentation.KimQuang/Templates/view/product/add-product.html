@@ -293,7 +293,12 @@
                         <div class="form-group">
                             <label for="PriceDescription" class="col-sm-3 control-label text-left-important">Hạng văn phòng</label>
                             <div class="col-sm-9 ">
-                                <input type=" text" class="form-control" id="OfficeRank" name="OfficeRank" tabindex="43" ng-model="dataSelected.OfficeRank" ng-change="changeText()" />
+                                <!--<input type=" text" class="form-control" id="OfficeRank" name="OfficeRank" tabindex="43" ng-model="dataSelected.OfficeRank" ng-change="changeText()" />-->
+                                <select class="form-control" ng-model="dataSelected.OfficeRank" tabindex="43"
+                                        ng-options="item.Value as item.Name for item in officeRankingSelectList">
+                                    <option value="">-- Chọn hạng văn phòng</option>
+                                </select>
+
                             </div>
                         </div>
 
@@ -375,9 +380,9 @@
                             </div>
                             <div class="col-sm-5">
                                 <!--<button type="button" class="btn btn-primary start col-xs-12" ng-disabled="!dataSelected.FileType" tabindex=" 55">
-                                    <i class="glyphicon glyphicon-upload"></i>
-                                    <span>Thêm tài liệu</span>
-                                </button>-->
+                            <i class="glyphicon glyphicon-upload"></i>
+                            <span>Thêm tài liệu</span>
+                        </button>-->
 
                                 <span class="btn btn-primary fileinput-button col-xs-12" ng-class="{disabled: disabled}" ng-disabled="!dataSelected.FileType" tabindex=" 55">
                                     <i class="glyphicon glyphicon-plus"></i>
