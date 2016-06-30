@@ -499,12 +499,12 @@
     $scope.listOfficeRankingID = [];
     $scope.listOtherFeeType = [];
 
-    $scope.search = function (entry) {
+    $scope.search = function (searchEntry) {
         $rootScope.showModal = true;
 
 
-        var searchEntry = angular.copy(entry);
-
+        //var searchEntry = angular.copy(entry);
+        //console.log(searchEntry);
 
 
         searchEntry.UnAssignedName = tiengvietkhongdau(searchEntry.Name);
@@ -572,8 +572,7 @@
             if (typeof searchEntry.ModifyDateTime != 'undefined')
                 if (searchEntry.ModifyDateTime != '')
                     searchEntry.ModifyDateTime = $filter('date')(searchEntry.ModifyDateTime, "yyyy-MM-dd");
-            if (typeof searchEntry.HavePackingCar != 'undefined')
-                searchEntry.HavePackingCar = searchEntry.HavePackingCar*1-100;
+            
         }
         catch (ex) {
 
@@ -588,6 +587,8 @@
                 }
             }
         }
+        if (typeof searchEntry.HavePackingCarUI != 'undefined')
+            searchEntry.HavePackingCar = searchEntry.HavePackingCarUI * 1 - 100;
 
         if ($rootScope.searchEntryFilter != null)
             searchEntry = $rootScope.searchEntryFilter;
