@@ -54,7 +54,8 @@ app.config(function ($stateProvider, $urlRouterProvider, $locationProvider) {
         })
      .state('test', {
          url: '/test',
-         templateUrl: '/Templates/view/chart/baseline-index.html'
+         templateUrl: '/Templates/view/test/index.html',
+         controller: 'TestCtrl'
      })
         //product
         .state('productlist', {
