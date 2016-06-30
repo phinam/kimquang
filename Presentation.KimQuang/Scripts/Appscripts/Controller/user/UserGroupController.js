@@ -8,29 +8,16 @@
             { name: 'RowIndex', heading: 'RowIndex', isHidden: true },
             { name: 'ID', heading: 'ID', isHidden: true },
             { name: 'MultiSelect', heading: titleHtml, width: '50px', className: 'text-center pd-0 break-word', type: controls.CHECKBOX, listAction: [{ classIcon: 'form-control', action: 'multiSelect' }] },
-            { name: 'LastUpdatedDateTime', heading: 'Ngày cập nhật', width: '90px', className: 'text-center pd-0 break-word' },
-             { name: 'PriorityLevel', heading: 'UT', className: 'text-center pd-0 break-word' },
-            { name: 'Name', heading: 'Tên', className: 'text-center pd-0 break-word' },
-             { name: 'AreaDescription', heading: 'Diện tích trống', className: 'text-center pd-0 break-word' },
-             { name: 'PriceDescription', heading: 'Lưu ý giá', className: 'text-center pd-0 break-word' },
-             { name: 'HirePrice', heading: 'Giá thuê', className: 'text-center pd-0 break-word' },
-             { name: 'HireManagermentFee', heading: 'PQL', className: 'text-center pd-0 break-word' },
-             { name: 'TotalPrice', heading: 'Giá tổng(M2)', className: 'text-center pd-0 break-word' },
-             { name: 'HireTotalAmount', heading: 'Giá tổng(DT)', className: 'text-center pd-0 break-word' },
-             { name: 'HireFinalPrice', heading: 'Giá chốt', className: 'text-center pd-0 break-word' },
-             { name: 'BasicInfo', heading: 'Thông tin cơ bản', width: '250px', className: 'text-center pd-0 break-word' },
-             { name: 'Contact', heading: 'Liên hệ', width: '152px', className: 'text-center pd-0 break-word' },
-            { name: 'HomeNumber', heading: 'Số nhà', className: 'text-center pd-0 break-word' },
-            { name: 'StreetName', heading: 'Đường', className: 'text-center pd-0 break-word' },
-              { name: 'WardName', heading: 'Phường', className: 'text-center pd-0 break-word' },
-            { name: 'DistrictName', heading: 'Quận', className: 'text-center pd-0 break-word' },
 
+             { name: 'Name', heading: 'Name', width: '152px', className: 'text-center pd-0 break-word' },
 
-            { name: 'Action1', heading: 'Sửa', width: '50px', className: 'text-center pd-0 break-word', type: controls.LIST_ICON, listAction: [{ classIcon: 'fa-pencil-square-o', action: 'view' }] },
-            { name: 'Action2', heading: 'Xóa', width: '50px', className: 'text-center pd-0 break-word', type: controls.LIST_ICON, listAction: [{ classIcon: 'fa-times  text-danger', action: 'delete' }] }
+              { name: 'Description', heading: 'Mô tả', className: 'text-center pd-0 break-word' },
+            { name: 'Status', heading: 'Trạng thái', className: 'text-center pd-0 break-word' },
+
+{ name: 'Action1', heading: 'THAO TÁC', width: '100px', className: 'text-center pd-0 break-word', type: controls.LIST_ICON, listAction: [{ classIcon: 'fa-files-o text-primary', action: 'copy' }, { classIcon: 'fa-pencil-square-o', action: 'view' }, { classIcon: 'fa fa-times  text-danger', action: 'delete' }] }
         ],
         data: [],
-        sysViewID: 20,
+        sysViewID: 30,
         searchQuery: '',
         onActionClick: function (row, act) {
             //            console.log(row, act);
@@ -78,4 +65,59 @@
             }
         }
     }
+
+    coreService.getListEx({ Sys_ViewID: 31 }, function (data) {
+
+        var arr = data[1];
+      //  console.log(arr)
+        var roles = new Array();
+        angular.forEach(arr, function (f, key) {
+            //arrDocument.push({ Name: f.fileName, FileType: f.fileType, Default: f.default })
+            //var obj = {ViewName:''};
+            var y = _.some(roles, function (c) {
+                return c.ViewName == f.ViewName;
+            });
+            //   console.log('yyyyy', y);
+            if (!y) {
+                var list = _.where(arr, { ViewName: f.ViewName });
+                roles.push({ ViewName: f.ViewName, Action: list,ViewID:f.ID });
+            }
+        });
+        $scope.roles = roles;
+    });
+
+
+    $scope.AddNewGroup = function () {
+        //  var entry = angular.copy($scope.dataSeleted);
+        var entry = { Action: 'INSERT', Sys_ViewID: 31, UserGroupID: 1 };
+        entry.Action = 'INSERT';
+        entry.Items = $scope.roles;
+        coreService.actionEntry2(entry, function (data) { });
+    }
+
+    coreService.getListEx({ Sys_ViewID: 32 }, function (data) {
+
+        var arr = data;
+        console.log(arr)
+        var roles = new Array();
+        //angular.forEach(arr, function (f, key) {
+        //    //arrDocument.push({ Name: f.fileName, FileType: f.fileType, Default: f.default })
+        //    //var obj = {ViewName:''};
+        //    var y = _.some(roles, function (c) {
+        //        return c.ViewName == f.ViewName;
+        //    });
+        //    //   console.log('yyyyy', y);
+        //    if (!y) {
+        //        var list = _.where(arr, { ViewName: f.ViewName });
+        //        roles.push({ ViewName: f.ViewName, Action: list, ViewID: f.ID });
+        //    }
+        //});
+        //$scope.roles = roles;
+    });
+    $scope.districtList = [];
+    coreService.getListEx({ CityID: 2, Sys_ViewID: 18 }, function (data) {
+        $scope.districtList = data[1];
+        console.log($scope.districtList);
+    });
+
 });

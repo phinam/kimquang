@@ -499,11 +499,11 @@
     $scope.listOfficeRankingID = [];
     $scope.listOtherFeeType = [];
 
-    $scope.search = function (searchEntry) {
+    $scope.search = function (entry) {
         $rootScope.showModal = true;
 
 
-
+        var searchEntry = angular.copy(entry);
 
 
 
@@ -572,10 +572,13 @@
             if (typeof searchEntry.ModifyDateTime != 'undefined')
                 if (searchEntry.ModifyDateTime != '')
                     searchEntry.ModifyDateTime = $filter('date')(searchEntry.ModifyDateTime, "yyyy-MM-dd");
+            if (typeof searchEntry.HavePackingCar != 'undefined')
+                searchEntry.HavePackingCar = searchEntry.HavePackingCar*1-100;
         }
         catch (ex) {
 
         }
+
 
 
         for (var property in searchEntry) {
@@ -617,8 +620,14 @@
     { ID: 4, Name: '24/7' }]
 
     $scope.changeDistrict = function (districtID) {
-        $scope.dataSelected.WardId = null;
+        console.log('changeDistrict', districtID);
         $scope.wardSelectList = $filter('filterDistrictID')($scope.tempWardSelectList, districtID);
+        $timeout(function () {
+            $scope.dataSelected.WardID = null;
+            $scope.searchEntry.WardID = null;
+         
+        }, 100);
+        
     }
 
     function converDatetoDB(obj) {
