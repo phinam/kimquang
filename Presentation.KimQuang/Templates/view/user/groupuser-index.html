@@ -7,13 +7,13 @@
         <div class="col-md-12">
             <div id="exTab3" class="container col-md-12">
                 <ul class="nav nav-pills">
-                    <li ng-class="{'active': tabActive=='1'}" ng-click="tabActive='1'" >
+                    <li ng-class="{'active': tabActive=='1'}" ng-click="tabActive='1'">
                         <a href="#1b" data-toggle="tab">Thông tin nhóm</a>
                     </li>
-                    <li ng-class="{'active': tabActive=='2'}" ng-click="tabActive='2'">
+                    <li ng-class="{'active': tabActive=='2'}" ng-click="tabActive='2'" ng-show="entry.ID!='0'">
                         <a href="#2b" data-toggle="tab">Dữ liệu</a>
                     </li>
-                   
+
                 </ul>
 
                 <div class="tab-content clearfix">
@@ -80,7 +80,7 @@
 
                         </form>
                     </div>
-                    <div class="tab-pane " id="2b" ng-class="{'active': tabActive=='2'}">
+                    <div class="tab-pane " id="2b" ng-class="{'active': tabActive=='2'}" >
                         <div class="col-md-12" style="margin-top:10px">
 
                             <div class="box box-solid box-primary">
@@ -226,14 +226,27 @@
                                         </table>
                                     </div>
 
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            <label for="employee" class="col-sm-2 control-label">&nbsp;</label>
+                                            <div class="col-sm-4">
+                                                <button class="form-control btn-primary" ng-click="actionConfirm('UPDATE')" ng-if="entry.ID!='0'">Cập nhật</button>
+                                            </div>
+                                           
+                                            <div class="col-sm-4 ">
+                                                <button class="form-control btn-primary" ng-click="reset()">Reset </button>
+                                            </div>
+                                        </div>
+                                    </div>
+
                                 </div><!-- /.box-body -->
                             </div><!-- /.box -->
                         </div>
 
-
+                      
 
                     </div>
-                  
+
                 </div>
 
 
