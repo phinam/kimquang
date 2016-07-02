@@ -72,7 +72,6 @@
 
     /**********************************************  BEGIN  UI PERMISSSION **********************************************************/
     function loadUiPermission(groupId) {
-        console.log('$scope.entry.ID ', $scope.entry.ID)
         if (typeof groupId == 'undefined')
             groupId = $scope.entry.ID;
         coreService.getListEx({ Sys_ViewID: 31, UserGroupID: groupId }, function (data) {
@@ -94,12 +93,39 @@
         });
     }
 
+    function actionGroupView(groupId) {
+        if (typeof groupId == 'undefined')
+            groupId = $scope.entry.ID;
+        var entry = angular.copy($scope.dataSeleted);
+        var roles = angular.copy($scope.roles);
+        var entry = { Action: 'INSERT', Sys_ViewID: 31, UserGroupID: groupId };
+        entry.Action = 'INSERT';
+        for (view in roles) {
+            angular.forEach(roles[view].Action, function (item, key) {
+                if (item.HasPermision == '') {
+                    delete roles[view].Action[key];
+                }
+            });
+        }
+        entry.Items = roles;
+        $rootScope.showModal = true;
+        coreService.actionEntry2(entry, function (data) {
+            $scope.reset();
+            $rootScope.showModal = false;
+            $scope.apply();
+        });
+       
+
+    }
+    $scope.actionViewActionRole = function () {
+        actionGroupView()
+    }
     /**********************************************  END  UI PERMISSSION **********************************************************/
 
 
     /**********************************************  BEGIN  DATA PERMISSSION **********************************************************/
-   
-  
+
+
     function loadDataPermission() {
         coreService.getListEx({ CityID: 2, Sys_ViewID: 18 }, function (data) {
             $scope.districtList = data[1];
@@ -113,7 +139,7 @@
     /**********************************************  END  DATA PERMISSSION **********************************************************/
 
     /**********************************************  BEGIN  INFO GROUP**********************************************************/
-   
+
     //$scope.AddNewGroup = function () {
     //    //  var entry = angular.copy($scope.dataSeleted);
     //    var entry = { Action: 'INSERT', Sys_ViewID: 31, UserGroupID: 1 };
@@ -161,6 +187,7 @@
                         case 'INSERT':
                             entry.ID = data.Result;
                             $scope.gridInfo.data.unshift(entry);
+                            actionGroupView(entry.ID);
                             break;
                             $scope.reset();
                         case 'UPDATE':
@@ -170,7 +197,7 @@
 
                                 }
                             });
-                            $scope.reset();
+                            actionGroupView(entry.ID);
                             break;
                         case 'DELETE':
                             var index = -1;
@@ -196,7 +223,7 @@
             });
         }
     }
-    
+
     $scope.reset = function (data) {
         $scope.entry = { Status: "0", ID: "0" };
 
