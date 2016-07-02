@@ -79,6 +79,8 @@ function dataGridsCtrl(DTOptionsBuilder, DTColumnDefBuilder, DTColumnBuilder, $s
         .withOption("searching", true)
         .withOption("autowidth", false)
         .withOption('fnRowCallback', function (nRow, aData, iDisplayIndex, iDisplayIndexFull) {
+
+            return;
             if ($scope.gridInfo.sysViewID != 7) return;
 
             $compile(nRow)($scope);

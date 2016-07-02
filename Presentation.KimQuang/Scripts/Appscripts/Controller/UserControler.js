@@ -1,26 +1,76 @@
 ﻿angular.module('indexApp')
- .controller('UserCtrl', function ($scope, coreService, authoritiesService, alertFactory, dialogs, md5) {
+ .controller('UserCtrl', function ($scope, $rootScope, coreService, authoritiesService, alertFactory, dialogs, md5, $timeout) {
      $scope.gridInfo = {
          gridID: 'usergrid',
          table: null,
          cols: [
                { name: 'UserName', heading: 'Tên đăng nhập', width: '20%', className: 'text-center pd-0 break-word', isHidden: false },
                { name: 'FullName', heading: 'Họ tên', wdth: '20%', className: 'text-center pd-0 break-word', isHidden: false },
-               { name: 'StatusName', heading: 'Trạng thái', width: '30%', className: 'text-center pd-0 break-word' }
-         ],
+               { name: 'GroupName', heading: 'Nhóm thành viên', wdth: '20%', className: 'text-center pd-0 break-word', isHidden: false },
+               { name: 'StatusName', heading: 'Trạng thái', width: '30%', className: 'text-center pd-0 break-word' },
+               { name: 'Action1', heading: 'THAO TÁC', width: '100px', className: 'text-center pd-0 break-word', type: controls.LIST_ICON, listAction: [{ classIcon: 'fa-pencil-square-o', action: 'view' }, { classIcon: 'fa fa-times  text-danger', action: 'delete' }] }
 
+         ],
          data: [],
          sysViewID: 7,
          searchQuery: '',
+         onActionClick: function (row, act) {
+             //            console.log(row, act);
+             // row la data cua dong do
+             //act la hanh dong em muon thao tac, mo cai swich ra xu ly ?? vd dum 1 cai 
+             //  $scope.gridInfo.tableInstance.search(query).draw(); $scope.gridInfo.tableInstance.row( tr ).data();
+
+             //alert('xem console view:' + act)
+             switch (act) {
+                 case 'view':
+                     //                    console.log('row', row);
+                     //$state.transitionTo('editproduct', { productId: row.ID || row });
+                     // day neu em nhan vieư em data cua view , hoac neu em can update thi row la object data em dung de show len man hinh, ok ko
+                     //                    alert('xem console view:' + act);
+                     var userId = row.ID || row;
+                     $rootScope.showModal = true;
+                     coreService.getListEx({ UserID: userId, Sys_ViewID: $scope.gridInfo.sysViewID }, function (data) {
+                         $scope.dataSeleted = data[1][0];
+                         $rootScope.showModal = false;
+                         $scope.$apply();
+                     });
+                     console.log('view', new Date());
+                     break;
+                 case 'delete':
+                     var dlg = dialogs.confirm('Xác nhận', 'Xóa tài khoản');
+                     dlg.result.then(function (btn) {
+                         $scope.dataSeleted.ID = row.ID || row;
+                         $scope.actionEntry('DELETE');
+                     }, function (btn) {
+                         //                        console.log('no');
+                     });
+
+                     break;
+
+                 case 'multiSelect':
+                     console.log();
+                     break;
+
+
+
+
+             }
+         }
      }
      $scope.listRight = authoritiesService.get($scope.gridInfo.sysViewID);
      $scope.userlist = [];
-     $scope.employeelist = [{ ID: 0, Name: 'Active', Code: 'Active' }, { ID: 1, Name: 'InActive', Code: 'InActive' }];
+     $scope.employeelist = [{ ID: 0, Name: 'Active', Code: 'Active' }, { ID: 1, Name: 'InActive', Code: 'InActive', }];
      $scope.roles = [];
-     $scope.dataSeleted = { ID: 0, UserName: "", Password: "", FullName: "", Status: "0", Sys_ViewID: $scope.gridInfo.sysViewID };
+     $scope.dataSeleted = { ID: "0", UserName: "", Password: "", FullName: "", Status: "0", Sys_ViewID: $scope.gridInfo.sysViewID };
      //coreService.getList(3, function (data) {
      //    $scope.employeelist = data[1];
      //});
+
+     $scope.listGroup = [];
+     coreService.getListEx({ Sys_ViewID: 30 }, function (data) {
+         $scope.listGroup = data[1];
+         $scope.$apply();
+     });
      $scope.loadUserRoles = function (userId) {
 
          coreService.getListEx({ Sys_ViewID: 9, UserID: userId }, function (data) {
@@ -31,7 +81,7 @@
      }
      $scope.resetPassword = function () {
 
-         
+
          var hashPass = md5.createHash($scope.dataSeleted.Password || '');
          var entry = { UserID: $scope.dataSeleted.ID, Password: hashPass, Action: 'UPDATE::RESETPASS' };
          var dlg = dialogs.confirm('Confirmation', 'Confirmation required');
@@ -41,7 +91,7 @@
 
                  });
 
-                
+
 
                  $scope.$apply();
              });
@@ -79,7 +129,7 @@
          var dlg = null;
          switch (act) {
              case 'INSERT':
-                 dlg=  dialogs.confirm('Thêm tài khoản', 'Bạn có muốn thêm tài khoản?');
+                 dlg = dialogs.confirm('Thêm tài khoản', 'Bạn có muốn thêm tài khoản?');
                  break;
              case 'UPDATE':
                  dlg = dialogs.confirm('Điều chỉnh tài khoản', 'Bạn có muốn diều chỉnh tài khoản đang được chọn?');
@@ -98,8 +148,8 @@
          if (typeof act != 'undefined') {
              var entry = angular.copy($scope.dataSeleted);
              entry.Action = act;
-             entry.Roles = {};
-             entry.Roles.Role = $scope.roles;
+             //  entry.Roles = {};
+             //  entry.Roles.Role = $scope.roles;
              entry.Sys_ViewID = $scope.gridInfo.sysViewID;
              entry.Password = md5.createHash(entry.Password || '');
              coreService.actionEntry2(entry, function (data) {
@@ -139,13 +189,16 @@
      }
 
      $scope.reset = function (data) {
-         $scope.dataSeleted = { ID: 0, UserName: '', Password: '', FullName: "", Status: "0", Sys_ViewID: $scope.gridInfo.sysViewID };
-         $scope.layout = {
-             enableClear: false,
-             enableButtonOrther: false
+         $scope.dataSeleted = { ID: "0", UserName: '', Password: '', FullName: "", Status: "0", Sys_ViewID: $scope.gridInfo.sysViewID };
+
+         if (typeof $scope.gridInfo.dtInstance == 'undefined') {
+             $timeout(function () {
+                 $scope.gridInfo.dtInstance.reloadData();
+             }, 1000);
+         } else {
+             $scope.gridInfo.dtInstance.reloadData();
          }
-         $scope.loadUserRoles(0);
-         // $scope.$apply();
+
      }
      $scope.layout = {
          enableClear: true,
@@ -157,7 +210,7 @@
              $(window).trigger("resize")
          }, 200);
 
-         $scope.reset(null);
+       //  $scope.reset(null);
      }
 
      $scope.changeText = function () {
@@ -171,4 +224,6 @@
          else
              $scope.layout.enableButtonOrther = true;
      }
+
+     
  })
