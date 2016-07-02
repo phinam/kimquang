@@ -420,8 +420,9 @@ margin-top:8px;
     list-style:none;
 
 }
-.dataTables_wrapper tr th {
+.dataTables_wrapper tr  {
     min-height:32px;
+    line-height:32px;
 }
 
 .dataTables_wrapper tr td{
@@ -433,3 +434,12 @@ table.table-bordered.dataTable tbody th, table.table-bordered.dataTable tbody td
     min-height:32px;
 
 }
+
+#exTab3 .tab-content {
+    background-color: white;
+    margin-bottom:15px;
+}
+#exTab3{
+    padding:0;
+}
+
