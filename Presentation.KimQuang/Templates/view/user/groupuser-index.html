@@ -7,22 +7,17 @@
         <div class="col-md-12">
             <div id="exTab3" class="container col-md-12">
                 <ul class="nav nav-pills">
-                    <li class="active">
+                    <li ng-class="{'active': tabActive=='1'}" ng-click="tabActive='1'" >
                         <a href="#1b" data-toggle="tab">Thông tin nhóm</a>
                     </li>
-                    <li>
+                    <li ng-class="{'active': tabActive=='2'}" ng-click="tabActive='2'">
                         <a href="#2b" data-toggle="tab">Dữ liệu</a>
                     </li>
-                    <li>
-                        <a href="#3b" data-toggle="tab">Dữ liệu</a>
-                    </li>
-                    <li>
-                        <a href="#4a" data-toggle="tab">Khác</a>
-                    </li>
+                   
                 </ul>
 
                 <div class="tab-content clearfix">
-                    <div class="tab-pane active" id="1b">
+                    <div class="tab-pane" id="1b" ng-class="{'active': tabActive=='1'}">
                         <form class="form-horizontal row" name="addProductForm" novalidate="">
                             <!--Column Left-->
                             <div class="col-md-4  ">
@@ -47,8 +42,7 @@
                                     <label for="employee" class="col-sm-3 control-label">Tình trạng</label>
                                     <div class="col-sm-9 padding-right-19">
                                         <select class="form-control" ng-model="entry.Status" tabindex="43"
-                                                ng-options="item.Value as item.Name for item in statusOptions">
-                                        </select>
+                                                ng-options="item.Value as item.Name for item in statusOptions"></select>
                                     </div>
                                 </div>
                                 <div class="form-group">
@@ -56,10 +50,10 @@
                                     <div class="col-sm-4">
                                         <button class="form-control btn-primary" ng-click="actionConfirm('INSERT')" ng-if="entry.ID=='0'">Thêm mới </button>
                                         <button class="form-control btn-primary" ng-click="actionConfirm('UPDATE')" ng-if="entry.ID!='0'">Cập nhật</button>
-                                  
+
                                     </div>
                                     <div class="col-sm-5 pull-right">
-                                        <button class="form-control btn-primary pull-right">Reset </button>
+                                        <button class="form-control btn-primary pull-right" ng-click="reset()">Reset </button>
                                     </div>
                                 </div>
                             </div>
@@ -72,7 +66,7 @@
                                     <label for="inputEmail3" class="col-sm-3 control-label text-center">{{role.ViewName}}</label>
                                     <div class="col-sm-9">
                                         <div class="checkbox checkbox-primary checkbox-inline" ng-repeat="act in role.Action">
-                                            <input class=" styled styled" id="{{act}}{{$index}}" type="checkbox" ng-checked="act.HasPermision=='1'" ng-model="act.HasPermision" ng-true-value="'1'" >
+                                            <input class=" styled styled" id="{{act}}{{$index}}" type="checkbox" ng-checked="act.HasPermision=='1'" ng-model="act.HasPermision" ng-true-value="'1'">
                                             <label for="{{act}}{{$index}}">
                                                 {{act.ActionName}}
                                             </label>
@@ -80,13 +74,13 @@
                                     </div>
                                 </div>
 
-                               
+
 
                             </div>
 
                         </form>
                     </div>
-                    <div class="tab-pane " id="2b">
+                    <div class="tab-pane " id="2b" ng-class="{'active': tabActive=='2'}">
                         <div class="col-md-12" style="margin-top:10px">
 
                             <div class="box box-solid box-primary">
@@ -239,12 +233,7 @@
 
 
                     </div>
-                    <div class="tab-pane" id="3b">
-                        <h3>We applied clearfix to the tab-content to rid of the gap between the tab and the content</h3>
-                    </div>
-                    <div class="tab-pane" id="4b">
-                        <h3>We use css to change the background color of the content to be equal to the tab</h3>
-                    </div>
+                  
                 </div>
 
 
