@@ -190,7 +190,7 @@ $scope.actionEntry = function (act) {
                         $scope.gridInfo.data.unshift(entry);
                         actionGroupView(entry.ID);
                         break;
-                        $scope.reset();
+                      //  $scope.reset();
                     case 'UPDATE':
                         angular.forEach($scope.gridInfo.data, function (item, key) {
                             if (entry.ID == item.ID) {
