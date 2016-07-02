@@ -25,6 +25,7 @@
         //  $scope.gridInfo.tableInstance.search(query).draw(); $scope.gridInfo.tableInstance.row( tr ).data();
 
         //alert('xem console view:' + act)
+        $scope.tabActive = '1';
         switch (act) {
             case 'view':
                 //                    console.log('row', row);
@@ -226,7 +227,9 @@ $scope.actionEntry = function (act) {
 
 $scope.reset = function (data) {
     $scope.entry = { Status: "0", ID: "0" };
-
+    $scope.tabActive = '1';
+    loadUiPermission();
+    loadDataPermission();
     if (typeof $scope.gridInfo.dtInstance == 'undefined') {
         $timeout(function () {
             $scope.gridInfo.dtInstance.reloadData();
@@ -239,6 +242,7 @@ $scope.reset = function (data) {
 $scope.districtList = [];
 $scope.statusOptions = [];
 $scope.entry = { Status: "0", ID: "0" };
+$scope.tabActive = '1';
 function Init() {
     loadUiPermission();
     loadDataPermission();
