@@ -63,6 +63,16 @@
                                 </div>
                             </div>
                             <div class="form-group">
+                                <label for="inputEmail3" class="col-sm-3 control-label">Nhóm thành viên</label>
+                                <div class="col-sm-9 padding-right-19">
+                                    <select class="form-control" ng-model="dataSeleted.GroupID"
+                                            ng-options="item.ID as item.Name for item in listGroup">
+                                        <option value="">-- Chọn nhóm</option>
+                                    </select>
+
+                                </div>
+                            </div>
+                            <div class="form-group">
                                 <label for="inputEmail3" class="col-sm-3 control-label">ĐTDD</label>
                                 <div class="col-sm-9 padding-right-19">
                                     <input ng-model="dataSeleted.CellPhone" type="text" class="form-control" id="inputEmail3" placeholder="Điện thoại" ng-change="changeText()"></input>
@@ -89,7 +99,8 @@
                             <div class="form-group">
                                 <label for="employee" class="col-sm-3 control-label">&nbsp;</label>
                                 <div class="col-sm-4">
-                                    <button class="form-control btn-primary ">Thêm mới </button>
+                                    <button class="form-control btn-primary" ng-click="actionEntry('INSERT')" ng-if="dataSeleted.ID=='0'">Thêm mới </button>
+                                    <button class="form-control btn-primary" ng-click="actionEntry('UPDATE')" ng-if="dataSeleted.ID!='0'">Cập nhật </button>
                                 </div>
                                 <div class="col-sm-5 pull-right">
                                     <button class="form-control btn-primary pull-right">Reset </button>
@@ -109,7 +120,7 @@
                 <div class="box-header with-border box-info">
                     <i class="fa fa-list-ol"></i>
                     <h3 class="box-title text-uppercase">
-                       Danh sách tài khoản
+                        Danh sách tài khoản
                     </h3>
                     <!-- tools box -->
                     <div class="pull-right box-tools">
@@ -119,8 +130,9 @@
                 <div class="box-body">
                     <div class="col-md-12">
                         <angular-grid-table grid-info="gridInfo" root-scope="this" list-right="listRight"></angular-grid-table>
+
                     </div>
-                 
+
                 </div>
             </div>
         </div>
