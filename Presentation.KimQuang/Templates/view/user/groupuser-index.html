@@ -7,10 +7,10 @@
         <div class="col-md-12">
             <div id="exTab3" class="container col-md-12">
                 <ul class="nav nav-pills">
-                    <li>
+                    <li class="active">
                         <a href="#1b" data-toggle="tab">Thông tin nhóm</a>
                     </li>
-                    <li class="active">
+                    <li>
                         <a href="#2b" data-toggle="tab">Dữ liệu</a>
                     </li>
                     <li>
@@ -22,43 +22,41 @@
                 </ul>
 
                 <div class="tab-content clearfix">
-                    <div class="tab-pane " id="1b">
+                    <div class="tab-pane active" id="1b">
                         <form class="form-horizontal row" name="addProductForm" novalidate="">
                             <!--Column Left-->
                             <div class="col-md-4  ">
-                                <div class="form-group">
-                                    <label for="inputEmail3" class="col-sm-12 control-label text-center">NHÓM</label>
+                                <div class="form-group" style="text-align: center; text-transform: uppercase;    font-weight: bolder;">
+                                    <h3> Nhóm</h3>
                                 </div>
 
                                 <div class="form-group">
                                     <label for="inputEmail3" class="col-sm-3 control-label">Tên nhóm</label>
                                     <div class="col-sm-9 padding-right-19">
-                                        <input ng-model="dataSeleted.Name" type="text" class="form-control" id="inputEmail3" placeholder="Tên đăng nhập" ng-change="changeText()"></input>
+                                        <input ng-model="entry.Name" type="text" class="form-control" id="inputEmail3" placeholder="Tên đăng nhập" ng-change="changeText()"></input>
                                     </div>
                                 </div>
 
                                 <div class="form-group">
                                     <label for="inputEmail3" class="col-sm-3 control-label">Mô tả</label>
                                     <div class="col-sm-9 padding-right-19">
-                                        <input ng-model="dataSeleted.Description" type="text" class="form-control" id="inputEmail3" placeholder="Email" ng-change="changeText()"></input>
+                                        <textarea ng-model="entry.Description" type="text" class="form-control" id="inputEmail3" placeholder="Mô tả" ng-change="changeText()"></textarea>
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <label for="employee" class="col-sm-3 control-label">Tình trạng</label>
                                     <div class="col-sm-9 padding-right-19">
-                                        <ui-select ng-model="dataSeleted.Status" theme="selectize" ng-disabled="disabled" title="Choose a employee">
-                                            <ui-select-match placeholder="Chọn trạng thái cho tài khoản...">{{$select.selected.Name}}</ui-select-match>
-                                            <ui-select-choices repeat="item.ID as item in employeelist | filter: $select.search">
-                                                <span ng-bind-html="item.Name | highlight: $select.search"></span>
-                                            </ui-select-choices>
-                                        </ui-select>
-                                        </ui-select>
+                                        <select class="form-control" ng-model="entry.Status" tabindex="43"
+                                                ng-options="item.Value as item.Name for item in statusOptions">
+                                        </select>
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <label for="employee" class="col-sm-3 control-label">&nbsp;</label>
                                     <div class="col-sm-4">
-                                        <button class="form-control btn-primary" ng-click="AddNewGroup()">Thêm mới </button>
+                                        <button class="form-control btn-primary" ng-click="actionConfirm('INSERT')" ng-if="entry.ID=='0'">Thêm mới </button>
+                                        <button class="form-control btn-primary" ng-click="actionConfirm('UPDATE')" ng-if="entry.ID!='0'">Cập nhật</button>
+                                  
                                     </div>
                                     <div class="col-sm-5 pull-right">
                                         <button class="form-control btn-primary pull-right">Reset </button>
@@ -67,27 +65,36 @@
                             </div>
 
                             <div class="col-md-8">
-                                <div class="form-group">
-                                    <label for="inputEmail3" class="col-sm-12 control-label text-center">&nbsp;</label>
+                                <div class="form-group" style="text-align: center; text-transform: uppercase;    font-weight: bolder;">
+                                    <h3> Chức năng </h3>
                                 </div>
                                 <div class="form-group" ng-repeat="role in roles">
-                                    <label for="inputEmail3" class="col-sm-3 control-label text-center">{{role.viewName}}</label>
+                                    <label for="inputEmail3" class="col-sm-3 control-label text-center">{{role.ViewName}}</label>
                                     <div class="col-sm-9">
                                         <div class="checkbox checkbox-primary checkbox-inline" ng-repeat="act in role.Action">
-                                            <input class=" styled styled" id="{{act}}{{$index}}" type="checkbox" ng-checked="act.HasPermision=='1'" ng-model="act.HasPermision" ng-true-value="'1'">
+                                            <input class=" styled styled" id="{{act}}{{$index}}" type="checkbox" ng-checked="act.HasPermision=='1'" ng-model="act.HasPermision" ng-true-value="'1'" >
                                             <label for="{{act}}{{$index}}">
                                                 {{act.ActionName}}
                                             </label>
                                         </div>
-
-
                                     </div>
                                 </div>
+
+                                <div class="form-group">
+                                    <label for="employee" class="col-sm-3 control-label">&nbsp;</label>
+                                    <div class="col-sm-4">
+                                        <button class="form-control btn-primary" ng-click="actionViewActionRole('INSERT')" >Thêm mới </button>
+                                    </div>
+                                    <div class="col-sm-5 pull-right">
+                                        <button class="form-control btn-primary pull-right">Reset </button>
+                                    </div>
+                                </div>
+
                             </div>
 
                         </form>
                     </div>
-                    <div class="tab-pane active" id="2b">
+                    <div class="tab-pane " id="2b">
                         <div class="col-md-12" style="margin-top:10px">
 
                             <div class="box box-solid box-primary">
