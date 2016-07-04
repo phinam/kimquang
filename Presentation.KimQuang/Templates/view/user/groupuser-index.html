@@ -86,7 +86,7 @@
 
                             <div class="box box-solid box-primary">
                                 <div class="box-header with-border">
-                                    <h3 class="box-title">Phân quyền theo khu vực</h3>
+                                    <h3 class="box-title">Phân quyền theo khu vực <span class="text-uppercase" style="color:chartreuse"> [NHÓM:{{entry.Name}}]</span></h3>
                                     <div class="box-tools pull-right">
                                         <div class="box-tools pull-right">
                                             <button class="btn btn-box-tool" data-widget="collapse" data-toggle="tooltip" title="Collapse"><i class="fa fa-minus"></i></button>
@@ -98,16 +98,16 @@
                                         <div class="checkbox checkbox-inline checkbox-primary">
                                             <input class="styled styled" id="cbDistrictDeneyAll" type="checkbox" ng-click="checkAllowAllDistrict()" ng-model="districtPersmision.allowAll" ng-true-value="'1'" ng-false-value="'0'">
                                             <label for="cbDistrictDeneyAll" class=" text-bold">
-                                                Allow All
+                                                Chọn tất cả khu vực
                                             </label>
                                         </div>
 
-                                        <div class="checkbox checkbox-inline checkbox-primary">
+                                        <!--<div class="checkbox checkbox-inline checkbox-primary">
                                             <input class="styled styled" id="checkbox10" type="checkbox" ng-click="checkDenyAllDistrict()" ng-model="districtPersmision.denyAll" ng-true-value="'1'"  ng-true-value="'0'">
                                             <label for="checkbox10" class="text-bold">
                                                 Deny All
                                             </label>
-                                        </div>
+                                        </div>-->
 
 
                                     </div>
@@ -119,9 +119,9 @@
                                                 <th style="width: 10px">#</th>
                                                 <th>Khu vực</th>
                                                 <th style="text-align:center">Cho phép</th>
-                                                <th style="text-align:center">Từ chối</th>
+                                                <!--<th style="text-align:center">Từ chối</th>-->
                                             </tr>
-                                            <tr ng-repeat="f in districtPersmision.list" ng-if="$index<8">
+                                            <tr ng-repeat="f in districtPersmision.list" ng-if="$index<9">
                                                 <td></td>
                                                 <td style=" white-space: nowrap;  overflow: hidden;  text-overflow: ellipsis;  max-width: 150px;">
                                                     {{f.Name}}
@@ -130,13 +130,13 @@
                                                 <td>
                                                     <div class="checkbox checkbox-primary  text-center " style=" padding-top:2px!important; margin-top: 2px;
     margin-bottom: 2px;">
-                                                        <input id="cboAllowDocumment{{$index}}" class="styled" type="checkbox" ng-true-value="'1'" ng-false-value="'0'" ng-model="f.checked" ng-checked="f.checked=='1'">
+                                                        <input id="cboAllowDocumment{{$index}}" class="styled" type="checkbox" ng-true-value="'1'" ng-false-value="'0'" ng-model="f.checked" ng-checked="f.checked=='1'" ng-click="checkItenDistrict()">
                                                         <label for="cboAllowDocumment{{$index}}">
                                                             &nbsp;
                                                         </label>
                                                     </div>
                                                 </td>
-                                                <td>
+                                                <!--<td>
                                                     <div class="checkbox checkbox-primary  text-center " style=" padding-top:2px!important; margin-top: 2px;
     margin-bottom: 2px;">
                                                         <input id="cboDocumment{{$index}}" class="styled" type="checkbox" ng-true-value="'0'" ng-false-value="'1'" ng-model="f.checked" ng-checked="f.checked=='0'">
@@ -144,7 +144,7 @@
                                                             &nbsp;
                                                         </label>
                                                     </div>
-                                                </td>
+                                                </td>-->
                                             </tr>
 
 
@@ -157,9 +157,9 @@
                                                 <th style="width: 10px">#</th>
                                                 <th>Khu vực</th>
                                                 <th style="text-align:center">Cho phép</th>
-                                                <th style="text-align:center">Từ chối</th>
+                                                <!--<th style="text-align:center">Từ chối</th>-->
                                             </tr>
-                                            <tr ng-repeat="f in districtPersmision.list" ng-if="$index>=8 &&$index<16">
+                                            <tr ng-repeat="f in districtPersmision.list" ng-if="$index>=9 &&$index<18">
                                                 <td></td>
                                                 <td style=" white-space: nowrap;  overflow: hidden;  text-overflow: ellipsis;  max-width: 150px;">
                                                     {{f.Name}}
@@ -168,13 +168,13 @@
                                                 <td>
                                                     <div class="checkbox checkbox-primary  text-center " style=" padding-top:2px!important; margin-top: 2px;
     margin-bottom: 2px;">
-                                                        <input id="cboAllowDocumment{{$index}}" class="styled" type="checkbox" ng-true-value="'1'" ng-false-value="'0'" ng-model="f.checked" ng-checked="f.checked=='1'">
+                                                        <input id="cboAllowDocumment{{$index}}" class="styled" type="checkbox" ng-true-value="'1'" ng-false-value="'0'" ng-model="f.checked" ng-checked="f.checked=='1'" ng-click="checkItenDistrict()">
                                                         <label for="cboAllowDocumment{{$index}}">
                                                             &nbsp;
                                                         </label>
                                                     </div>
                                                 </td>
-                                                <td>
+                                                <!--<td>
                                                     <div class="checkbox checkbox-primary  text-center " style=" padding-top:2px!important; margin-top: 2px;
     margin-bottom: 2px;">
                                                         <input id="cboDocumment{{$index}}" class="styled" type="checkbox" ng-true-value="'0'" ng-false-value="'1'" ng-model="f.checked" ng-checked="f.checked=='0'">
@@ -182,7 +182,7 @@
                                                             &nbsp;
                                                         </label>
                                                     </div>
-                                                </td>
+                                                </td>-->
                                             </tr>
 
 
@@ -195,9 +195,9 @@
                                                 <th style="width: 10px">#</th>
                                                 <th>Khu vực</th>
                                                 <th style="text-align:center">Cho phép</th>
-                                                <th style="text-align:center">Từ chối</th>
+                                                <!--<th style="text-align:center">Từ chối</th>-->
                                             </tr>
-                                            <tr ng-repeat="f in districtPersmision.list" ng-if="$index>=16">
+                                            <tr ng-repeat="f in districtPersmision.list" ng-if="$index>=18">
                                                 <td></td>
                                                 <td style=" white-space: nowrap;  overflow: hidden;  text-overflow: ellipsis;  max-width: 150px;">
                                                     {{f.Name}}
@@ -206,13 +206,13 @@
                                                 <td>
                                                     <div class="checkbox checkbox-primary  text-center " style=" padding-top:2px!important; margin-top: 2px;
     margin-bottom: 2px;">
-                                                        <input id="cboAllowDocumment{{$index}}" class="styled" type="checkbox" ng-true-value="'1'" ng-false-value="'0'" ng-model="f.checked" ng-checked="f.checked=='1'">
+                                                        <input id="cboAllowDocumment{{$index}}" class="styled" type="checkbox" ng-true-value="'1'" ng-false-value="'0'" ng-model="f.checked" ng-checked="f.checked=='1'" ng-click="checkItenDistrict()">
                                                         <label for="cboAllowDocumment{{$index}}">
                                                             &nbsp;
                                                         </label>
                                                     </div>
                                                 </td>
-                                                <td>
+                                                <!--<td>
                                                     <div class="checkbox checkbox-primary  text-center " style=" padding-top:2px!important; margin-top: 2px;
     margin-bottom: 2px;">
                                                         <input id="cboDocumment{{$index}}" class="styled" type="checkbox" ng-true-value="'0'" ng-false-value="'1'" ng-model="f.checked" ng-checked="f.checked=='0'">
@@ -220,7 +220,7 @@
                                                             &nbsp;
                                                         </label>
                                                     </div>
-                                                </td>
+                                                </td>-->
                                             </tr>
 
 
