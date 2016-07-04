@@ -129,8 +129,14 @@
 
     //loadDistrict
     coreService.getListEx({ CityID: 2, Sys_ViewID: 18 }, function (data) {
+
+        // a.unshift(34);
+
         $scope.districtList = data[1];
-        // console.log($scope.districtList);
+
+        var objUnknow = { Code: "-UNKNOW", ID: "11", Name: "KHÔNG XÁC ĐỊNH" };
+        $scope.districtList.push(objUnknow);
+        //console.log($scope.districtList);
     });
 
 
@@ -293,6 +299,20 @@
         }
     }
 
+    $scope.checkItenDistrict = function () {
+        var alowAll = "1";
+
+        angular.forEach($scope.districtPersmision.list, function (item, key) {
+            if (item.hasOwnProperty('checked')) {
+                if (item.checked == "0" || item.checked == "")
+                    alowAll = "0";
+            }
+            else
+                alowAll = "0";
+        });
+
+        $scope.districtPersmision.allowAll = alowAll;
+    }
     $scope.reset = function (data) {
         $scope.entry = { Status: "0", ID: "0" };
         $scope.tabActive = '1';
@@ -320,10 +340,10 @@
         });
     }
     $scope.checkDenyAllDistrict = function () {
-        var checked = ''
+        var checked = '1'
         if ($scope.districtPersmision.denyAll == "1") {
             $scope.districtPersmision.allowAll = "0";
-            checked = '0';
+            checked = '';
         }
         angular.forEach($scope.districtPersmision.list, function (item, key) {
             item.checked = checked;
