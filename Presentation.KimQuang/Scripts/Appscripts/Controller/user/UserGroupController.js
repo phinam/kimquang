@@ -114,7 +114,7 @@
         coreService.actionEntry2(entry, function (data) {
             $scope.reset();
             $rootScope.showModal = false;
-            $scope.apply();
+           $scope.$apply();
         });
 
 
@@ -128,23 +128,22 @@
     /**********************************************  BEGIN  DATA PERMISSSION **********************************************************/
 
     //loadDistrict
-    coreService.getListEx({ CityID: 2, Sys_ViewID: 18 }, function (data) {
+    coreService.getListEx({ CityID: 2, Sys_ViewID: 33 }, function (data) {
 
         // a.unshift(34);
-
+       
         $scope.districtList = data[1];
 
         var objUnknow = { Code: "-UNKNOW", ID: "11", Name: "KHÔNG XÁC ĐỊNH" };
-        $scope.districtList.push(objUnknow);
-        //console.log($scope.districtList);
+       $scope.districtList.push(objUnknow);
     });
 
 
     function loadDataPermission(groupId) {
 
         $scope.districtPersmision.list = angular.copy($scope.districtList);
-        coreService.getListEx({ UserGroupID: groupId, TableName: "core.District", Sys_ViewID: 32 }, function (data) {
-            if (data[1].length == 1) {
+        coreService.getListEx({ UserGroupID: groupId, TableName: "app.district", Sys_ViewID: 32 }, function (data) {
+             if (data[1].length == 1) {
                 if (data[1][0].DataValueID == '') {
                     $scope.districtPersmision.allowAll = data[1][0].AllowAll;
                     $scope.districtPersmision.denyAll = data[1][0].DenyAll;
@@ -176,7 +175,7 @@
         var district = angular.copy($scope.districtPersmision.list);
         var roles = angular.copy($scope.roles);
         var entry = { Action: 'INSERT', Sys_ViewID: 32, UserGroupID: groupId };
-        entry.Items = { Table: [{ TableName: "core.District", ColumnName: "ID", AllowAll: $scope.districtPersmision.allowAll, DenyAll: $scope.districtPersmision.denyAll }] };
+        entry.Items = { Table: [{ TableName: "app.district", ColumnName: "ID", AllowAll: $scope.districtPersmision.allowAll, DenyAll: $scope.districtPersmision.denyAll }] };
         // for (view in roles) {
         var list = new Array();
         angular.forEach(district, function (item, key) {

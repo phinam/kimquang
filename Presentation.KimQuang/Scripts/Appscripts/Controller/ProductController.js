@@ -90,7 +90,7 @@
             { name: 'LastUpdatedDateTime', heading: 'NGÀY CẬP NHẬT', width: '90px', className: 'text-center pd-0 break-word' },
              { name: 'PriorityLevel', heading: 'UT', className: 'text-center pd-0 break-word' },
             { name: 'Name', heading: 'TÊN', className: 'text-center pd-0 break-word' },
-             { name: 'AreaDescription', heading: 'DIỆN TÍCH TRỐNG', className: 'text-center pd-0 break-word' },
+             { name: 'AvailableArea', heading: 'DIỆN TÍCH TRỐNG', className: 'text-center pd-0 break-word' },
              { name: 'AvailableFloor', heading: 'T', className: 'text-center pd-0 break-word', width: '20px' },
              { name: 'PriceDescription', heading: 'LƯU Ý GIÁ', className: 'text-center pd-0 break-word' },
              { name: 'HirePrice', heading: 'GIÁ THUÊ', className: 'text-center pd-0 break-word', width: '60px' },
@@ -162,7 +162,7 @@
         enableClear: false,
         enableButtonOrther: false
     }
-    $scope.dataSelected = { ID: 0, Name: "", Code: '', Description: "", Status: "0", Sys_ViewID: $scope.gridInfo.sysViewID, layout: '', brokeragecontract: '', image1: '', bidcontracts: '', proposal: '', ortherpapers: '' };
+    $scope.dataSelected = { ID: 0, Name: "", Code: '', Description: "", Status: "0", Sys_ViewID: $scope.gridInfo.sysViewID, layout: '', brokeragecontract: '', image1: '', bidcontracts: '', proposal: '', ortherpapers: ''};
     $scope.init = function () {
         window.setTimeout(function () {
             $(window).trigger("resize")
@@ -316,8 +316,17 @@
 
                 $scope.dataSelected = data[1][0];
                 $rootScope.showModal = false;
+               debugger
+               
+                if (typeof $scope.dataSelected.ModifyDateTime != 'undefined') {
+                    if ($scope.dataSelected.ModifyDateTime != '')
+                        $scope.dataSelected.ModifyDateTime = $filter('date')(new Date($scope.dataSelected.ModifyDateTime), 'dd-MM-yyyy')
+                }
+                if (typeof $scope.dataSelected.AvailableFrom != 'undefined') {
+                    if ($scope.dataSelected.AvailableFrom != '')
+                        $scope.dataSelected.AvailableFrom = $filter('date')(new Date($scope.dataSelected.AvailableFrom), 'dd-MM-yyyy')
+                }
                 $scope.$apply();
-                //console.log('ProductID after', data[1]);
             });
 
             coreService.getListEx({ ProductID: $scope.productId, Sys_ViewID: 29 }, function (data) {
@@ -381,7 +390,9 @@
             entry.UnAssignedName = tiengvietkhongdau(entry.Name); //coreService.toASCi(entry.Name);
             entry.UnAssignedStreet = tiengvietkhongdau(entry.StreetName); //coreService.toASCi(entry.Address);
             try {
-              
+                if (typeof entry.ModifyDateTime != 'undefined')
+                    if (entry.ModifyDateTime != '')
+                        entry.ModifyDateTime = $filter('date')(entry.ModifyDateTime, "yyyy-MM-dd");
                 if (typeof entry.AvailableFrom != 'undefined')
                     if (entry.AvailableFrom != '')
                         entry.AvailableFrom = $filter('date')(entry.AvailableFrom, "yyyy-MM-dd");
@@ -400,9 +411,7 @@
                 if (typeof entry.LastUpdatedDateTimeTo != 'undefined')
                     if (entry.LastUpdatedDateTimeTo != '')
                         entry.LastUpdatedDateTimeTo = $filter('date')(entry.LastUpdatedDateTimeTo, "yyyy-MM-dd");
-                if (typeof entry.ModifyDateTime != 'undefined')
-                    if (entry.ModifyDateTime != '')
-                        entry.ModifyDateTime = $filter('date')(entry.ModifyDateTime, "yyyy-MM-dd");
+               
             }
             catch (ex) {
 
