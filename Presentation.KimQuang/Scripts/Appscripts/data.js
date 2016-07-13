@@ -16,7 +16,7 @@ $adminCMS.data = {
                 }
             },
             {
-                "name": "notification",
+                "name": "thông báo",
                 "url": "#",
                 "imgIcon": "",
                 "cssIcon": "fa fa-bell-o",
@@ -29,7 +29,7 @@ $adminCMS.data = {
                 }
             },
             {
-                "name": "task",
+                "name": "nhiệm vụ",
                 "url": "#",
                 "imgIcon": "",
                 "cssIcon": "fa fa-flag-o",

@@ -4,6 +4,7 @@
 
     /*************************************Upload File*************************************/
     $scope.arrFiles = [];
+    $scope.isCopy = '0';
     $scope.exportInfo = localStorageService.get('authorizationData');
     $scope.setExportInfo = function (fileType, viewId) {
         $scope.exportInfo.fileType = fileType;
@@ -30,7 +31,7 @@
     }
 
     var uploader = $scope.uploader = new FileUploader({
-        url: 'service.data/uploadFiles.aspx'
+        url: 'DocumentFile.aspx'
     });
 
     // FILTERS
@@ -42,12 +43,12 @@
     });
 
     uploader.onCompleteItem = function (fileItem, response, status, headers) {
-        var fileType = "";
-        for (var i = 0; i < $scope.FileTypeSelectList.length; i++)
-            if ($scope.FileTypeSelectList[i].Value == $scope.dataSelected.FileType)
-                fileType = $scope.FileTypeSelectList[i].Name;
-        var item = { fileName: fileItem.file.name, fileType: fileType };
-        $scope.arrFiles.unshift(item);
+        //var fileType = "";
+        //for (var i = 0; i < $scope.FileTypeSelectList.length; i++)
+        //    if ($scope.FileTypeSelectList[i].Value == $scope.dataSelected.FileType)
+        //        fileType = $scope.FileTypeSelectList[i].Name;
+        //var item = { fileName: fileItem.file.name, fileType: fileType };
+        //$scope.arrFiles.unshift(item);
     };
     uploader.onAfterAddingAll = function (addedFileItems) {
         // console.info('onAfterAddingAll', addedFileItems);
@@ -55,8 +56,8 @@
         uploader.uploadAll();
     };
     uploader.onSuccessItem = function (fileItem, response, status, headers) {
-        console.log('onSuccessItem', fileItem, response, status, headers);
-
+        var item = { name: fileItem._file.name, fileType: $scope.FileTypeSelectList[i].Name, fileName: response };
+        $scope.arrFiles.unshift(item);
 
     };
     uploader.onErrorItem = function (fileItem, response, status, headers) {
@@ -120,11 +121,11 @@
             switch (act) {
                 case 'view':
                     //                    console.log('row', row);
-                    $state.transitionTo('editproduct', { productId: row.ID || row, isCopy: 0 });
+                    $state.transitionTo('editproduct', { productId: row.ID || row, action: act });
                     break;
                 case 'copy':
                     //                    console.log('row', row);
-                    $state.transitionTo('editproduct', { productId: row.ID || row, isCopy: 1 });
+                    $state.transitionTo('editproduct', { productId: row.ID || row, action: act });
                     break;
                 case 'delete':
                     console.log('row', row);
@@ -257,13 +258,14 @@
     $scope.FileTypeSelectList = [];
     $scope.officeRankingSelectList = [];
     $scope.floorList = [];
-    coreService.getListEx({ Code: "BUILDINGDIRECTION|FILETYPEUPLOAD|OFFICERANKING|FLOOR", Sys_ViewID: 16 }, function (data) {
+    $scope.leasingCapabilitiesList = [];
+    coreService.getListEx({ Code: "BUILDINGDIRECTION|FILETYPEUPLOAD|OFFICERANKING|FLOOR|LEASINGCAPABILITIES", Sys_ViewID: 16 }, function (data) {
         $scope.buildingDirectionIDSelectList = data[1];
         $scope.FileTypeSelectList = data[2];
         $scope.officeRankingSelectList = data[3];
         for (var i = 0; i < data[4].length; i++)
             $scope.floorList.push(data[4][i].Name);
-        // console.log($scope.floorList);
+        $scope.leasingCapabilitiesList = data[5];
     });
 
 
@@ -316,8 +318,6 @@
 
                 $scope.dataSelected = data[1][0];
                 $rootScope.showModal = false;
-               debugger
-               
                 if (typeof $scope.dataSelected.ModifyDateTime != 'undefined') {
                     if ($scope.dataSelected.ModifyDateTime != '')
                         $scope.dataSelected.ModifyDateTime = $filter('date')(new Date($scope.dataSelected.ModifyDateTime), 'dd-MM-yyyy')
@@ -369,7 +369,10 @@
         var arrDocument = new Array();
         var log = null;
         angular.forEach($scope.arrFiles, function (f, key) {
-            arrDocument.push({ Name: f.fileName, FileType: f.fileType, Default: f.default })
+            var isDefault = f.default;
+            if (typeof isDefault == 'undefined')
+                isDefault = 0;
+            arrDocument.push({ Name: f.name, FileName: f.fileName, FileType: f.fileType, Default: isDefault })
         }, log);
         if (arrDocument.length == 0) return;
         var entry = {
@@ -581,6 +584,12 @@
             if (typeof searchEntry.ModifyDateTime != 'undefined')
                 if (searchEntry.ModifyDateTime != '')
                     searchEntry.ModifyDateTime = $filter('date')(searchEntry.ModifyDateTime, "yyyy-MM-dd");
+            if (typeof searchEntry.ActionFromDate != 'undefined')
+                if (searchEntry.ActionFromDate != '')
+                    searchEntry.ActionFromDate = $filter('date')(searchEntry.ActionFromDate, "yyyy-MM-dd");
+            if (typeof searchEntry.ActionToDate != 'undefined')
+                if (searchEntry.ActionToDate != '')
+                    searchEntry.ActionToDate = $filter('date')(searchEntry.ActionToDate, "yyyy-MM-dd");
             
         }
         catch (ex) {

@@ -71,11 +71,12 @@ app.config(function ($stateProvider, $urlRouterProvider, $locationProvider) {
         .state('editproduct', {
             //url: '/edit-product/:productId', // not hide productId
             url: '/edit-product',
-            params: { productId: null},
+            params: { productId: null, action: null },
             templateUrl: '/Templates/view/product/add-product.html',
             controller: function ($scope, $stateParams) {
                 $scope.productId = $stateParams.productId;
-                $scope.isCopy = $stateParams.isCopy;
+                console.log('$stateParams', $stateParams);
+                $scope.actType = $stateParams.action;
             }
         })
          .state('importproduct', {
