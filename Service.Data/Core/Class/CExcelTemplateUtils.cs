@@ -203,11 +203,13 @@ namespace Service.Data.Core.Class
             templateRange = "A{0}:" + def.definedColumnField[def.definedColumnField.Count - 1].address +"{0}";
             templateRange = string.Format(templateRange, def.loopDataRowIndex);
             ExcelRange rowTemplate = ws.Cells[templateRange];
+            double rowHeight = ws.Row(def.loopDataRowIndex).Height;
 
             
             int pasteRow = row.Table.Rows.IndexOf(row)+ def.loopDataRowIndex+1;
             string pasteAddress = "A"+ pasteRow;
             ws.InsertRow(pasteRow, 1);
+            ws.Row(pasteRow).Height = rowHeight;
             rowTemplate.Copy(ws.Cells[pasteAddress]);
             
             for(int i = 0;i < def.definedColumnField.Count;i++)
@@ -416,6 +418,7 @@ namespace Service.Data.Core.Class
             CLogManager.WriteSL("ApplyImageCell", "Cell:" + cellAddress + " format:" + format + " file:" + filename);
             try
             {
+                filename = Path.Combine(ConfigurationManager.AppSettings["UploadDirectory"], filename);
                 if (!File.Exists(filename))
                 {
                     filename = Path.Combine(ConfigurationManager.AppSettings["UploadDirectory"], "NoImageAvailable.png");

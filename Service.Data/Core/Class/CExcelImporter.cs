@@ -6,6 +6,7 @@ using System.Globalization;
 using System.Linq;
 using System.Web;
 using System.IO;
+using PMSA.Framework.Log;
 
 namespace Service.Data.Core.Class
 {
@@ -75,14 +76,18 @@ namespace Service.Data.Core.Class
         {
             try
             {
+                CLogManager.WriteSL("IMPORT", "File:" + excelfile);
                 int startDataRow = 11;
                 CMixExcel mixExcel = new CMixExcel(excelfile, false);
                 ExcelPackage pck = (ExcelPackage)mixExcel.ExcelMixCore;
                 var worksheet = pck.Workbook.Worksheets[1];
                 bool isAllOk = true;
+                CLogManager.WriteSL("IMPORT", "Begin For to :" + worksheet.Dimension.End.Row.ToString());
                 for (int row = startDataRow; row <= worksheet.Dimension.End.Row; row++)
                 {
+
                     string inputValue = GetRowInXml(worksheet, row);
+                    CLogManager.WriteSL("IMPORT", "Input :" + inputValue);
                     if (string.IsNullOrEmpty(inputValue))
                     {
                         continue;
@@ -123,6 +128,7 @@ namespace Service.Data.Core.Class
             }
             catch(Exception ex)
             {
+                CLogManager.WriteSL("IMPORT", ex.ToString());
                 return "Code\n02-" + ex.Message;
             }
         }
@@ -248,9 +254,9 @@ namespace Service.Data.Core.Class
 
                 return true;
             }
-            catch
+            catch(Exception ex)
             {
-
+                CLogManager.WritePL("ExecuteImport", ex.ToString());
             }
             return false;
         }

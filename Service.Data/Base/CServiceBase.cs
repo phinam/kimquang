@@ -25,6 +25,10 @@ namespace Service.Data.Base
             return System.Web.HttpUtility.HtmlDecode(xmlString);
         }
 
+        protected static string UrlDecode(string str)
+        {
+            return System.Web.HttpUtility.UrlDecode(str);
+        }
         protected DataSet CallDataSetService(string ClientKey, string inputValue, dlg_CallFunction callFunction)
         {
             inputValue = HtmlDecode(inputValue);

@@ -62,6 +62,7 @@ namespace Service.Data.Core
             InputValue = HtmlDecode(InputValue);
             string uploadPath = System.Configuration.ConfigurationManager.AppSettings["CKFilderRootDir"];
             string fileName = CXmlUtils.GetXmlNodeValue(InputValue, "InputValue/@Filename");
+            fileName = UrlDecode(fileName);
             fileName = System.IO.Path.Combine(uploadPath, fileName);
 
             return  new CExcelImporter().ImportExcel(ClientKey, fileName);
