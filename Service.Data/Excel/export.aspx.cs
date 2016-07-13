@@ -174,7 +174,7 @@ namespace Service.Data.Excel
 
         private void WriteResponse(string contentType,string filename, string dataInBase64)
         {
-            CLogManager.WriteSL("WriteResponse", dataInBase64.Substring(0,100));
+            //CLogManager.WriteSL("WriteResponse", dataInBase64.Substring(0,100));
             if (dataInBase64.StartsWith("00-"))
             {
                 dataInBase64 = dataInBase64.Remove(0, 3);
