@@ -254,9 +254,18 @@ function dataGridsCtrl(DTOptionsBuilder, DTColumnDefBuilder, DTColumnBuilder, $s
 //                    var result = '{{vm.listRight | json}}';
                     var result = '';
                     angular.forEach(field.listAction, function (value, key) {
+                        if (value.action == 'linkview') {
+                            var link = full[value.fieldName];
+                            if (link!='')
+                                result += '<a t target="_blank" href="' + link + '"  ng-hide="listRight.IsDelete == \'False\' && \'' + value.action + '\' == \'delete\'">' +
+                            '<i  class="fa ' + value.classIcon + '">&nbsp;&nbsp;' + '</i>' +
+                            '</a>';
+                        }
+                        else{
                         result += '<a href="" ng-click="vm.actionClick(' + full.ID + ",\'" + value.action + '\',this)" ng-hide="listRight.IsDelete == \'False\' && \'' + value.action + '\' == \'delete\'">' +
                             '<i  class="fa ' + value.classIcon + '">&nbsp;&nbsp;' + '</i>' +
                             '</a>';
+                        }
                     });
                     return result;
                 }).withOption('width', field.width);

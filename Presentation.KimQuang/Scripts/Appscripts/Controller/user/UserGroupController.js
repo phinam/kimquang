@@ -42,6 +42,7 @@
                     });
                     loadUiPermission(groupId);
                     loadDataPermission(groupId);
+                    loadCapabilitiesDataPermission(groupId);
                     break;
                 case 'delete':
                     if (modalUtils.modalsExist())
@@ -114,7 +115,7 @@
         coreService.actionEntry2(entry, function (data) {
             $scope.reset();
             $rootScope.showModal = false;
-           $scope.$apply();
+            $scope.$apply();
         });
 
 
@@ -125,17 +126,17 @@
     /**********************************************  END  UI PERMISSSION **********************************************************/
 
 
-    /**********************************************  BEGIN  DATA PERMISSSION **********************************************************/
+    /**********************************************  BEGIN  DATA DISTRICT PERMISSSION **********************************************************/
 
     //loadDistrict
     coreService.getListEx({ CityID: 2, Sys_ViewID: 33 }, function (data) {
 
         // a.unshift(34);
-       
+
         $scope.districtList = data[1];
 
         var objUnknow = { Code: "-UNKNOW", ID: "11", Name: "KHÔNG XÁC ĐỊNH" };
-       $scope.districtList.push(objUnknow);
+        $scope.districtList.push(objUnknow);
     });
 
 
@@ -143,7 +144,7 @@
 
         $scope.districtPersmision.list = angular.copy($scope.districtList);
         coreService.getListEx({ UserGroupID: groupId, TableName: "app.district", Sys_ViewID: 32 }, function (data) {
-             if (data[1].length == 1) {
+            if (data[1].length == 1) {
                 if (data[1][0].DataValueID == '') {
                     $scope.districtPersmision.allowAll = data[1][0].AllowAll;
                     $scope.districtPersmision.denyAll = data[1][0].DenyAll;
@@ -201,7 +202,110 @@
     $scope.actionGroupData = function (groupId) {
         actionGroupData(groupId);
     }
-    /**********************************************  END  DATA PERMISSSION **********************************************************/
+    /**********************************************  END  DATA DISTRICT PERMISSSION **********************************************************/
+
+
+    /**********************************************  BEGIN  DATA apabilities PERMISSSION **********************************************************/
+    $scope.capabilitiesPersmision = { list: [], allowAll: '0', denyAll: '0' }
+    //loadDistrict
+    coreService.getListEx({ Code: "LEASINGCAPABILITIES", Sys_ViewID: 16 }, function (data) {
+        $scope.capabilitiesList = data[1];
+        var objUnknow = { Code: "-UNKNOW", Value: "11", Name: "KHÔNG XÁC ĐỊNH" };
+        $scope.capabilitiesList.push(objUnknow);
+    });
+
+    $scope.checkAllowAlCapabilities = function () {
+        var checked = ''
+        if ($scope.capabilitiesPersmision.allowAll == "1") {
+            $scope.capabilitiesPersmision.denyAll = "0";
+            checked = '1';
+        }
+        angular.forEach($scope.capabilitiesPersmision.list, function (item, key) {
+            item.checked = checked;
+        });
+    }
+    $scope.checkItenCapabilities = function () {
+        var alowAll = "1";
+
+        angular.forEach($scope.capabilitiesPersmision.list, function (item, key) {
+            if (item.hasOwnProperty('checked')) {
+                if (item.checked == "0" || item.checked == "")
+                    alowAll = "0";
+            }
+            else
+                alowAll = "0";
+        });
+
+        $scope.capabilitiesPersmision.allowAll = alowAll;
+    }
+    function loadCapabilitiesDataPermission(groupId) {
+
+        $scope.capabilitiesPersmision.list = angular.copy($scope.capabilitiesList);
+        coreService.getListEx({ UserGroupID: groupId, TableName: "LEASINGCAPABILITIES", Sys_ViewID: 32 }, function (data) {
+            console.log('loadCapabilitiesDataPermission', data);
+            if (data[1].length == 1) {
+                if (data[1][0].DataValueID == '') {
+                    $scope.capabilitiesPersmision.allowAll = data[1][0].AllowAll;
+                    $scope.capabilitiesPersmision.denyAll = data[1][0].DenyAll;
+                    angular.forEach($scope.capabilitiesPersmision.list, function (item, key) {
+                        item.checked = $scope.capabilitiesPersmision.allowAll;
+                    });
+                }
+            }
+            else {
+                angular.forEach(data[1], function (item, key) {
+                    var filteredGoal = _.where($scope.capabilitiesPersmision.list, { Value: item.DataValueID });
+                    if (filteredGoal != null) {
+                        if (item.Deny == "1")
+                            filteredGoal[0].checked = '0';
+                        else
+                            filteredGoal[0].checked = '1';
+                    }
+                    // console.log('filteredGoal', filteredGoal[0]);
+
+                });
+            }
+            // console.log('filteredGoal', $scope.districtPersmision.list);
+        });
+    }
+
+    function actionGroupataCapabilities(groupId) {
+        if (typeof groupId == 'undefined')
+            groupId = $scope.entry.ID;
+        var district = angular.copy($scope.capabilitiesPersmision.list);
+        console.log($scope.capabilitiesPersmision.list)
+        var roles = angular.copy($scope.roles);
+        var entry = { Action: 'INSERT', Sys_ViewID: 32, UserGroupID: groupId };
+        entry.Items = { Table: [{ TableName: "LEASINGCAPABILITIES", ColumnName: "ID", AllowAll: $scope.capabilitiesPersmision.allowAll, DenyAll: $scope.capabilitiesPersmision.denyAll }] };
+        // for (view in roles) {
+        var list = new Array();
+        angular.forEach(district, function (item, key) {
+            if (item.hasOwnProperty('checked')) {
+                var obj = { Value: item.Value, Allow: "1", Deny: "0" }
+                if (item.checked == "0")
+                    obj = { Value: item.Value, Allow: "0", Deny: "1" }
+                list.push(obj);
+            }
+        });
+
+      
+        //}
+        entry.Items.Table[0].Data = list;
+
+        $rootScope.showModal = true;
+        coreService.actionEntry2(entry, function (data) {
+            $rootScope.showModal = false;
+            dialogs.notify(data.Message.Name, data.Message.Description);
+        });
+
+
+    }
+
+    $scope.actionGroupDataCapabilitiesD = function (groupId) {
+        actionGroupDataCapabilitiesD(groupId);
+    }
+    /**********************************************  END  DATA apabilities PERMISSSION **********************************************************/
+
 
     /**********************************************  BEGIN  INFO GROUP**********************************************************/
 
@@ -228,14 +332,24 @@
             case 'INSERTDATAPERMISION':
                 dlg = dialogs.confirm('Phân quyền dữ liệu', 'Bạn có muốn cập nhật thông tin đang được chọn?');
                 break;
-
+            case 'INSERTCAPABILITIESDATAPERMISION':
+                dlg = dialogs.confirm('Phân quyền dữ liệu', 'Bạn có muốn cập nhật thông tin đang được chọn?');
+                break;
 
         }
         dlg.result.then(function (btn) {
-            if (act == 'INSERTDATAPERMISION')
-                actionGroupData();
-            else
-                $scope.actionEntry(act);
+            switch (act) {
+                case 'INSERTDATAPERMISION':
+                    actionGroupData(); 
+                    break;
+                case 'INSERTCAPABILITIESDATAPERMISION':
+                    actionGroupataCapabilities();
+                    break;
+                default:
+                    $scope.actionEntry(act);
+
+            }
+            
         }, function (btn) {
             //$scope.confirmed = 'You confirmed "No."';
         });

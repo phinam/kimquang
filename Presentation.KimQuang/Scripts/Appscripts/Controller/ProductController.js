@@ -56,7 +56,12 @@
         uploader.uploadAll();
     };
     uploader.onSuccessItem = function (fileItem, response, status, headers) {
-        var item = { name: fileItem._file.name, fileType: $scope.FileTypeSelectList[i].Name, fileName: response };
+        var fileType = "";
+        for (var i = 0; i < $scope.FileTypeSelectList.length; i++)
+            if ($scope.FileTypeSelectList[i].Value == $scope.dataSelected.FileType)
+                fileType = $scope.FileTypeSelectList[i].Name;
+
+        var item = { name: fileItem._file.name, fileType: fileType, fileName: response };
         $scope.arrFiles.unshift(item);
 
     };
@@ -106,7 +111,7 @@
               { name: 'WardName', heading: 'PHƯỜNG', className: 'text-center pd-0 break-word' },
             { name: 'DistrictName', heading: 'QUẬN', className: 'text-center pd-0 break-word' },
 
-            { name: 'Action1', heading: 'THAO TÁC', width: '100px', className: 'text-center pd-0 break-word', type: controls.LIST_ICON, listAction: [{ classIcon: 'fa-files-o text-primary', action: 'copy' }, { classIcon: 'fa-pencil-square-o', action: 'view' }, { classIcon: 'fa fa-times  text-danger', action: 'delete' }] }
+            { name: 'Action1', heading: 'THAO TÁC', width: '100px', className: 'text-center pd-0 break-word', type: controls.LIST_ICON, listAction: [{ classIcon: 'fa fa-eye text-primary', action: 'linkview', fieldName: "LinkProduct" }, { classIcon: 'fa-files-o text-primary', action: 'copy' }, { classIcon: 'fa-pencil-square-o', action: 'view' }, { classIcon: 'fa fa-times  text-danger', action: 'delete' }] }
         ],
         data: [],
         sysViewID: 20,
@@ -123,12 +128,21 @@
                     //                    console.log('row', row);
                     $state.transitionTo('editproduct', { productId: row.ID || row, action: act });
                     break;
+                case 'linkproduct':
+                    getProduct(row.ID || row, function (data) {
+                        if (data.length > 1) {
+                            if(data[1][0].LinkProduct!='')
+                                window.open(data[1][0].LinkProduct);
+                        }
+                    })
+                    //                    console.log('row', row);
+                    debugger;
+                    break;
                 case 'copy':
                     //                    console.log('row', row);
                     $state.transitionTo('editproduct', { productId: row.ID || row, action: act });
                     break;
                 case 'delete':
-                    console.log('row', row);
                     if (modalUtils.modalsExist())
                         modalUtils.closeAllModals();
                     var dlg = dialogs.confirm('Confirmation', 'Confirmation required');
@@ -157,13 +171,21 @@
         }
     }
 
+
+    function getProduct(productId, func) {
+        coreService.getListEx({ ProductID: productId, Sys_ViewID: 20 }, function (data) {
+            func(data)
+
+        });
+    }
+
     $scope.listRight = authoritiesService.get($scope.gridInfo.sysViewID);
     $scope.statusOptions = statusOptions;
     $scope.Layout = {
         enableClear: false,
         enableButtonOrther: false
     }
-    $scope.dataSelected = { ID: 0, Name: "", Code: '', Description: "", Status: "0", Sys_ViewID: $scope.gridInfo.sysViewID, layout: '', brokeragecontract: '', image1: '', bidcontracts: '', proposal: '', ortherpapers: ''};
+    $scope.dataSelected = { ID: 0, Name: "", Code: '', Description: "", Status: "0", Sys_ViewID: $scope.gridInfo.sysViewID, layout: '', brokeragecontract: '', image1: '', bidcontracts: '', proposal: '', ortherpapers: '' };
     $scope.init = function () {
         window.setTimeout(function () {
             $(window).trigger("resize")
@@ -414,7 +436,7 @@
                 if (typeof entry.LastUpdatedDateTimeTo != 'undefined')
                     if (entry.LastUpdatedDateTimeTo != '')
                         entry.LastUpdatedDateTimeTo = $filter('date')(entry.LastUpdatedDateTimeTo, "yyyy-MM-dd");
-               
+
             }
             catch (ex) {
 
@@ -532,13 +554,13 @@
         }
 
         searchEntry.OfficeDirectionID = '';
-       
+
         if ($scope.listOfficeDirectionID.length > 0) {
             var listOBD = new Array();
             for (var i = 0; i < $scope.listOfficeDirectionID.length; i++) {
                 listOBD.push($scope.listOfficeDirectionID[i].Value);
             }
-           
+
             searchEntry.OfficeDirectionID = listOBD.toString();
         }
         searchEntry.OfficeRankingID = '';
@@ -549,7 +571,7 @@
             }
             searchEntry.OfficeRankingID = listOF.toString();
         }
-      
+
         searchEntry.OtherFeeTypeID = '';
         if ($scope.listOtherFeeType.length > 0) {
             var listOFT = new Array();
@@ -558,8 +580,8 @@
             }
             searchEntry.OtherFeeTypeID = listOFT.toString();
         }
-       
-       
+
+
 
         try {
 
@@ -590,7 +612,7 @@
             if (typeof searchEntry.ActionToDate != 'undefined')
                 if (searchEntry.ActionToDate != '')
                     searchEntry.ActionToDate = $filter('date')(searchEntry.ActionToDate, "yyyy-MM-dd");
-            
+
         }
         catch (ex) {
 
@@ -644,9 +666,9 @@
         $timeout(function () {
             $scope.dataSelected.WardID = null;
             $scope.searchEntry.WardID = null;
-         
+
         }, 100);
-        
+
     }
 
     function converDatetoDB(obj) {
