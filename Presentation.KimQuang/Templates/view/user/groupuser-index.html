@@ -14,7 +14,10 @@
                         <!--ng-show="entry.ID!='0'"-->
                         <a href="#2b" data-toggle="tab">Dữ liệu</a>
                     </li>
-
+                    <li ng-class="{'active': tabActive=='3'}" ng-click="tabActive='3'" ng-show="entry.ID!='0'">
+                        <!--ng-show="entry.ID!='0'"-->
+                        <a href="#3b" data-toggle="tab">Công nắng</a>
+                    </li>
                 </ul>
 
                 <div class="tab-content clearfix">
@@ -248,6 +251,83 @@
 
                     </div>
 
+
+                    <div class="tab-pane " id="3b" ng-class="{'active': tabActive=='3'}">
+                        <div class="col-md-12" style="margin-top:10px">
+
+                            <div class="box box-solid box-primary">
+                                <div class="box-header with-border">
+                                    <h3 class="box-title">Phân quyền công năng <span class="text-uppercase" style="color:chartreuse"> [NHÓM:{{entry.Name}}]</span></h3>
+                                    <div class="box-tools pull-right">
+                                        <div class="box-tools pull-right">
+                                            <button class="btn btn-box-tool" data-widget="collapse" data-toggle="tooltip" title="Collapse"><i class="fa fa-minus"></i></button>
+                                        </div>
+                                    </div><!-- /.box-tools -->
+                                </div><!-- /.box-header -->
+                                <div class="box-body">
+                                    <div class="col-md-12 text-center" style="zoom:1.5">
+                                        <div class="checkbox checkbox-inline checkbox-primary">
+                                            <input class="styled styled" id="cbCapabilitiesPersmisionAll" type="checkbox" ng-click="checkAllowAlCapabilities()" ng-model="capabilitiesPersmision.allowAll" ng-true-value="'1'" ng-false-value="'0'">
+                                            <label for="cbCapabilitiesPersmisionAll" class=" text-bold">
+                                                Chọn tất cả
+                                            </label>
+                                        </div>
+
+                                      
+
+                                    </div>
+
+                                    <div class="col-md-12">
+
+                                        <table class="table table-condensed table-striped ">
+                                            <tr>
+                                                <th style="width: 10px">#</th>
+                                                <th>Công năng</th>
+                                                <th style="text-align:center">Cho phép</th>
+                                                <!--<th style="text-align:center">Từ chối</th>-->
+                                            </tr>
+                                            <tr ng-repeat="f in capabilitiesPersmision.list">
+                                                <td></td>
+                                                <td style=" white-space: nowrap;  overflow: hidden;  text-overflow: ellipsis;  max-width: 150px;">
+                                                    {{f.Name}}
+                                                </td>
+
+                                                <td>
+                                                    <div class="checkbox checkbox-primary  text-center " style=" padding-top:2px!important; margin-top: 2px;
+    margin-bottom: 2px;">
+                                                        <input id="cboAllowDocummentCapabilities{{$index}}" class="styled" type="checkbox" ng-true-value="'1'" ng-false-value="'0'" ng-model="f.checked" ng-checked="f.checked=='1'" ng-click="checkItenCapabilities()">
+                                                        <label for="cboAllowDocummentCapabilities{{$index}}">
+                                                            &nbsp;
+                                                        </label>
+                                                    </div>
+                                                </td>
+
+                                            </tr>
+
+
+                                        </table>
+                                    </div>
+
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            <label for="employee" class="col-sm-2 control-label">&nbsp;</label>
+                                            <div class="col-sm-4">
+                                                <button class="form-control btn-primary" ng-click="actionConfirm('INSERTCAPABILITIESDATAPERMISION')" ">Cập nhật</button>
+                                            </div>
+
+                                            <div class="col-sm-4 ">
+                                                <button class="form-control btn-primary" ng-click="reset()">Reset </button>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div><!-- /.box-body -->
+                            </div><!-- /.box -->
+                        </div>
+
+
+
+                    </div>
                 </div>
 
 
