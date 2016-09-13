@@ -59,8 +59,8 @@
             <!-- Header Navbar: style can be found in header.less -->
             <nav class="navbar navbar-static-top" role="navigation">
                 <!-- Sidebar toggle button-->
-                <a href="#" class="sidebar-toggle" data-toggle="offcanvas" role="button">
-                    <span class="sr-only">Toggle navigation</span>
+                <a class="sidebar-toggle" role="button" ng-click="IsSidebarCollapse=!IsSidebarCollapse">
+                    <span class="sr-only">Toggle navigation{{IsSidebarCollapse}}</span>
                 </a>
                 <div class="navbar-custom-menu">
                     <!--Directive headerNavbarMenu & headerNavbarDropdown-->
@@ -190,7 +190,7 @@
     <script src="Scripts/plugins/underscore/underscore.js"></script>
     <script src="Scripts/appScripts/indexApp.js"></script>
     <!-- Controller-->
-    <script src="Scripts/Appscripts/Controller/DepartmentController.js"></script>
+    <script src="Scripts/Appscripts/Controller/CustomerController.js"></script>
     <script src="Scripts/appScripts/Controller/ProductController.js"></script>
     <script src="Scripts/Appscripts/Controller/ImportProductCtrl.js"></script>
     <script src="Scripts/Appscripts/Controller/UserControler.js"></script>
