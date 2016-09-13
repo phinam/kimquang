@@ -1,0 +1,475 @@
+﻿<kq ng-controller="CustomerCtrl" ng-init="init()">
+    <content-header title-name="Thêm mới khách hàng" ng-if="isNewHeader==true"></content-header>
+    <content-header title-name="Hiệu chỉnh  khách hàng" ng-if="isNewHeader==false"></content-header>
+    <!-- Main content -->
+    <section class="content">
+        <div class="row ">
+            <input type=" text" class="form-control hidden" id="ID" name="ID" placeholder="ID" ng-model="dataSelected.ID" ng-change="changeText()" />
+            <form class="form-horizontal row" name="addProductForm" novalidate="">
+                <div class="col-md-12 col-sm-12">
+
+                    <!--Column Left-->
+                    <div class="col-md-6 col-sm-6">
+                        <div class="form-group">
+                            <label for="inputEmail3" class="col-sm-3 control-label">Tên công ty</label>
+                            <div class="col-sm-9">
+                                <input type="text" class="form-control" id="ID" name="Name" ng-model="dataSelected.Name" tabindex="1" ng-change="changeText()" required />
+                            </div>
+                        </div>
+                        <div class="form-group ">
+                            <label for="inputPassword3" class="col-sm-3 control-label">Mã số thuế</label>
+                            <div class="col-sm-5">
+                                <input type="text" class="form-control" ng-model="dataSelected.TaxID" tabindex="2">
+                            </div>
+                            <div class="col-sm-4">
+                                <div class="input-group">
+                                    <input type="text" class="form-control text-center col-sm-10" datepicker-popup="{{'dd-MM-yyyy'}}" ng-model="dataSelected.ReceiveDate" is-open="openedModifyDateTime" close-text="Close" id="txtModifyDateTime" ng-click="openedModifyDateTime=true" tabindex="3" placeholder="Ngày nhận KH " />
+                                    <span class="input-group-btn">
+                                        <button type="button" class="btn btn-default" ng-click="openedModifyDateTime=true"><i class="glyphicon glyphicon-calendar"></i></button>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="inputPassword3" class="col-sm-3 control-label">Lĩnh vực kinh doanh</label>
+                            <div class="col-sm-9">
+                                <input type="text" class="form-control" ng-model="dataSelected.BusinessArea" tabindex="4">
+                            </div>
+
+                        </div>
+                        <div class="form-group">
+                            <label for="inputPassword3" class="col-sm-3 control-label">Nhóm khách hàng</label>
+                            <div class="col-sm-9">
+                                <select class="form-control" ng-model="dataSelected.State" tabindex="5"
+                                        ng-options="item.Value as item.Name for item in customerGroup">
+                                    <option value="">-- Chọn nhóm</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="HirePrice" class="col-sm-3 control-label text-left-important">Nhóm diện tích</label>
+                            <div class="col-sm-9 ">
+                                <select class="form-control" ng-model="dataSelected.State" tabindex="5"
+                                        ng-options="item.Value as item.Name for item in leasingAreaGroup">
+                                    <option value="">-- Chọn nhóm diện tích</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="PriceDescription" class="col-sm-3 control-label text-left-important">Diện tích thuê</label>
+                            <div class="col-sm-5 ">
+                                <input type=" text" class="form-control" id="AreaDescription" name="AreaDescription" tabindex="7" ng-model="dataSelected.HireArea" placeholder="" />
+                            </div>
+                            <div class="col-sm-4">
+                                <input type=" text" class="form-control" id="HirePrice" name="HirePrice" tabindex="7" ng-model="dataSelected.HirePrice" placeholder="Giá thuê" />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="PriceDescription" class="col-sm-3 control-label text-left-important">Khu vực thuê</label>
+                            <div class="col-sm-5 ">
+                                <input type=" text" class="form-control" id="HireSector" name="HireSector" tabindex="9" ng-model="dataSelected.HireSector" placeholder="" />
+                            </div>
+                            <div class="col-sm-4">
+                                <div class="input-group ">
+                                    <input type="text" class="form-control text-center col-sm-10" tabindex="10" datepicker-popup="{{'dd-MM-yyyy'}}" placeholder="Thời gian thuê" ng-model="dataSelected.HireDuration" is-open="openedDD1" close-text="Close" id="txtOpenedDD1" ng-click="openedDD1=true" />
+                                    <span class="input-group-btn">
+                                        <button type="button" class="btn btn-default" ng-click="openedDD1=true"><i class="glyphicon glyphicon-calendar"></i></button>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="PriceDescription" class="col-sm-3 control-label text-left-important">Lưu ý nhu cầu</label>
+                            <div class="col-sm-9 ">
+                                <input type=" text" class="form-control" id="State" name="State" tabindex="11" ng-model="dataSelected.DemandNode" placeholder="" ng-change="changeText()" />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="PriceDescription" class="col-sm-3 control-label text-left-important">Hướng toà nhà</label>
+                            <div class="col-sm-3 ">
+                                <select tabindex=" 21" ng-model="dataSelected.BuildingDirectionID" name="BuildingDirectionID" id="BuildingDirectionID" tabindex="46" class="form-control"
+                                        ng-options="option.Value as option.Name for option in buildingDirectionIDSelectList">
+                                    <option value="">-- Chọn hướng </option>
+                                </select>
+                            </div>
+                            <label for="PriceDescription" class="col-sm-3 control-label text-left-important">Hướng văn phòng</label>
+                            <div class="col-sm-3 ">
+                                <select tabindex=" 21" ng-model="dataSelected.OfficeDirectionID" name="OfficeDirectionID" id="OfficeDirectionID" tabindex="47" class="form-control"
+                                        ng-options="option.Value as option.Name for option in buildingDirectionIDSelectList">
+                                    <option value="">-- Chọn hướng </option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="HirePrice" class="col-sm-3 control-label text-left-important">Thông tin liên hệ</label>
+                            <div class="col-sm-3 ">
+                                <input type=" text" class="form-control" id="HirePrice" name="Tên" tabindex="13" ng-model="dataSelected.HirePrice" />
+                            </div>
+                            <div class="col-sm-3 ">
+                                <input type=" text" class="form-control" id="HireManagermentFee" name="HireManagermentFee" tabindex="14" ng-model="dataSelected.HireManagermentFee" placeholder="Phí quản lý" ng-change="calculateHirePrice()" />
+                            </div>
+                            <div class="col-sm-3 ">
+                                <input type=" text" class="form-control" id="TotalPrice" name="TotalPrice" tabindex="15" ng-model="dataSelected.TotalPrice" placeholder="Giá tổng/m2" />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="PriceDescription" class="col-sm-3 control-label text-left-important">Giá tổng/(DT)</label>
+                            <div class="col-sm-9 ">
+                                <input type=" text" class="form-control" id="HireTotalAmount" name="HireTotalAmount" tabindex="15" ng-model="dataSelected.HireTotalAmount" ng-change="changeText()" />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="PriceDescription" class="col-sm-3 control-label text-left-important">Gía chốt</label>
+                            <div class="col-sm-9 ">
+                                <input type=" text" class="form-control" id="HireFinalPrice" name="HireFinalPrice" tabindex="16" ng-model="dataSelected.HireFinalPrice" ng-change="changeText()" />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="DistrictID" class="col-sm-3 control-label text-left-important">Quận/Huyện</label>
+                            <div class="col-sm-9 ">
+                                <select class="form-control" ng-model="dataSelected.DistrictID" tabindex="17"
+                                        ng-options="item.ID as item.Name for item in districtSelectList"
+                                        ng-change="changeDistrict(dataSelected.DistrictID)">
+                                    <option value="">-- Chọn Quận/Huyện</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="WardID" class="col-sm-3 control-label text-left-important">Phường/Xã</label>
+                            <div class="col-sm-9" ">
+                                            <select class=" form-control" ng-model="dataSelected.WardID" tabindex="18"
+                                 ng-options="item.ID as item.Name for item in wardSelectList | filterDistrictID:dataSelected.DistrictID"
+                                 ng-disabled="dataSelected.DistrictID == null || dataSelected.DistrictID == ''">
+                                <option value="">
+                                    -- Chọn Phường/Xã
+                                </option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="inputPassword3" class="col-sm-3 control-label">Tên đường</label>
+                            <div class="col-sm-9">
+                                <input type="text" class="form-control" ng-model="dataSelected.StreetName" tabindex="19">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="inputPassword3" class="col-sm-3 control-label">Số nhà</label>
+                            <div class="col-sm-9">
+                                <input type="text" class="form-control" ng-model="dataSelected.HomeNumber" tabindex="20">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="PriceDescription" class="col-sm-3 control-label text-left-important">Điện thoại bàn</label>
+                            <div class="col-sm-9 ">
+                                <input type=" text" class="form-control" id="ContactPhone" name="ContactPhone" tabindex="21" ng-model="dataSelected.ContactPhone" ng-change="changeText()" />
+                            </div>
+                        </div>
+
+
+                        <div class="form-group">
+                            <label for="ContactMgntName" class="col-sm-3 control-label text-left-important">TT Quản lý</label>
+                            <div class="col-sm-6 ">
+                                <input type=" text" class="form-control" id="ContactMgntName" name="ContactMgntName" tabindex="22" ng-model="dataSelected.ContactMgntName" placeholder="Số điện thoại - Tên" />
+                            </div>
+
+                            <div class="col-sm-3 ">
+                                <input type=" text" class="form-control" id="ContactMgntEmail" name="ContactMgntEmail" tabindex="24" ng-model="dataSelected.ContactMgntEmail" placeholder="Email" />
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="ContactOwnerNane" class="col-sm-3 control-label text-left-important">TT Chủ đầu tư</label>
+                            <div class="col-sm-6 ">
+                                <input type=" text" class="form-control" id="ContactOwnerPhone" name="ContactOwnerPhone" tabindex="25" ng-model="dataSelected.ContactOwnerPhone" placeholder="Số điện thoại - Tên " />
+                            </div>
+                            <div class="col-sm-3 ">
+                                <input type=" text" class="form-control" id="ContactOwnerEmail" name="ContactOwnerEmail" tabindex="27" ng-model="dataSelected.ContactOwnerEmail" placeholder="Email" />
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="LeasingCapabilities" class="col-sm-3 control-label text-left-important">Công năng cho thuê</label>
+                            <div class="col-sm-9 ">
+                                <select class="form-control" ng-model="dataSelected.LeasingCapabilities" tabindex="17"
+                                        ng-options="item.Value as item.Name for item in leasingCapabilitiesList">
+                                    <option value="">-- Chọn công năng</option>
+                                </select>
+
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="Elevator" class="col-sm-3 control-label text-left-important">TT Thang máy</label>
+                            <div class="col-sm-9 ">
+                                <input type=" text" class="form-control" id="Elevator" name="Elevator" tabindex="29" ng-model="dataSelected.Elevator ">
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="PowerBackup" class="col-sm-3 control-label text-left-important">TT Máy phát điện</label>
+                            <div class="col-sm-9 ">
+                                <input type=" text" class="form-control" id="PowerBackup" name="State" tabindex="30" ng-model="dataSelected.PowerBackup ">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="CoolerSystem" class="col-sm-3 control-label text-left-important">HT Máy lạnh</label>
+                            <div class="col-sm-9 ">
+                                <input type=" text" class="form-control" id="CoolerSystem" name="CoolerSystem" tabindex="31" ng-model="dataSelected.CoolerSystem ">
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="TimeToSetup" class="col-sm-3 control-label text-left-important">Thời gian set-up</label>
+                            <div class="col-sm-9 ">
+                                <input type=" text" class="form-control" id="TimeToSetup" name="TimeToSetup" tabindex="32" ng-model="dataSelected.TimeToSetup ">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="TimeWork" class="col-sm-3 control-label text-left-important">Giờ làm việc</label>
+                            <div class="col-sm-9 ">
+                                <textarea type=" text" class="form-control" id="TimeWork" name="TimeWork" tabindex="33" ng-model="dataSelected.TimeWork" cols="2"></textarea>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="ContractDuration" class="col-sm-3 control-label text-left-important">Thời hạn hợp đồng</label>
+                            <div class="col-sm-9 ">
+                                <input type=" text" class="form-control" id="ContractDuration" name="ContractDuration" tabindex="34" ng-model="dataSelected.ContractDuration">
+                            </div>
+                        </div>
+                    </div>
+                    <!--Column Right-->
+                    <div class="col-md-6 col-sm-6">
+
+
+                        <div class="form-group">
+                            <label for="PackingBikePosition" class="col-sm-3 control-label text-left-important">Phí xe máy</label>
+                            <div class="col-sm-5 ">
+                                <input type=" text" class="form-control" id="PackingBikePosition" name="PackingBikePosition" tabindex="35" ng-model="dataSelected.PackingBikeCount" placeholder="Vị trí/Số lượng " title=" vị trí" />
+                            </div>
+                            <div class="col-sm-3 ">
+                                <input type=" text" class="form-control" id="PackingBikeFee" name="PackingBikeCount" tabindex="36" ng-model="dataSelected.PackingBikeFee" placeholder="Giá tiền " title="Số lượng" />
+                            </div>
+                            <div class="col-sm-1 ">
+                                <div class="checkbox checkbox-primary">
+                                    <input class="styled styled" id="checkbox10" type="checkbox" ng-checked="dataSelected.HavePackingBike=='1'" ng-model="dataSelected.HavePackingBike" ng-true-value="'1'">
+                                    <label for="checkbox10">
+                                        &nbsp;
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="PackingCarPosition" class="col-sm-3 control-label text-left-important">Phí ô tô</label>
+                            <div class="col-sm-5 ">
+                                <input type=" text" class="form-control" id="PackingCarPosition" name="PackingCarPosition" tabindex="38" ng-model="dataSelected.PackingCarCount" placeholder="Vị trí/Số lượng" title="Vị trí/Số lượng" />
+                            </div>
+                            <div class="col-sm-3 ">
+                                <input type=" text" class="form-control" id="PackingCarCount" name="PackingCarCount" tabindex="39" ng-model="dataSelected.PackingCarFee" placeholder="Giá tiền" title="Số lượng" />
+                            </div>
+                            <div class="col-sm-1 ">
+                                <div class="checkbox checkbox-primary">
+                                    <input class="styled styled" id="checkbox11" type="checkbox" ng-checked="dataSelected.HavePackingCar=='1'" ng-model="dataSelected.HavePackingCar" ng-true-value="'1'">
+                                    <label for="checkbox11">
+                                        &nbsp;
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="PriceDescription" class="col-sm-3 control-label text-left-important">Phí ngoài giờ</label>
+                            <div class="col-sm-6 ">
+                                <input type=" text" class="form-control" id="OtherFee" name="OtherFee" tabindex="40" ng-model="dataSelected.OtherFee" placeholder="0.05usd/1hr, tính từ 6h tối" />
+                            </div>
+                            <div class="col-sm-3 ">
+                                <select class="form-control" ng-model="dataSelected.OtherFeeType" tabindex="17"
+                                        ng-options="item.ID as item.Name for item in otherFeeType"
+                                <option value="">-- Chọn loại</option>
+                            </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="PriceDescription" class="col-sm-3 control-label text-left-important">Điện/Nước</label>
+                            <div class="col-sm-5 ">
+                                <input type=" text" class="form-control" id="ElectricityFee" name="ElectricityFee" tabindex="41" ng-model="dataSelected.ElectricityFee" placeholder="Giá điện" />
+                            </div>
+                            <div class="col-sm-4 ">
+                                <input type=" text" class="form-control" id="ElectricityFee" name="ServiceWaterFee" tabindex="42" ng-model="dataSelected.ServiceWaterFee" placeholder="Giá nước" />
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="PriceDescription" class="col-sm-3 control-label text-left-important">Hạng văn phòng</label>
+                            <div class="col-sm-9 ">
+                                <!--<input type=" text" class="form-control" id="OfficeRank" name="OfficeRank" tabindex="43" ng-model="dataSelected.OfficeRank" ng-change="changeText()" />-->
+                                <select class="form-control" ng-model="dataSelected.OfficeRank" tabindex="43"
+                                        ng-options="item.Value as item.Name for item in officeRankingSelectList">
+                                    <option value="">-- Chọn hạng văn phòng</option>
+                                </select>
+
+                            </div>
+                        </div>
+
+
+                        <div class="form-group">
+                            <label for="PriceDescription" class="col-sm-3 control-label text-left-important">Độ cao trần</label>
+                            <div class="col-sm-9 ">
+                                <input type=" text" class="form-control" id="CeilingHeight" name="CeilingHeight" tabindex="44" ng-model="dataSelected.CeilingHeight" ng-change="changeText()" />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="PriceDescription" class="col-sm-3 control-label text-left-important">Năm hoàn thành</label>
+                            <div class="col-sm-9 ">
+                                <input type=" text" class="form-control" id="CompleteTime" name="CompleteTime" tabindex="45" ng-model="dataSelected.CompleteTime" ng-change="changeText()" />
+                            </div>
+                        </div>
+
+
+                        <div class="form-group">
+                            <label for="PriceDescription" class="col-sm-3 control-label text-left-important">Chủ đầu tư</label>
+                            <div class="col-sm-9 ">
+                                <input type=" text" class="form-control" id="OtherFee" name="OtherFee" tabindex="48" ng-model="dataSelected.OwnerName" />
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="PriceDescription" class="col-sm-3 control-label text-left-important">Đặt Cọc/Thanh toán</label>
+                            <div class="col-sm-5 ">
+                                <input type=" text" class="form-control" id="PayByDeposit" name="PayByDeposit" tabindex="49" ng-model="dataSelected.PayByDeposit" placeholder="Tiền đặt cọc" />
+                            </div>
+                            <div class="col-sm-4 ">
+                                <input type=" text" class="form-control" id="PayByCredit" name="PayByCredit" tabindex="50" ng-model="dataSelected.PayByCredit" placeholder="Tiền thành toán" />
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="PriceDescription" class="col-sm-3 control-label text-left-important">Hoa hồng</label>
+                            <div class="col-sm-9 ">
+                                <input type=" text" class="form-control" id="Bonus" name="Bonus" tabindex="51" ng-model="dataSelected.Bonus" ng-change="changeText()" />
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="PriceDescription" class="col-sm-3 control-label text-left-important">Vị trí</label>
+                            <div class="col-sm-9 ">
+                                <input type=" text" class="form-control" id="BuildingPosition" name="BuildingPosition" tabindex="52" ng-model="dataSelected.BuildingPosition" ng-change="changeText()" />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="PriceDescription" class="col-sm-3 control-label text-left-important">Link sản phẩm </label>
+                            <div class="col-sm-9 ">
+                                <input type=" text" class="form-control" id="LinkProduct" name="LinkProduct" tabindex="52" ng-model="dataSelected.LinkProduct" ng-change="changeText()" />
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="Description" class="col-sm-3 control-label text-left-important">Chú thích</label>
+                            <div class="col-sm-9">
+                                <textarea name=" description" id="Description" class="form-control" rows="4" tabindex="53" placeholder="" ng-model="dataSelected.Description"></textarea>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="Status" class="col-sm-3 control-label text-left-important">Tài liệu</label>
+                            <div class="col-sm-4 ">
+                                <select tabindex=" 54" ng-model="dataSelected.FileType" name="FileType" id="FileType" tabindex="47" class="form-control"
+                                        ng-options="option.Value as option.Name for option in FileTypeSelectList">
+                                    <option value="">-- Chọn loại</option>
+                                </select>
+                            </div>
+                            <div class="col-sm-5">
+                                <!--<button type="button" class="btn btn-primary start col-xs-12" ng-disabled="!dataSelected.FileType" tabindex=" 55">
+                                    <i class="glyphicon glyphicon-upload"></i>
+                                    <span>Thêm tài liệu</span>
+                                </button>-->
+
+
+
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="Status" class="col-sm-3 control-label text-left-important">&nbsp;</label>
+                            <div class="col-sm-9 ">
+
+                                <div class="box" ng-show="arrFiles.length>0">
+                                    <div class="box-body no-padding">
+                                        <table class="table table-condensed table-striped">
+                                            <tr>
+                                                <th style="width: 10px">#</th>
+                                                <th>Tên file</th>
+                                                <th style="width: 100px">Loại</th>
+                                                <th style="width: 30px">Xem</th>
+                                                <th style="width: 30px">Xóa</th>
+                                            </tr>
+                                            <tr ng-repeat="f in arrFiles">
+                                                <td>
+                                                    <div class="checkbox checkbox-primary" style="padding-top:2px!important; min-height:0px!important">
+                                                        <input id="cboDocumment{{$index}}" class="styled" type="checkbox" ng-true-value="'1'" ng-false-value="'0'" ng-model="f.default" ng-checked="f.default=='1'">
+                                                        <label for="cboDocumment{{$index}}">
+                                                            &nbsp;
+                                                        </label>
+                                                    </div>
+                                                </td>
+                                                <td style=" white-space: nowrap;  overflow: hidden;  text-overflow: ellipsis;  max-width: 150px;">
+                                                    {{f.name}}
+                                                </td>
+                                                <td>
+                                                    {{f.fileType}}
+                                                </td>
+                                                <td><a class="btn btn-xs btn-danger" title="download" href="../../Upload/{{f.fileName}}" download="{{f.name}}"><i><i class="fa fa-download"></i></a></td>
+                                                <td><a class="btn btn-xs btn-danger" title="Xóa" ng-click="deleteFile($index,f)"><i class="fa fa-times"></i></a></td>
+                                            </tr>
+
+
+                                        </table>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <div class="col-sm-12 col-md-8 col-md-offset-2">
+                        <div class="row">
+                            <div class="col-md-4 col-md-offset-2 pull-left" ng-show="dataSelected.ID==0||actType=='copy'">
+                                <button class="btn col-xs-12 btn-primary" tabindex="30"
+                                        ng-disabled="addProductForm.Name.$error.required"
+                                        ng-click="actionConfirm('INSERT')">
+                                    <span class="glyphicon glyphicon-plus"></span>
+                                    Thêm
+                                </button>
+                            </div>
+                            <div class="col-md-4 col-md-offset-2 pull-left" ng-show="dataSelected.ID!=0&&actType!='copy'">
+                                <button class="btn col-xs-12 btn-danger" tabindex="31"
+                                        ng-click="actionConfirm('UPDATE')">
+                                    <span class="glyphicon glyphicon-plus"></span>
+                                    Lưu thay đổi
+                                </button>
+                            </div>
+                            <div class="col-md-4 pull-left">
+                                <button class="btn col-xs-12" tabindex="32"
+                                        ui-sref="productlist">
+                                    <span class="glyphicon glyphicon-plus"></span>
+                                    Trở về
+                                </button>
+                            </div>
+                        </div>
+
+                    </div>
+
+
+            </form>
+        </div>
+    </section>
+</kq>
+<script>
+
+    //Toggle button
+    var o = $.AdminLTE.options;
+    if (o.enableBoxWidget) {
+        $.AdminLTE.boxWidget.activate();
+    }
+</script>
+
