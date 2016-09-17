@@ -253,9 +253,9 @@
                             <label for="LeasingCapabilities" class="col-sm-3 control-label text-left-important">Thời gian đặt cọc</label>
                             <div class="col-sm-5">
                                 <div class="input-group ">
-                                    <input type="text" class="form-control text-center col-sm-10" tabindex="10" datepicker-popup="{{'dd-MM-yyyy'}}" ng-model="dataSelected.HireExpireDate" is-open="openedHireExpireDate" close-text="Close" id="txtHireExpireDate" ng-click="openedHireExpireDate=true" placeholder="Ngày hết HĐ" />
+                                    <input type="text" class="form-control text-center col-sm-10" tabindex="10" datepicker-popup="{{'dd-MM-yyyy'}}" ng-model="dataSelected.DepositDate" is-open="openedDepositDate" close-text="Close" id="txtDepositDate" ng-click="openedDepositDate=true" placeholder="Ngày đặt cọc" />
                                     <span class="input-group-btn">
-                                        <button type="button" class="btn btn-default" ng-click="openedHireExpireDate=true"><i class="glyphicon glyphicon-calendar"></i></button>
+                                        <button type="button" class="btn btn-default" ng-click="openedDepositDate=true"><i class="glyphicon glyphicon-calendar"></i></button>
                                     </span>
                                 </div>
                             </div>
@@ -265,17 +265,17 @@
                             <label for="Elevator" class="col-sm-3 control-label text-left-important">Thời gian ký HĐ</label>
                             <div class="col-sm-5">
                                 <div class="input-group ">
-                                    <input type="text" class="form-control text-center col-sm-10" tabindex="10" datepicker-popup="{{'dd-MM-yyyy'}}" ng-model="dataSelected.HireExpireDate" is-open="openedHireExpireDate" close-text="Close" id="txtHireExpireDate" ng-click="openedHireExpireDate=true" placeholder="Thời gian ký HĐ" />
+                                    <input type="text" class="form-control text-center col-sm-10" tabindex="10" datepicker-popup="{{'dd-MM-yyyy'}}" ng-model="dataSelected.SignContractDate" is-open="openedSignContractDate" close-text="Close" id="txtSignContractDate" ng-click="openedSignContractDate=true" placeholder="Thời gian ký HĐ" />
                                     <span class="input-group-btn">
-                                        <button type="button" class="btn btn-default" ng-click="openedHireExpireDate=true"><i class="glyphicon glyphicon-calendar"></i></button>
+                                        <button type="button" class="btn btn-default" ng-click="openedSignContractDate=true"><i class="glyphicon glyphicon-calendar"></i></button>
                                     </span>
                                 </div>
                             </div>
                             <div class="col-sm-4">
                                 <div class="input-group ">
-                                    <input type="text" class="form-control text-center col-sm-10" tabindex="10" datepicker-popup="{{'dd-MM-yyyy'}}" ng-model="dataSelected.HireExpireDate" is-open="openedHireExpireDate" close-text="Close" id="txtHireExpireDate" ng-click="openedHireExpireDate=true" placeholder="Thời gian xuất HĐ" />
+                                    <input type="text" class="form-control text-center col-sm-10" tabindex="10" datepicker-popup="{{'dd-MM-yyyy'}}" ng-model="dataSelected.OutContractDate" is-open="openedOutContractDate" close-text="Close" id="txtOutContractDate" ng-click="openedOutContractDate=true" placeholder="Thời gian xuất HĐ" />
                                     <span class="input-group-btn">
-                                        <button type="button" class="btn btn-default" ng-click="openedHireExpireDate=true"><i class="glyphicon glyphicon-calendar"></i></button>
+                                        <button type="button" class="btn btn-default" ng-click="openedOutContractDate=true"><i class="glyphicon glyphicon-calendar"></i></button>
                                     </span>
                                 </div>
                             </div>
@@ -285,15 +285,15 @@
                             <label for="PowerBackup" class="col-sm-3 control-label text-left-important">Thời gian nhận tiền HH</label>
                             <div class="col-sm-5">
                                 <div class="input-group ">
-                                    <input type="text" class="form-control text-center col-sm-10" tabindex="10" datepicker-popup="{{'dd-MM-yyyy'}}" ng-model="dataSelected.HireExpireDate" is-open="openedHireExpireDate" close-text="Close" id="txtHireExpireDate" ng-click="openedHireExpireDate=true" placeholder="Thời gian ký HĐ" />
+                                    <input type="text" class="form-control text-center col-sm-10" tabindex="10" datepicker-popup="{{'dd-MM-yyyy'}}" ng-model="dataSelected.ReceiveBonus" is-open="openedReceiveBonus" close-text="Close" id="txtReceiveBonus" ng-click="openedReceiveBonus=true" placeholder="Thời gian ký HĐ" />
                                     <span class="input-group-btn">
-                                        <button type="button" class="btn btn-default" ng-click="openedHireExpireDate=true"><i class="glyphicon glyphicon-calendar"></i></button>
+                                        <button type="button" class="btn btn-default" ng-click="openedReceiveBonus=true"><i class="glyphicon glyphicon-calendar"></i></button>
                                     </span>
                                 </div>
                             </div>
                             <div class="col-sm-4 ">
-                                <select class=" form-control" ng-model="dataSelected.WardID" tabindex="18">
-                                    <option value="">
+                                <select class=" form-control" ng-model="dataSelected.IsReceiveBonus" tabindex="18">
+                                    <option value="2">
                                         -- Đã nhận / chưa nhận
                                     </option>
 
@@ -311,20 +311,20 @@
                         <div class="form-group">
                             <label for="CoolerSystem" class="col-sm-3 control-label text-left-important">HH đã có VAT</label>
                             <div class="col-sm-9 ">
-                                <input type=" text" class="form-control" id="CoolerSystem" name="CoolerSystem" tabindex="31" ng-model="dataSelected.CoolerSystem ">
+                                <input type=" text" class="form-control" id="CoolerSystem" name="BonusWithVAT" tabindex="31" ng-model="dataSelected.BonusWithVAT ">
                             </div>
                         </div>
 
                         <div class="form-group">
                             <label for="TimeToSetup" class="col-sm-3 control-label text-left-important">HH chưa VAT</label>
                             <div class="col-sm-9 ">
-                                <input type=" text" class="form-control" id="TimeToSetup" name="TimeToSetup" tabindex="32" ng-model="dataSelected.TimeToSetup ">
+                                <input type=" text" class="form-control" id="BonusWithoutVAT" name="BonusWithoutVAT" tabindex="32" ng-model="dataSelected.BonusWithoutVAT ">
                             </div>
                         </div>
                         <div class="form-group">
                             <label for="TimeWork" class="col-sm-3 control-label text-left-important">Doanh thu thực</label>
                             <div class="col-sm-9 ">
-                                <input type=" text" class="form-control" id="ContractDuration" name="ContractDuration" tabindex="34" ng-model="dataSelected.ContractDuration">
+                                <input type=" text" class="form-control" id="Income" name="Income" tabindex="34" ng-model="dataSelected.Income">
                             </div>
                         </div>
 
