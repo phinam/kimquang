@@ -21,7 +21,9 @@
 .padding-left-0 {
     padding-left: 0px !important;
 }
-
+.padding-right-0 {
+    padding-right: 0px !important;
+}
 .margin-top-8 {
     margin-top: 8px;
 }
@@ -443,3 +445,13 @@ table.table-bordered.dataTable tbody th, table.table-bordered.dataTable tbody td
     padding:0;
 }
 
+.calendar-right{
+    position:relative
+}
+
+.calendar-right  ul.dropdown-menu{
+   left: auto !important;
+   right: 0;
+ }
+
+.padding-right-5{   padding-right: 5px!important;}
