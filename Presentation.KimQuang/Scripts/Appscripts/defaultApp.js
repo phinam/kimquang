@@ -5,7 +5,8 @@
         password: "",
         useRefreshTokens: false
     };
-     $scope.login = function () {
+    $scope.login = function () {
+       
         var inputData = {
             UserName: $scope.loginData.userName,
             Password:md5.createHash($scope.loginData.password || '')
@@ -18,8 +19,10 @@
                 //console.log(data[2][0])
                 if (parseInt(data[1][0].Result) > 0) {
                     data[2][0].isAuth = true;
+                   
                     localStorageService.set('authorizationData', data[2][0]);
-                    window.location.href = '/app.html';
+                    $scope.getRole(data[2][0].ID);
+                 //   window.location.href = '/app.html';
                 } else {
                     localStorageService.set('authorizationData', loginInfo);
                     dialogs.error('Error', 'User Name or Password is not correct', { size: "md", animation: 'fadein' });
@@ -32,7 +35,30 @@
             $scope.$apply();
         });
     }
+    $scope.getRole = function (userId) {
+        var inputData = {
+            UserID: userId,
+            RequestParams:{viewId:36}
+        }
 
+        coreService.userID = userId;
+        coreService.getListEx({ Sys_ViewID: 36 }, function (data) {
+           
+            var roles = new Array();
+            angular.forEach(data[1], function (f, key) {
+                var y = _.some(roles, function (c) {
+                    return c.ViewID == f.ViewID;
+                });
+                //   console.log('yyyyy', y);
+                if (!y) {
+                    var list = _.where(data[1], { ViewID: f.ViewID });
+                    roles.push({ ViewName: f.ViewName, Action: list, ViewID: f.ViewID });
+                }
+            });
+            localStorageService.set('roleData', roles);
+            window.location.href = '/app.html';
+        });
+    }
 
 })
 

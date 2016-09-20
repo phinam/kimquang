@@ -5,7 +5,9 @@
     /*************************************Upload File*************************************/
     $scope.arrFiles = [];
     $scope.isCopy = '0';
+    $scope.isEditsRole = '0';
     $scope.exportInfo = localStorageService.get('authorizationData');
+    $scope.roleData = localStorageService.get('roleData');
     $scope.setExportInfo = function (fileType, viewId) {
         $scope.exportInfo.fileType = fileType;
         $scope.exportInfo.viewId = viewId;
@@ -84,8 +86,35 @@
 
     }
     /********************************************************************END UPLOAD FILE***********************************************************/
-    var titleHtml = '<input type="checkbox" ng-model="vm.selectAll" ng-click="vm.toggleAll(vm.selectAll, vm.selected)">';
 
+    var _listAction = [{ classIcon: 'fa fa-eye text-primary', action: 'linkview', fieldName: "LinkProduct" }];
+
+    var pagetRole = _.where($scope.roleData, { ViewID: "20" });
+    if (pagetRole != null)
+        if (pagetRole[0] != null) {
+
+            for (var i = 0; i < pagetRole[0].Action.length; i++) {
+                var f = pagetRole[0].Action[i];
+                if (f.HasPermision == "1")
+                    switch (f.Action) {
+                        case 'VIEW':
+                            _listAction.push({ classIcon: 'fa-pencil-square-o', action: 'view' });
+                            break;
+                        case 'INSERT':
+                            _listAction.push({ classIcon: 'fa-files-o text-primary', action: 'copy' });
+                            break;
+                        case 'UPDATE':
+                            $scope.isEditsRole = '1';
+                            break;
+                          
+                        case 'DELETE':
+                            _listAction.push({ classIcon: 'fa fa-times  text-danger', action: 'delete' });
+                            break;
+                    }
+            }
+        }
+    console.log('_listAction', _listAction);
+    var titleHtml = '<input type="checkbox" ng-model="vm.selectAll" ng-click="vm.toggleAll(vm.selectAll, vm.selected)">';
     $scope.gridInfo = {
         gridID: 'productgrid',
         table: null,
@@ -111,7 +140,7 @@
               { name: 'WardName', heading: 'PHƯỜNG', className: 'text-center pd-0 break-word' },
             { name: 'DistrictName', heading: 'QUẬN', className: 'text-center pd-0 break-word' },
 
-            { name: 'Action1', heading: 'THAO TÁC', width: '100px', className: 'text-center pd-0 break-word', type: controls.LIST_ICON, listAction: [{ classIcon: 'fa fa-eye text-primary', action: 'linkview', fieldName: "LinkProduct" }, { classIcon: 'fa-files-o text-primary', action: 'copy' }, { classIcon: 'fa-pencil-square-o', action: 'view' }, { classIcon: 'fa fa-times  text-danger', action: 'delete' }] }
+            { name: 'Action1', heading: 'THAO TÁC', width: '100px', className: 'text-center pd-0 break-word', type: controls.LIST_ICON, listAction: _listAction }
         ],
         data: [],
         sysViewID: 20,
@@ -131,7 +160,7 @@
                 case 'linkproduct':
                     getProduct(row.ID || row, function (data) {
                         if (data.length > 1) {
-                            if(data[1][0].LinkProduct!='')
+                            if (data[1][0].LinkProduct != '')
                                 window.open(data[1][0].LinkProduct);
                         }
                     })
@@ -698,65 +727,7 @@
         return entry;
     }
 
-    function convertStringtoNumber(array, fieldName) {
-        angular.forEach(array, function (item, key) {
-            if (!isNaN(item[fieldName]) && item[fieldName] != '')
-                item[fieldName] = parseInt(item[fieldName]);
-        });
-    }
-    function convertStringtoBoolean(array, fieldName) {
-        angular.forEach(array, function (item, key) {
-            if (item[fieldName] === "True") {
-                item[fieldName] = true;
-            } else {
-                item[fieldName] = false;
-            }
 
-        });
-    }
-
-    function tiengvietkhongdau(str) {
-
-        if (str == null || typeof str == 'undefined' || str == '')
-            return "";
-
-        /* str = str.replace(/à|á|ạ|ả|ã|â|ầ|ấ|ậ|ẩ|ẫ|ă|ằ|ắ|ặ|ẳ|ẵ/g, "a");
-         str = str.replace(/è|é|ẹ|ẻ|ẽ|ê|ề|ế|ệ|ể|ễ.+/g, "e");
-         str = str.replace(/ì|í|ị|ỉ|ĩ/g, "i");
-         str = str.replace(/ò|ó|ọ|ỏ|õ|ô|ồ|ố|ộ|ổ|ỗ|ơ|ờ|ớ|ợ|ở|ỡ.+/g, "o");
-         str = str.replace(/ù|ú|ụ|ủ|ũ|ư|ừ|ứ|ự|ử|ữ/g, "u");
-         str = str.replace(/ỳ|ý|ỵ|ỷ|ỹ/g, "y");
-         str = str.replace(/đ/g, "d");
-         */
-        str = locdau(str);
-        str = str.replace(/-+-/g, "-"); //thay thế 2- thành 1-
-        str = str.replace(/^\-+|\-+$/g, "");
-        return str;
-    }
-    function locdau(slug) {
-        //Đổi ký tự có dấu thành không dấu
-        slug = slug.replace(/á|à|ả|ạ|ã|ă|ắ|ằ|ẳ|ẵ|ặ|â|ấ|ầ|ẩ|ẫ|ậ/gi, "a");
-        slug = slug.replace(/é|è|ẻ|ẽ|ẹ|ê|ế|ề|ể|ễ|ệ/gi, "e");
-        slug = slug.replace(/i|í|ì|ỉ|ĩ|ị/gi, "i");
-        slug = slug.replace(/ó|ò|ỏ|õ|ọ|ô|ố|ồ|ổ|ỗ|ộ|ơ|ớ|ờ|ở|ỡ|ợ/gi, "o");
-        slug = slug.replace(/ú|ù|ủ|ũ|ụ|ư|ứ|ừ|ử|ữ|ự/gi, "u");
-        slug = slug.replace(/ý|ỳ|ỷ|ỹ|ỵ/gi, "y");
-        slug = slug.replace(/đ/gi, "d");
-        //Xóa các ký tự đặt biệt
-        slug = slug.replace(/\`|\~|\!|\@|\#|\||\$|\%|\^|\&|\*|\(|\)|\+|\=|\,|\.|\/|\?|\>|\<|\"|\"|\:|\;|_/gi, "");
-        //Đổi khoảng trắng thành ký tự gạch ngang
-        slug = slug.replace(/ /gi, " ");
-        //Đổi nhiều ký tự gạch ngang liên tiếp thành 1 ký tự gạch ngang
-        //Phòng trường hợp người nhập vào quá nhiều ký tự trắng
-        slug = slug.replace(/\-\-\-\-\-/gi, "-");
-        slug = slug.replace(/\-\-\-\-/gi, "-");
-        slug = slug.replace(/\-\-\-/gi, "-");
-        slug = slug.replace(/\-\-/gi, "-");
-        //Xóa các ký tự gạch ngang ở đầu và cuối
-        slug = "@" + slug + "@";
-        slug = slug.replace(/\@\-|\-\@|\@/gi, "");
-        return slug;
-    }
 
 
 

@@ -105,7 +105,6 @@ app.config(function ($stateProvider, $urlRouterProvider, $locationProvider) {
             templateUrl: '/Templates/view/customer/add-customer.html',
             controller: function ($scope, $stateParams) {
                 $scope.customerId = $stateParams.customerId;
-                console.log('$scope.customerId', $scope.customerId);
             }
         })
         //job

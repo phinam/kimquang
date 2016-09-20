@@ -131,6 +131,7 @@ angular.module('indexApp')
             controller: function ($scope, md5) {
                 $scope.signOut = function () {
                     localStorageService.remove('authorizationData');
+                    localStorageService.remove('roleData');
                     window.location.href = '/index.html';
                 }
                 $scope.changePassword = function () {
