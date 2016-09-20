@@ -456,7 +456,7 @@
                                     Thêm
                                 </button>
                             </div>
-                            <div class="col-md-4 col-md-offset-2 pull-left" ng-show="dataSelected.ID!=0&&actType!='copy'">
+                            <div class="col-md-4 col-md-offset-2 pull-left" ng-show="dataSelected.ID!=0&&actType!='copy'" ng-if="isEditsRole=='1'">
                                 <button class="btn col-xs-12 btn-danger" tabindex="31"
                                         ng-click="actionConfirm('UPDATE')">
                                     <span class="glyphicon glyphicon-plus"></span>

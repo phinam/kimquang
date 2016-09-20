@@ -1,92 +1,348 @@
-﻿<content-header title-name="KHÁCH HÀNG - XEM DS"></content-header>
+﻿<content-header title-name="Danh sách khách hàng"></content-header>
 
-<div style="background-color: #72b3e9; height: 5px; width: 100%;">
-</div>
-<!--search table-->
-<form name="searchProductForm" class="form-horizontal" novalidate="">
-    <table cellspacing="2" cellpadding="0" border="0" class="table_wrap" style="width: 98%; margin: 20px auto 0px auto;">
-        <tbody>
-            <tr>
-                <td class="td" colspan="4" style="background-color: #cccccc; padding-left: 5px; height: 28px;">
-                    Tìm kiếm
-                </td>
-            </tr>
-            <tr>
-                <td class="td" style="width: 200px; background-color: #dddddd; padding-left: 5px; height: 28px;">
-                    Tên khách hàng
-                </td>
-                <td class="td" style="background-color: #dddddd; padding-left: 5px;">
-                    <input type="text" id="Name" name="Name" ng-model="searchEntry.Name" placeholder="">
-                </td>
-                <td class="td" style="width: 200px; background-color: #dddddd; padding-left: 5px; height: 28px;">
-                    Số điện thoại
-                </td>
-                <td class="td" style="background-color: #dddddd; padding-left: 5px;">
-                    <input type="text" id="Phone" name="Phone" ng-model="searchEntry.Phone" placeholder="">
-                </td>
-            </tr>
-            <tr>
-                <td class="td" style="width: 200px; background-color: #dddddd; padding-left: 5px; height: 28px;">
-                    Email
-                </td>
-                <td class="td" style="background-color: #dddddd; padding-left: 5px;">
-                    <input type="text" id="Email" name="Email" ng-model="searchEntry.Email" placeholder="">
-                </td>
-                <td class="td" style="width: 200px; background-color: #dddddd; padding-left: 5px; height: 28px;">
-                    Khách hàng tiềm năng?
-                </td>
-                <td class="td" style="background-color: #dddddd; padding-left: 5px;">
-                    <select ng-model="searchEntry.Potential"
-                            ng-options="option.value as option.name for option in potentialOptions">
-                        <option value="">Tất cả</option>
-                    </select>
-                </td>
-            </tr>
-            <tr>
-                <td class="td" style="width: 200px; background-color: #dddddd; padding-left: 5px; height: 28px;">
-                    Tình trạng
-                </td>
-                <td class="td" style="background-color: #dddddd; padding-left: 5px;">
-                    <select ng-model="searchEntry.Status" name="Status" id="Status"
-                            ng-options="option.value as option.name for option in statusOptions">
-                    </select>
-                </td>
-                <td class="td" style="width: 200px; background-color: #dddddd; padding-left: 5px; height: 28px;">
-                    <span ng-show="searchEntry.AssignUserId == null">Loại khách hàng</span>
-                </td>
-                <td class="td" style="background-color: #dddddd; padding-left: 5px;">
-                    <div ng-show="searchEntry.AssignUserId == null">
-                        <select ng-model="searchEntry.Assign"
-                                ng-options="option.value as option.name for option in customerTypeOptions"></select>
+<!-- Main content -->
+<section class="content overflow-x-scroll">
+    <div class="row " ng-init="init()">
+
+        <div class="col-md-12 col-sm-12">
+            <div class="box box-default box-solid">
+                <div class="box-header with-border">
+                    <i class="fa fa-search"></i>
+                    <h3 class="box-title text-uppercase">
+                        Thông tin tìm kiếm
+                    </h3>
+                    <!-- tools box -->
+                    <div class="pull-right box-tools">
+                        <button class="btn btn-default btn-sm" data-widget="collapse" title="Rút gọn"><i class="fa fa-minus"></i></button>
+                    </div><!-- /. tools -->
+                </div>
+                <div class="box-body">
+                    <form class="form-horizontal row" name="addProductForm" novalidate="">
+                        <!--Column Left-->
+                        <div class="col-md-6 col-sm-6">
+
+
+                            <div class="form-group">
+                                <label for="Name" class="col-sm-4 control-label text-left-important">Tên công ty </label>
+                                <div class="col-sm-8">
+                                    <input type="text" class="form-control" id="Name" name="Name" ng-model="searchEntry.Name" placeholder="" tabindex="1">
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="Name" class="col-sm-4 control-label text-left-important">Mã số thuế </label>
+                                <div class="col-sm-8">
+                                    <input type="text" class="form-control" id="Name" name="Name" ng-model="searchEntry.TaxID" placeholder="" tabindex="2">
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="Name" class="col-sm-4 control-label text-left-important">Số điện thoại</label>
+                                <div class="col-sm-8">
+                                    <input type="text" class="form-control" id="Name" name="Name" ng-model="searchEntry.ContactPhone" placeholder="" tabindex="3">
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="PriceDescription" class="col-sm-4 control-label text-left-important">Nhân viên chăm sóc</label>
+                                <div class="col-sm-8 ">
+                                    <input type="text" class="form-control" id="PriceTo" name="PriceTo" ng-model="searchEntry.StaffName" placeholder="Chưa làm search tiêu chí này" tabindex="8">
+
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="AvailableAreaFrom" class="col-sm-4 control-label text-left-important">Nhóm khách hàng</label>
+                                <div class="col-sm-8">
+                                    <multiselect class="input-xlarge" multiple="true"
+                                                 ng-model="listAreaGroupID"
+                                                 options="c.Name for c in areaGroupIDSelectList"
+                                                 change="selected()" tabindex="11"></multiselect>
+                                </div>
+
+                            </div>
+                          
+                            <div class="form-group">
+                                <label for="PriceFrom" class="col-sm-4 control-label text-left-important">Ngày nhận khách </label>
+                                <div class="col-sm-4">
+                                    <div class="input-group input-group-sm">
+                                        <input type="text" class="form-control text-center col-sm-10" tabindex="9" datepicker-popup="{{'dd-MM-yyyy'}}" ng-model=" searchEntry.ReceiveDateFrom" is-open="openedDD1" close-text="Close" id="txtOpenedDD1" ng-click="openedDD1=true" placeholder="Từ" />
+                                        <span class="input-group-btn">
+                                            <button type="button" class="btn btn-default" ng-click="openedDD1=true"><i class="glyphicon glyphicon-calendar"></i></button>
+                                        </span>
+                                    </div>
+                                </div>
+                                <div class="col-sm-4">
+                                    <div class="input-group input-group-sm">
+                                        <input type="text" class="form-control text-center col-sm-10" tabindex="10" datepicker-popup="{{'dd-MM-yyyy'}}" ng-model="searchEntry.ReceiveDateTo" is-open="openedDD2" close-text="Close" id="txtOpenedDD2" ng-click="openedDD2=true" placeholder="Đến" />
+                                        <span class="input-group-btn">
+                                            <button type="button" class="btn btn-default" ng-click="openedDD2=true"><i class="glyphicon glyphicon-calendar"></i></button>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+
+
+                            <div class="form-group">
+                                <label for="PriceFrom" class="col-sm-4 control-label text-left-important">Ngày chăm sóc </label>
+                                <div class="col-sm-4">
+                                    <div class="input-group input-group-sm">
+                                        <input type="text" class="form-control text-center col-sm-10" tabindex="9" datepicker-popup="{{'dd-MM-yyyy'}}" ng-model=" searchEntry.CareDateFrom" is-open="careDateForm" close-text="Close" id="txtCareDateFrom" ng-click="careDateForm=true" placeholder="Từ" />
+                                        <span class="input-group-btn">
+                                            <button type="button" class="btn btn-default" ng-click="careDateForm=true"><i class="glyphicon glyphicon-calendar"></i></button>
+                                        </span>
+                                    </div>
+                                </div>
+                                <div class="col-sm-4">
+                                    <div class="input-group input-group-sm">
+                                        <input type="text" class="form-control text-center col-sm-10" tabindex="10" datepicker-popup="{{'dd-MM-yyyy'}}" ng-model="searchEntry.CareDateTo" is-open="openedCareDateTo" close-text="Close" id="txtCareDateFrom" ng-click="openedCareDateTo=true" placeholder="Đến" />
+                                        <span class="input-group-btn">
+                                            <button type="button" class="btn btn-default" ng-click="openedCareDateTo=true"><i class="glyphicon glyphicon-calendar"></i></button>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+
+
+                            <div class="form-group">
+                                <label for="PriceFrom" class="col-sm-4 control-label text-left-important">Thời gian nhận tiền </label>
+                                <div class="col-sm-4">
+                                    <div class="input-group input-group-sm">
+                                        <input type="text" class="form-control text-center col-sm-10" tabindex="9" datepicker-popup="{{'dd-MM-yyyy'}}" ng-model=" searchEntry.DepositDateFrom" is-open="depositDateFormOpen" close-text="Close" id="txtDepositDateForm" ng-click="depositDateFormOpen=true" placeholder="Từ" />
+                                        <span class="input-group-btn">
+                                            <button type="button" class="btn btn-default" ng-click="depositDateFormOpen=true"><i class="glyphicon glyphicon-calendar"></i></button>
+                                        </span>
+                                    </div>
+                                </div>
+                                <div class="col-sm-4">
+                                    <div class="input-group input-group-sm">
+                                        <input type="text" class="form-control text-center col-sm-10" tabindex="10" datepicker-popup="{{'dd-MM-yyyy'}}" ng-model="searchEntry.DepositDateTo" is-open="openedDepositDateTo" close-text="Close" id="txtDepositDateTo" ng-click="openedDepositDateTo=true" placeholder="Đến" />
+                                        <span class="input-group-btn">
+                                            <button type="button" class="btn btn-default" ng-click="openedDepositDateTo=true"><i class="glyphicon glyphicon-calendar"></i></button>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+
+
+
+                        </div>
+                        <!--Column Right-->
+                        <div class="col-md-6 col-sm-6">
+                            <div class="form-group">
+                                <label for="PriceFrom" class="col-sm-4 control-label text-left-important">Thời gian thuê </label>
+                                <div class="col-sm-4">
+                                    <div class="input-group input-group-sm">
+                                        <input type="text" class="form-control text-center col-sm-10" tabindex="9" datepicker-popup="{{'dd-MM-yyyy'}}" ng-model=" searchEntry.HireDateFrom" is-open="openedHireDateFrom" close-text="Close" id="txtHireDateFrom" ng-click="openedHireDateFrom=true" placeholder="Từ" />
+                                        <span class="input-group-btn">
+                                            <button type="button" class="btn btn-default" ng-click="openedHireDateFrom=true"><i class="glyphicon glyphicon-calendar"></i></button>
+                                        </span>
+                                    </div>
+                                </div>
+                                <div class="col-sm-4">
+                                    <div class="input-group input-group-sm">
+                                        <input type="text" class="form-control text-center col-sm-10" tabindex="10" datepicker-popup="{{'dd-MM-yyyy'}}" ng-model="searchEntry.HireDateTo" is-open="openedHireDateTo" close-text="Close" id="txtHireDateTo" ng-click="openedHireDateTo=true" placeholder="Đến" />
+                                        <span class="input-group-btn">
+                                            <button type="button" class="btn btn-default" ng-click="openedHireDateTo=true"><i class="glyphicon glyphicon-calendar"></i></button>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="inputPassword3" class="col-sm-4 control-label">Lĩnh vực kinh doanh</label>
+
+                                <div class="col-sm-8">
+                                    <input type="text" class="form-control" id="BusinessArea" name="BusinessArea" ng-model="searchEntry.BusinessArea"  tabindex=" 15">
+                                </div>
+                              
+
+                            </div>
+
+                            <div class="form-group">
+                                <label for="inputPassword3" class="col-sm-4 control-label">Tên tòa nhà</label>
+
+                                <div class="col-sm-8">
+                                    <input type="text" class="form-control" id="BusinessArea" name="BusinessArea" ng-model="searchEntry.HouseName" placeholder="chưa làm search tiêu chí này" tabindex=" 15">
+                                </div>
+
+
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="DistrictID" class="col-sm-4 control-label text-left-important">Quận/Huyện</label>
+                                <div class="col-sm-8">
+                                    <select class="form-control" ng-model="searchEntry.DistrictID"
+                                            ng-options="item.ID as item.Name for item in districtSelectList"
+                                            ng-change="changeDistrict(searchEntry.DistrictID)" tabindex="2">
+                                        <option value="">-- Chọn Quận/Huyện</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="WardID" class="col-sm-4 control-label text-left-important">Phường/Xã</label>
+                                <div class="col-sm-8">
+                                    <select class="form-control" ng-model="searchEntry.WardID"
+                                            ng-options="item.ID as item.Name for item in wardSelectList | filterDistrictID:searchEntry.DistrictID"
+                                            ng-disabled="searchEntry.DistrictID == null || searchEntry.DistrictID == ''" tabindex="3">
+                                        <option value="">
+                                            -- Tất cả
+                                        </option>
+                                    </select>
+                                </div>
+
+                            </div>
+                            <div class="form-group">
+                                <label for="inputPassword3" class="col-sm-4 control-label">Tên đường</label>
+                                <div class="col-sm-8">
+                                    <input type="text" class="form-control" ng-model="searchEntry.StreetName" tabindex="4">
+                                </div>
+                            </div>
+                           
+                            <div class="form-group">
+                                <label for="inputPassword3" class="col-sm-4 control-label">Nhóm diện tích</label>
+
+                                <div class="col-sm-8">
+                                    <multiselect class="input-xlarge" multiple="true"
+                                                 ng-model="searchEntry.listleasingAreaGroupID"
+                                                 options="c.Name for c in leasingAreaGroup"
+                                                 change="selected()" tabindex="11"></multiselect>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="inputPassword3" class="col-sm-4 control-label">Doanh thu thực</label>
+
+                                <div class="col-sm-4">
+                                    <input type="text" class="form-control" id="CeilingHeightFrom" name="IncomeFrom" ng-model="searchEntry.IncomeFrom" placeholder="Từ" tabindex="30">
+                                </div>
+                                <div class="col-sm-4">
+                                    <input type="text" class="form-control" id="CeilingHeightFrom" name="IncomeTo" ng-model="searchEntry.IncomeTo" placeholder="Đến" tabindex="30">
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                    </form>
+
+                </div>
+                <div class="box-footer clearfix">
+                    <div class="row">
+                        <div class="col-md-12 form-horizontal">
+                            <div class="col-md-4  col-md-offset-4">
+                                <div class="form-group">
+                                    <input type="button" class="form-control btn-primary" ng-click="search(searchEntry)" value="TÌM KIẾM">
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                </td>
-            </tr>
-        <tr>
-            <td class="td" style="width: 200px; background-color: #dddddd; padding-left: 5px; height: 28px;">
-                <i ng-if="UserInfo.UserGroupID!='0'"> Chỉ định tới user?</i> &nbsp;
-            </td>
-            <td class="td" style="background-color: #dddddd; padding-left: 5px;">
-                <select ng-model="searchEntry.AssignUserId" ng-if="UserInfo.UserGroupID!='0'"
-                        ng-options="item.ID as item.FullName for item in userList">
-                    <option value="">-- Chọn user</option>
-                </select>
-            </td>
-            <td class="td" style="width: 200px; background-color: #dddddd; padding-left: 5px; height: 28px;">
-                <input type="submit" class="form-control btn-success" ng-click="search(searchEntry)" value="TÌM KIẾM" style="width: 142px;" />
-            </td>
-            <td class="td" style="background-color: #dddddd; padding-left: 5px;"></td>
-        </tr>
+                </div>
+                <!-- Navigator part -->
+            </div>
+            <div class="box box-default box-solid">
+                <div class="box-header with-border box-info">
+                    <i class="fa fa-list-ol"></i>
+                    <h3 class="box-title text-uppercase">
+                        Kết quả
+                    </h3>
+                    <!-- tools box -->
+                    <div class="pull-right box-tools">
+                        <button class="btn btn-default btn-sm" data-widget="collapse" title="Rút gọn"><i class="fa fa-minus"></i></button>
+                    </div><!-- /. tools -->
+                </div>
+                <div class="box-body">
+                    <div class="col-md-12">
+                       
+
+                        <ul class="nav nav-tabs">
+                            <li ng-class="{ 'active':$first}" ng-repeat="g in  areaGroupIDSelectList"><a data-toggle="tab" href="#GC{{g.Value}}" ng-bind="g.Name"></a></li>
+                        </ul>
+
+                        <div class="tab-content" >
+                            <div id="GC{{g.Value}}" class="tab-pane fade in" ng-class="{ 'active':$first}" ng-repeat="g in  areaGroupIDSelectList">
+                                <angular-grid-table grid-info="gridInfo" root-scope="this" ></angular-grid-table>
+                            </div>
+
+                        </div>
+
+                    </div>
+                    <!--<div class="col-md-6">
+                        <button type="button" class="btn btn-primary" data-whatever="@mdo" ng-click="setExportInfo('excel',26)">Báo giá cơ bản(excel)</button>&nbsp;<button type="button" class="btn btn-primary" data-whatever="@mdo" ng-click="setExportInfo('excel',27)"></span>Báo giá chi tiết(Excel)</button>
+
+                    </div>
+                    <div class="col-md-6 text-right">
+                        <button type="button" class="btn btn-primary" data-whatever="@mdo" ng-click="setExportInfo('pdf',26)">Báo giá cơ bản(Pdf)</button>&nbsp;
+                        <button type="button" class="btn btn-primary" data-whatever="@mdo" ng-click="setExportInfo('pdf',27)"></span>Báo giá chi tiết(Pdf)</button>
+
+                    </div>-->
+                </div>
+            </div>
+        </div>
 
 
-        </tbody>
-    </table>
-</form>
-<div>
-    <!--list table-->
-    <angular-grid-table grid-info="gridInfo" root-scope="this" list-right="listRight" class="customerGrid"></angular-grid-table>
-</div>
-<!--<div style="width: 98%; margin: 20px auto 0px auto;">
-    <input type="submit" name="ctl00$ContentPlaceHolder1$btnExport" value="Xuất ra file" id="ContentPlaceHolder1_btnExport" />
-</div>-->
-<div style="margin-top: 10px;">
-</div>
+
+        <div class="modal fade " id="infoExportModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header btn-primary">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title" id="exampleModalLabel">Điền thông tin xuất file</h4>
+                    </div>
+                    <div class="modal-body">
+                        <form>
+                            <div class="form-group">
+                                <label for="recipient-name" class="control-label">Gủi đến</label>
+                                <input type="text" class="form-control" ng-model="exportInfo.addressTo">
+                            </div>
+                            <div class="form-group">
+                                <label for="recipient-name" class="control-label">Họ tên</label>
+                                <input type="text" class="form-control" ng-model="exportInfo.FullName">
+                            </div>
+                            <div class="form-group">
+                                <label for="recipient-name" class="control-label">Chức vụ</label>
+                                <input type="text" class="form-control" ng-model="exportInfo.Position">
+                            </div>
+                            <div class="form-group">
+                                <label for="recipient-name" class="control-label">Điện thoại bàn</label>
+                                <input type="text" class="form-control" ng-model="exportInfo.TelePhone">
+                            </div>
+
+                            <div class="form-group">
+                                <label for="recipient-name" class="control-label">Điện thoại di động</label>
+                                <input type="text" class="form-control" ng-model="exportInfo.CellPhone">
+                            </div>
+                            <div class="form-group">
+                                <label for="recipient-name" class="control-label">Email</label>
+                                <input type="text" class="form-control" ng-model="exportInfo.Email">
+                            </div>
+                            <div class="form-group">
+                                <label for="recipient-name" class="control-label">Tên file</label>
+                                <input type="text" class="form-control" ng-model="exportInfo.fileName">
+                            </div>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Đóng</button>
+                        <button type="button" class="btn btn-primary" ng-click="exportFileDialog(this)">Xuất file</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+
+
+
+</section>
+<script>
+
+    //Toggle button
+    var o = $.AdminLTE.options;
+    if (o.enableBoxWidget) {
+        $.AdminLTE.boxWidget.activate();
+    }
+</script>
+
+<iframe src="../service.data/excel/export.aspx" style="display:none" id="hiddenDownloader" />

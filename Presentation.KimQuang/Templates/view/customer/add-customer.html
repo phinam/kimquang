@@ -333,84 +333,72 @@
                     <div class="col-md-6 col-sm-6">
 
 
-                        <div class="form-group">
-                            <label for="PackingBikePosition" class="col-sm-3 control-label text-left-important">QT chăm sóc</label>
+                        <div class="form-group" ng-repeat="item in listCareNote">
+                            <label for="PackingBikePosition" class="col-sm-3 control-label text-left-important"> <span ng-show="$first">QT chăm sóc </span> </label>
                             <div class="col-sm-5 ">
-                                <input type=" text" class="form-control" id="PackingBikePosition" name="PackingBikePosition" tabindex="35" ng-model="dataSelected.PackingBikeCount" placeholder="Quá trình chăm sóc " title="Quá trình chăm sóc" />
+                                <input type=" text" class="form-control" name="PackingBikePosition" tabindex="35" ng-model="item.value" placeholder="Quá trình chăm sóc " title="Quá trình chăm sóc" />
                             </div>
                             <div class="col-sm-3 padding-left-0 padding-right-0 ">
                                 <div class="input-group calendar-right">
-                                    <input type="text" class="form-control text-center col-sm-10" tabindex="10" datepicker-popup="{{'dd-MM-yyyy'}}" ng-model="dataSelected.HireExpireDate" is-open="openedHireExpireDate" close-text="Close" id="txtHireExpireDate" ng-click="openedHireExpireDate=true" placeholder="Thời gian ký HĐ" />
+                                    <input type="text" class="form-control text-center col-sm-10" tabindex="10" datepicker-popup="{{'dd-MM-yyyy'}}" ng-model="item.date" is-open="openedCareNote$index" close-text="Close" id="txtHireExpireDate" ng-click="openedCareNote$index=true" placeholder="Thời gian ký HĐ" />
                                     <span class="input-group-btn">
-                                        <button type="button" class="btn btn-default" ng-click="openedHireExpireDate=true"><i class="glyphicon glyphicon-calendar"></i></button>
+                                        <button type="button" class="btn btn-default" ng-click="openedCareNote$index=true"><i class="glyphicon glyphicon-calendar"></i></button>
                                     </span>
 
                                 </div>
                             </div>
                             <div class="col-sm-1 padding-left-0  text-right">
-                                <a type="button" class="btn btn-danger"><i class="fa fa-minus"></i></a>
+                                <a type="button" class="btn btn-danger" ng-click="listCareNote=removeItemList(listCareNote,$index)" ng-if="!$last" ><i class=" fa fa-minus"></i></a>
+                                <a type="button" class="btn btn-primary" ng-click="listCareNote=addItemList(listCareNote)" ng-if="$last"><i class=" fa fa-plus"></i></a>
                             </div>
                         </div>
 
-                        <div class="form-group">
-                            <label for="PackingBikePosition" class="col-sm-3 control-label text-left-important">&nbsp;</label>
-                            <div class="col-sm-9 ">
-                                <button type="button" class="btn col-xs-12  btn-primary">Thêm mới quá trình</button>
-                            </div>
-                        </div>
+                      
 
 
-                        <div class="form-group">
-                            <label for="PackingBikePosition" class="col-sm-3 control-label text-left-important">Phản hồi KH</label>
+                        <div class="form-group" ng-repeat="item in listCustomerContact">
+                            <label for="PackingBikePosition" class="col-sm-3 control-label text-left-important"> <span ng-show="$first">Phản hồi KH </span> </label>
                             <div class="col-sm-5 ">
-                                <input type=" text" class="form-control" id="PackingBikePosition" name="PackingBikePosition" tabindex="35" ng-model="dataSelected.PackingBikeCount" placeholder="Quá trình chăm sóc " title="Quá trình chăm sóc" />
+                                <input type=" text" class="form-control" name="PackingBikePosition" tabindex="35" ng-model="item.value" placeholder="Phản hồi Khách hàng " title="Phản hồi Khách hàng" />
                             </div>
                             <div class="col-sm-3 padding-left-0 padding-right-0 ">
                                 <div class="input-group calendar-right">
-                                    <input type="text" class="form-control text-center col-sm-10" tabindex="10" datepicker-popup="{{'dd-MM-yyyy'}}" ng-model="dataSelected.HireExpireDate" is-open="openedHireExpireDate" close-text="Close" id="txtHireExpireDate" ng-click="openedHireExpireDate=true" placeholder="Thời gian ký HĐ" />
+                                    <input type="text" class="form-control text-center col-sm-10" tabindex="10" datepicker-popup="{{'dd-MM-yyyy'}}" ng-model="item.date" is-open="openedCustomerContact$index" close-text="Close" ng-click="openedCustomerContact$index=true" placeholder="Thời gian phản hồi" />
                                     <span class="input-group-btn">
-                                        <button type="button" class="btn btn-default" ng-click="openedHireExpireDate=true"><i class="glyphicon glyphicon-calendar"></i></button>
+                                        <button type="button" class="btn btn-default" ng-click="openedCustomerContact$index=true"><i class="glyphicon glyphicon-calendar"></i></button>
                                     </span>
 
                                 </div>
                             </div>
                             <div class="col-sm-1 padding-left-0  text-right">
-                                <a type="button" class="btn btn-danger"><i class="fa fa-minus"></i></a>
+                                <a type="button" class="btn btn-danger" ng-click="listCustomerContact=removeItemList(listCustomerContact,$index)" ng-if="!$last"><i class=" fa fa-minus"></i></a>
+                                <a type="button" class="btn btn-primary" ng-click="listCustomerContact=addItemList(listCustomerContact)" ng-if="$last"><i class=" fa fa-plus"></i></a>
                             </div>
                         </div>
 
-                        <div class="form-group">
-                            <label for="PackingBikePosition" class="col-sm-3 control-label text-left-important">&nbsp;</label>
-                            <div class="col-sm-9 ">
-                                <button type="button" class="btn col-xs-12  btn-primary">Thêm mới phản hồi</button>
-                            </div>
-                        </div>
 
-                        <div class="form-group">
-                            <label for="PackingBikePosition" class="col-sm-3 control-label text-left-important">Chiến lược chăm sóc</label>
+                        <div class="form-group" ng-repeat="item in listStrategyCare">
+                            <label for="PackingBikePosition" class="col-sm-3 control-label text-left-important"> <span ng-show="$first">Chiến lược chăm sóc </span> </label>
                             <div class="col-sm-5 ">
-                                <input type=" text" class="form-control" id="PackingBikePosition" name="PackingBikePosition" tabindex="35" ng-model="dataSelected.PackingBikeCount" placeholder="Quá trình chăm sóc " title="Quá trình chăm sóc" />
+                                <input type=" text" class="form-control" name="PackingBikePosition" tabindex="35" ng-model="item.value" placeholder="Chiến lược chăm sóc" title="Chiến lược chăm sóc " />
                             </div>
                             <div class="col-sm-3 padding-left-0 padding-right-0 ">
                                 <div class="input-group calendar-right">
-                                    <input type="text" class="form-control text-center col-sm-10" tabindex="10" datepicker-popup="{{'dd-MM-yyyy'}}" ng-model="dataSelected.HireExpireDate" is-open="openedHireExpireDate" close-text="Close" id="txtHireExpireDate" ng-click="openedHireExpireDate=true" placeholder="Thời gian ký HĐ" />
+                                    <input type="text" class="form-control text-center col-sm-10" tabindex="10" datepicker-popup="{{'dd-MM-yyyy'}}" ng-model="item.date" is-open="openedlistStrategyCare$index" close-text="Close" ng-click="openedlistStrategyCare$index=true" placeholder="Thời gian" />
                                     <span class="input-group-btn">
-                                        <button type="button" class="btn btn-default" ng-click="openedHireExpireDate=true"><i class="glyphicon glyphicon-calendar"></i></button>
+                                        <button type="button" class="btn btn-default" ng-click="openedlistStrategyCare$index=true"><i class="glyphicon glyphicon-calendar"></i></button>
                                     </span>
 
                                 </div>
                             </div>
                             <div class="col-sm-1 padding-left-0  text-right">
-                                <a type="button" class="btn btn-danger"><i class="fa fa-minus"></i></a>
+                                <a type="button" class="btn btn-danger" ng-click="listStrategyCare=removeItemList(listStrategyCare,$index)" ng-if="!$last"><i class=" fa fa-minus"></i></a>
+                                <a type="button" class="btn btn-primary" ng-click="listStrategyCare=addItemList(listStrategyCare)" ng-if="$last"><i class=" fa fa-plus"></i></a>
                             </div>
                         </div>
 
-                        <div class="form-group">
-                            <label for="PackingBikePosition" class="col-sm-3 control-label text-left-important">&nbsp;</label>
-                            <div class="col-sm-9 ">
-                                <button type="button" class="btn col-xs-12  btn-primary">Thêm mới chiến lược</button>
-                            </div>
-                        </div>
+
+                        
 
                         <div class="form-group">
                             <label for="PriceDescription" class="col-sm-3 control-label text-left-important">Ưu điểm</label>
@@ -541,7 +529,7 @@
                                     Thêm
                                 </button>
                             </div>
-                            <div class="col-md-4 col-md-offset-2 pull-left" ng-show="dataSelected.ID!=0&&actType!='copy'">
+                            <div class="col-md-4 col-md-offset-2 pull-left" ng-show="dataSelected.ID!=0&&actType!='copy'" ng-if="isEditsRole=='1'">
                                 <button class="btn col-xs-12 btn-danger" tabindex="31"
                                         ng-click="actionConfirm('UPDATE')">
                                     <span class="glyphicon glyphicon-plus"></span>
