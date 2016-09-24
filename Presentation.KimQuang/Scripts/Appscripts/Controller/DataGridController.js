@@ -40,7 +40,7 @@ function dataGridsCtrl(DTOptionsBuilder, DTColumnDefBuilder, DTColumnBuilder, $s
                     if (typeof res.data.d != 'undefined') {
                         var pData = res.data.d;
                         pData = pData.CSV2JSON2();
-                        //                        console.log('pData1', pData);
+                       // console.log('pData1', pData);
                         data = pData[1];
                         totalRow = pData[2][0].TotalRow;
 
@@ -329,7 +329,7 @@ function dataGridsCtrl(DTOptionsBuilder, DTColumnDefBuilder, DTColumnBuilder, $s
     }
 
     vm.actionClick = function (row, act, obj) {
-        $scope.gridInfo.onActionClick(row, act);
+        $scope.gridInfo.onActionClick(row, act, obj);
     }
 
     vm.dtInstanceCallback = function (dtInstance) {

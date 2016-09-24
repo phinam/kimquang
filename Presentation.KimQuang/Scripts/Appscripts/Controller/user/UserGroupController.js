@@ -252,19 +252,19 @@
                     });
                 }
             }
-            else {
-                angular.forEach(data[1], function (item, key) {
-                    var filteredGoal = _.where($scope.capabilitiesPersmision.list, { Value: item.DataValueID });
-                    if (filteredGoal != null) {
-                        if (item.Deny == "1")
-                            filteredGoal[0].checked = '0';
-                        else
-                            filteredGoal[0].checked = '1';
-                    }
-                    // console.log('filteredGoal', filteredGoal[0]);
 
-                });
-            }
+            angular.forEach(data[1], function (item, key) {
+                var filteredGoal = _.where($scope.capabilitiesPersmision.list, { Value: item.DataValueID });
+                if (filteredGoal != null) {
+                    if (item.Deny == "1")
+                        filteredGoal[0].checked = '0';
+                    else
+                        filteredGoal[0].checked = '1';
+                }
+                // console.log('filteredGoal', filteredGoal[0]);
+
+            });
+
             // console.log('filteredGoal', $scope.districtPersmision.list);
         });
     }
@@ -288,7 +288,7 @@
             }
         });
 
-      
+
         //}
         entry.Items.Table[0].Data = list;
 
@@ -340,7 +340,7 @@
         dlg.result.then(function (btn) {
             switch (act) {
                 case 'INSERTDATAPERMISION':
-                    actionGroupData(); 
+                    actionGroupData();
                     break;
                 case 'INSERTCAPABILITIESDATAPERMISION':
                     actionGroupataCapabilities();
@@ -349,7 +349,7 @@
                     $scope.actionEntry(act);
 
             }
-            
+
         }, function (btn) {
             //$scope.confirmed = 'You confirmed "No."';
         });

@@ -14,7 +14,7 @@
     $scope.officeRankingSelectList = [];
     $scope.userList = [];
     $scope.staffListID = [];
-    
+    $scope.isShowModal = false;
     $scope.leasingCapabilitiesList = [];
     $scope.buildingDirectionIDSelectList = [];
     $scope.dataSelected = { ID: 0 };
@@ -62,14 +62,15 @@
              { name: 'CareNote', heading: 'QUÁ TRÌNH CHĂM SÓC', className: 'text-center pd-0 break-word' },
              { name: 'Feedback', heading: 'PHẢN HỒI KHÁCH HÀNG', className: 'text-center pd-0 break-word'},
              { name: 'StrategyCare', heading: 'CHIẾN LƯỢC CHĂM SÓC', className: 'text-center pd-0 break-word' },
-             { name: 'ContactInfo', heading: 'THÔNG TIN LIÊN HỆ', className: 'text-center pd-0 break-word' },
+             { name: 'State', heading: 'State', className: 'text-center pd-0 break-word', isHidden: true },
+              { name: 'ContactInfo', heading: 'THÔNG TIN LIÊN HỆ', className: 'text-center pd-0 break-word' },
             { name: 'Action1', heading: 'THAO TÁC', width: '100px', className: 'text-center pd-0 break-word', type: controls.LIST_ICON, listAction: _listAction }
         ],
         data: [],
         sysViewID: 35,
         searchQuery: '',
-        onActionClick: function (row, act) {
-            //            console.log(row, act);
+        onActionClick: function (row, act, obj) {
+            console.log(row, act, obj);
             // row la data cua dong do
             //act la hanh dong em muon thao tac, mo cai swich ra xu ly ?? vd dum 1 cai 
             //  $scope.gridInfo.tableInstance.search(query).draw(); $scope.gridInfo.tableInstance.row( tr ).data();
@@ -103,9 +104,12 @@
                     console.log();
                     break;
 
-                case 'chart':
-                    $scope.openDialogChart(rowID);
-
+                case 'changegroup':
+                    // $scope.openDialogChart(rowID);
+                    var allDataGrid = $scope.gridInfo.dtInstance.dataTable.fnGetData(obj.parent);
+                    var rowSelected = _.where(allDataGrid, { ID: row.toString()});
+                    console.log('rowSelected', rowSelected[0]);
+                    $("#infoCustomerChangeGroupModel").modal('show');
 
                     break;
 
