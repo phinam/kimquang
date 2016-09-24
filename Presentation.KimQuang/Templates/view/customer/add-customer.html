@@ -60,12 +60,23 @@
                         <div class="form-group">
                             <label for="PriceDescription" class="col-sm-3 control-label text-left-important">Diện tích thuê</label>
                             <div class="col-sm-5 ">
-                                <input type=" text" class="form-control" id="AreaDescription" name="AreaDescription" tabindex="7" ng-model="dataSelected.HireArea" placeholder="" />
+                                <input type=" text" class="form-control" id="AreaDescription" name="AreaDescription" tabindex="7" ng-model="dataSelected.HireAreaFrom" placeholder="Từ" />
                             </div>
                             <div class="col-sm-4">
-                                <input type=" text" class="form-control" id="HirePrice" name="HirePrice" tabindex="7" ng-model="dataSelected.HirePrice" placeholder="Giá thuê" />
+                                <input type=" text" class="form-control" id="HirePrice" name="HirePrice" tabindex="7" ng-model="dataSelected.HireAreaTo" placeholder="Đến" />
                             </div>
                         </div>
+
+                        <div class="form-group">
+                            <label for="PriceDescription" class="col-sm-3 control-label text-left-important">Giá thuê</label>
+                            <div class="col-sm-5 ">
+                                <input type=" text" class="form-control" id="AreaDescription" name="AreaDescription" tabindex="7" ng-model="dataSelected.HirePriceFrom" placeholder="Từ" />
+                            </div>
+                            <div class="col-sm-4">
+                                <input type=" text" class="form-control" id="HirePrice" name="HirePrice" tabindex="7" ng-model="dataSelected.HirePriceTo" placeholder="Đến" />
+                            </div>
+                        </div>
+
                         <div class="form-group">
                             <label for="PriceDescription" class="col-sm-3 control-label text-left-important">Khu vực thuê</label>
                             <div class="col-sm-5 ">
@@ -102,26 +113,37 @@
                                 </select>
                             </div>
                         </div>
+                        <g ng-repeat="item in listContact">
+                            <div class="form-group">
+                                <label for="HirePrice" class="col-sm-3 control-label text-left-important"><span ng-show="$first">Thông tin liên hệ </span> </label>
+                                <div class="col-sm-5 ">
+                                    <input type=" text" class="form-control" placeholder="Tên" tabindex="13" ng-model="item.Name" />
+                                </div>
+                                <div class="col-sm-4 ">
+                                    <input type=" text" class="form-control" tabindex="14" ng-model="item.Phone" placeholder="Điện thoại" />
+                                </div>
 
-                        <div class="form-group">
-                            <label for="HirePrice" class="col-sm-3 control-label text-left-important">Thông tin liên hệ</label>
-                            <div class="col-sm-5 ">
-                                <input type=" text" class="form-control" id="HirePrice" placeholder="Tên" tabindex="13" ng-model="dataSelected.HirePrice" />
                             </div>
-                            <div class="col-sm-4 ">
-                                <input type=" text" class="form-control" id="HireManagermentFee" name="HireManagermentFee" tabindex="14" ng-model="dataSelected.HireManagermentFee" placeholder="Điện thoại" />
-                            </div>
+                            <div class="form-group">
+                                <!--<div for="PriceDescription" class="col-sm-3 text-right"><a type="button" class="btn btn-primary ng-scope"><i class=" fa fa-plus"></i></a></div>-->
+                                <div class="col-sm-1 col-sm-offset-2 ">
+                                   
+                                    <button type="button" class="btn btn-danger start col-xs-12 col-sm-12" tabindex=" 55" ng-click="listContact=removeItemList(listContact,$index)" ng-if="!$last">
+                                        <i class=" fa fa-minus"></i>
 
-                        </div>
-                        <div class="form-group">
-                            <label for="PriceDescription" class="col-sm-3 control-label text-left-important">&nbsp;</label>
-                            <div class="col-sm-5 ">
-                                <input type=" text" class="form-control" id="HirePrice" placeholder="Chức vụ" tabindex="13" ng-model="dataSelected.HirePrice" />
+                                    </button>
+                                    <button type="button" class="btn btn-primary start col-xs-12 col-sm-12" tabindex=" 55" ng-click="listContact=addItemList(listContact)" ng-if="$last">
+                                        <i class=" fa fa-plus"></i>
+                                    </button>
+                                </div>
+                                <div class="col-sm-5 ">
+                                    <input type=" text" class="form-control" placeholder="Chức vụ" tabindex="13" ng-model="item.Position" />
+                                </div>
+                                <div class="col-sm-4 ">
+                                    <input type=" text" class="form-control" tabindex="14" ng-model="item.Email" placeholder="Email" />
+                                </div>
                             </div>
-                            <div class="col-sm-4 ">
-                                <input type=" text" class="form-control" id="HireManagermentFee" name="HireManagermentFee" tabindex="14" ng-model="dataSelected.HireManagermentFee" placeholder="Email" />
-                            </div>
-                        </div>
+                        </g>
 
                         <div class="form-group">
                             <label for="PriceDescription" class="col-sm-3 control-label text-left-important">Địa chỉ</label>
