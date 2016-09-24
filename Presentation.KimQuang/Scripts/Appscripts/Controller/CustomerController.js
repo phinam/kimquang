@@ -3,6 +3,8 @@
     $rootScope.showModal = false;
     $scope.isNewHeader = true;
     //phu viet cho nay
+
+    $scope.roleData = localStorageService.get('roleData');
     $scope.customerGroup = [];
     $scope.listCareNote = [{ id:0, name: '', text: '', date: '' }];
     $scope.listCustomerContact = [{ id: 0, name: '', text: '', date: '' }];
@@ -10,12 +12,43 @@
 
     $scope.leasingAreaGroup = [];
     $scope.officeRankingSelectList = [];
-    $scope.floorList = [];
+    $scope.userList = [];
+    $scope.staffListID = [];
+    
     $scope.leasingCapabilitiesList = [];
     $scope.buildingDirectionIDSelectList = [];
     $scope.dataSelected = { ID: 0 };
     $scope.areaGroupIDSelectList = [];
-    $scope.searchEntry = {listleasingAreaGroupID:[]};
+    $scope.searchEntry = { listleasingAreaGroupID: [], listUserID: [] };
+    var _listAction = [];
+
+    var pagetRole = _.where($scope.roleData, { ViewID: "34" });
+    if (pagetRole != null)
+        if (pagetRole[0] != null) {
+
+            for (var i = 0; i < pagetRole[0].Action.length; i++) {
+                var f = pagetRole[0].Action[i];
+                if (f.HasPermision == "1")
+                    switch (f.Action) {
+                        case 'VIEW':
+                            _listAction.push({ classIcon: 'fa-pencil-square-o', action: 'view' });
+                            break;
+                        case 'CHANGEGROUP':
+                            _listAction.push({ classIcon: 'fa-exchange', action: 'changegroup' });
+                            break;
+                        case 'INSERT':
+                            _listAction.push({ classIcon: 'fa-files-o text-primary', action: 'copy' });
+                            break;
+                        case 'UPDATE':
+                            $scope.isEditsRole = '1';
+                            break;
+
+                        case 'DELETE':
+                            _listAction.push({ classIcon: 'fa fa-times  text-danger', action: 'delete' });
+                            break;
+                    }
+            }
+        }
     $scope.gridInfo = {
         gridID: 'customergrid',
         table: null,
@@ -30,7 +63,7 @@
              { name: 'Feedback', heading: 'PHẢN HỒI KHÁCH HÀNG', className: 'text-center pd-0 break-word'},
              { name: 'StrategyCare', heading: 'CHIẾN LƯỢC CHĂM SÓC', className: 'text-center pd-0 break-word' },
              { name: 'ContactInfo', heading: 'THÔNG TIN LIÊN HỆ', className: 'text-center pd-0 break-word' },
-            { name: 'Action1', heading: 'THAO TÁC', width: '100px', className: 'text-center pd-0 break-word', type: controls.LIST_ICON, listAction: [{ classIcon: 'fa fa-eye text-primary', action: 'linkview', fieldName: "LinkProduct" }, { classIcon: 'fa-files-o text-primary', action: 'copy' }, { classIcon: 'fa-pencil-square-o', action: 'view' }, { classIcon: 'fa fa-times  text-danger', action: 'delete' }] }
+            { name: 'Action1', heading: 'THAO TÁC', width: '100px', className: 'text-center pd-0 break-word', type: controls.LIST_ICON, listAction: _listAction }
         ],
         data: [],
         sysViewID: 35,
@@ -80,9 +113,18 @@
             }
         }
     }
+    $scope.reset = function () {
 
+    }
 
+    coreService.getListEx({ Sys_ViewID: 7 }, function (data) {
 
+        angular.forEach(data[1], function (item, key) {
+            item.Name = item.FullName;
+        });
+        
+        $scope.userList = data[1];
+    });
 
 
     coreService.getListEx({ Code: "CUSTOMER_STATE|CUSTOMER_LEASINGAREAGROUP|BUILDINGDIRECTION|CUSTOMER_STATE", Sys_ViewID: 16 }, function (data) {
