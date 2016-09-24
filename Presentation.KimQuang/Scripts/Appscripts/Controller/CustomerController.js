@@ -1,12 +1,10 @@
 ﻿angular.module('indexApp')
 .controller('CustomerCtrl', function ($scope, $rootScope, coreService, FileUploader, authoritiesService, alertFactory, dialogs, $filter, $state, $timeout, modalUtils, localStorageService) {
     $rootScope.showModal = false;
-    $scope.isNewHeader = true;
-    //phu viet cho nay
 
     $scope.roleData = localStorageService.get('roleData');
     $scope.customerGroup = [];
-    $scope.listCareNote = [{ id:0, name: '', text: '', date: '' }];
+    $scope.listCareNote = [{ id: 0, name: '', text: '', date: '' }];
     $scope.listCustomerContact = [{ id: 0, name: '', text: '', date: '' }];
     $scope.listStrategyCare = [{ id: 0, name: '', text: '', date: '' }];
 
@@ -20,8 +18,10 @@
     $scope.dataSelected = { ID: 0 };
     $scope.areaGroupIDSelectList = [];
     $scope.searchEntry = { listleasingAreaGroupID: [], listUserID: [] };
+    $scope.currentState = { Name: '', ID: '' }
     var _listAction = [];
-
+    if ($rootScope.searchEntryFilter)
+        $rootScope.searchEntryFilter.State = 6;
     var pagetRole = _.where($scope.roleData, { ViewID: "34" });
     if (pagetRole != null)
         if (pagetRole[0] != null) {
@@ -60,17 +60,16 @@
              { name: 'Name', heading: 'CÔNG TY THUÊ', className: 'text-center pd-0 break-word' },
             { name: 'DemandNode', heading: 'NHU CẦU THUÊ', className: 'text-center pd-0 break-word' },
              { name: 'CareNote', heading: 'QUÁ TRÌNH CHĂM SÓC', className: 'text-center pd-0 break-word' },
-             { name: 'Feedback', heading: 'PHẢN HỒI KHÁCH HÀNG', className: 'text-center pd-0 break-word'},
+             { name: 'Feedback', heading: 'PHẢN HỒI KHÁCH HÀNG', className: 'text-center pd-0 break-word' },
              { name: 'StrategyCare', heading: 'CHIẾN LƯỢC CHĂM SÓC', className: 'text-center pd-0 break-word' },
-             { name: 'State', heading: 'State', className: 'text-center pd-0 break-word', isHidden: true },
               { name: 'ContactInfo', heading: 'THÔNG TIN LIÊN HỆ', className: 'text-center pd-0 break-word' },
             { name: 'Action1', heading: 'THAO TÁC', width: '100px', className: 'text-center pd-0 break-word', type: controls.LIST_ICON, listAction: _listAction }
         ],
         data: [],
+        param:{State:"6"},
         sysViewID: 35,
         searchQuery: '',
         onActionClick: function (row, act, obj) {
-            console.log(row, act, obj);
             // row la data cua dong do
             //act la hanh dong em muon thao tac, mo cai swich ra xu ly ?? vd dum 1 cai 
             //  $scope.gridInfo.tableInstance.search(query).draw(); $scope.gridInfo.tableInstance.row( tr ).data();
@@ -81,7 +80,7 @@
                     //                    console.log('row', row);
                     $state.transitionTo('editcustomer', { customerId: row.ID || row, action: act });
                     break;
-               
+
                 case 'copy':
                     //                    console.log('row', row);
                     $state.transitionTo('editproduct', { productId: row.ID || row, action: act });
@@ -107,8 +106,9 @@
                 case 'changegroup':
                     // $scope.openDialogChart(rowID);
                     var allDataGrid = $scope.gridInfo.dtInstance.dataTable.fnGetData(obj.parent);
-                    var rowSelected = _.where(allDataGrid, { ID: row.toString()});
-                    console.log('rowSelected', rowSelected[0]);
+                    var rowSelected = _.where(allDataGrid, { ID: row.toString() });
+                    $scope.currentState.ToGroupID = null;
+                    $scope.dataSelected = { ID: allDataGrid[0].ID };
                     $("#infoCustomerChangeGroupModel").modal('show');
 
                     break;
@@ -126,13 +126,14 @@
         angular.forEach(data[1], function (item, key) {
             item.Name = item.FullName;
         });
-        
+
         $scope.userList = data[1];
     });
 
 
     coreService.getListEx({ Code: "CUSTOMER_STATE|CUSTOMER_LEASINGAREAGROUP|BUILDINGDIRECTION|CUSTOMER_STATE", Sys_ViewID: 16 }, function (data) {
         $scope.customerGroup = data[1];
+        $scope.currentState = data[1][0];
         $scope.leasingAreaGroup = data[2];
         $scope.buildingDirectionIDSelectList = data[3];
         $scope.areaGroupIDSelectList = data[4];
@@ -226,7 +227,7 @@
         if (typeof act != 'undefined') {
             var entry = angular.copy($scope.dataSelected);
             entry.UnAssignedName = tiengvietkhongdau(entry.Name); //coreService.toASCi(entry.Name);
-          //  entry.UnAssignedStreet = tiengvietkhongdau(entry.StreetName); //coreService.toASCi(entry.Address);
+            //  entry.UnAssignedStreet = tiengvietkhongdau(entry.StreetName); //coreService.toASCi(entry.Address);
             try {
                 if (typeof entry.ReceiveDate != 'undefined')
                     if (entry.ReceiveDate != '')
@@ -291,6 +292,7 @@
                             $state.go('productlist', '', { reload: true });
                             break;
                         case 'DELETE':
+                        case 'UPDATE::CHANGEGROUP':
                             var index = -1;
                             var i = 0;
                             angular.forEach($scope.gridInfo.data, function (item, key) {
@@ -315,6 +317,9 @@
                     $scope.reset();
 
                 }
+                else {
+                    dialogs.error(data.Message.Name, data.Message.Description);
+                }
                 //thong bao ket qua
                 //dialogs.notify(data.Message.Name, data.Message.Description);
                 $scope.$apply();
@@ -323,17 +328,12 @@
         }
     }
 
-    $scope.search = function (searchEntry) {
-        $rootScope.showModal = true;
-
-
-        //var searchEntry = angular.copy(entry);
-        //console.log(searchEntry);
-
-
+    function getParamSearch() {
+        var searchEntry = angular.copy( $scope.searchEntry);
         searchEntry.UnAssignedName = tiengvietkhongdau(searchEntry.Name);
         searchEntry.UnBusinessArea = tiengvietkhongdau(searchEntry.BusinessArea); //coreService.toASCi(entry.Address);
         searchEntry.BuildingDirectionID = '';
+        searchEntry.State =$scope.currentState.Value;
         if (searchEntry.listleasingAreaGroupID.length > 0) {
             var listBD = new Array();
 
@@ -342,35 +342,6 @@
             }
             searchEntry.LeasingAreaGroupID = listBD.toString();
         }
-
-        //searchEntry.OfficeDirectionID = '';
-
-        //if ($scope.listOfficeDirectionID.length > 0) {
-        //    var listOBD = new Array();
-        //    for (var i = 0; i < $scope.listOfficeDirectionID.length; i++) {
-        //        listOBD.push($scope.listOfficeDirectionID[i].Value);
-        //    }
-
-        //    searchEntry.OfficeDirectionID = listOBD.toString();
-        //}
-        //searchEntry.OfficeRankingID = '';
-        //if ($scope.listOfficeRankingID.length > 0) {
-        //    var listOF = new Array();
-        //    for (var i = 0; i < $scope.listOfficeRankingID.length; i++) {
-        //        listOF.push($scope.listOfficeRankingID[i].Value);
-        //    }
-        //    searchEntry.OfficeRankingID = listOF.toString();
-        //}
-
-        //searchEntry.OtherFeeTypeID = '';
-        //if ($scope.listOtherFeeType.length > 0) {
-        //    var listOFT = new Array();
-        //    for (var i = 0; i < $scope.listOtherFeeType.length; i++) {
-        //        listOFT.push($scope.listOtherFeeType[i].Value);
-        //    }
-        //    searchEntry.OtherFeeTypeID = listOFT.toString();
-        //}
-
 
 
         try {
@@ -420,12 +391,23 @@
         if (typeof searchEntry.HavePackingCarUI != 'undefined')
             searchEntry.HavePackingCar = searchEntry.HavePackingCarUI * 1 - 100;
 
+        
+
+        return searchEntry;
+
+    }
+    $scope.search = function (searchEntry) {
+        $rootScope.showModal = true;
+
+        searchEntry = getParamSearch();
+        //var searchEntry = angular.copy(entry);
+        //console.log(searchEntry);
+
+        
         if ($rootScope.searchEntryFilter != null)
             searchEntry = $rootScope.searchEntryFilter;
         else
             $rootScope.searchEntryFilter = searchEntry;
-
-
         if (typeof $scope.gridInfo.dtInstance == 'undefined') {
             $timeout(function () {
                 $scope.gridInfo.dtInstance.reloadData();
@@ -443,5 +425,29 @@
     }
     $scope.addItemList = function (arr) {
         return arr.push({ name: '', text: '', date: '' });
+    }
+    $scope.filterGroup = function (group) {
+        $scope.currentState = group;
+        //$scope.gridInfo.param.State = group.Value;
+        $scope.gridInfo.param = getParamSearch()
+        $scope.search();
+    }
+    $scope.changeGroup = function (obj, sysViewId) {
+        $("#infoCustomerChangeGroupModel").modal('hide');
+        if (modalUtils.modalsExist())
+            modalUtils.closeAllModals();
+        var dlg = dialogs.confirm('Confirmation', 'Confirmation required');
+        dlg.result.then(function (btn) {
+            $scope.dataSelected.FromGroupID = $scope.currentState.Value;
+            $scope.dataSelected.ToGroupID = $scope.currentState.ToGroupID;
+            $scope.actionEntry('UPDATE::CHANGEGROUP');
+
+        }, function (btn) {
+            //                        console.log('no');
+            $("#infoCustomerChangeGroupModel").modal('show');
+        });
+       
+
+
     }
 });

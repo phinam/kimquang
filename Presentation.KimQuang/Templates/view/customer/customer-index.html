@@ -206,12 +206,12 @@
                 <div class="col-md-12 col-sm-12">
 
                     <ul class="nav nav-tabs">
-                        <li class="text-uppercase " ng-class="{ 'active':$first}" ng-repeat="g in  areaGroupIDSelectList"><a data-toggle="tab" href="#GC{{g.Value}}" ng-bind-html="g.ValueString"></a></li>
+                        <li class="text-uppercase " ng-class="{ 'active':$first}" ng-repeat="g in  areaGroupIDSelectList"><a data-toggle="tab" href="#GC{{g.Value}}" ng-bind-html="g.ValueString" ng-click="filterGroup(g)"></a></li>
                     </ul>
 
                     <div class="tab-content">
                         <div id="GC{{g.Value}}" class="tab-pane fade in" ng-class="{ 'active':$first}" ng-repeat="g in  areaGroupIDSelectList">
-                            <angular-grid-table grid-info="gridInfo" root-scope="this"></angular-grid-table>
+                            <angular-grid-table grid-info="gridInfo" root-scope="this" ng-if="g.Value==currentState.Value"></angular-grid-table>
                         </div>
 
                     </div>
@@ -221,33 +221,34 @@
 
 
 
-        <div class="modal fade " id="infoCustomerChangeGroup" tabindex="-1" role="dialog" aria-labelledby="infoCustomerChangeGroup" style="display:block">
+        <div class="modal fade " id="infoCustomerChangeGroupModel" tabindex="-1" role="dialog" aria-labelledby="infoCustomerChangeGroupLabel" >
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
                     <div class="modal-header btn-primary">
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                        <h4 class="modal-title" id="infoCustomerChangeGroup">Chuyên nhóm khách hàng</h4>
+                        <h4 class="modal-title" id="infoCustomerChangeGroupLabel" >Chuyển nhóm khách hàng</h4>
                     </div>
                     <div class="modal-body">
                         <form>
                             <div class="form-group">
                                 <label for="recipient-name" class="control-label">Nhóm hiện tại</label>
-                                <input type="text" class="form-control" ng-model="exportInfo.addressTo">
+                                <input type="text" class="form-control" ng-model="currentState.Name" readonly="readonly">
                             </div>
                             <div class="form-group">
                                 <label for="recipient-name" class="control-label">Nhóm mới</label>
-                                <input type="text" class="form-control" ng-model="exportInfo.FullName">
+                                <select class="form-control" ng-model="currentState.ToGroupID" tabindex="5"
+                                        ng-options="item.Value as item.Name for item in customerGroup |filterExcludeValue:currentState.Value"></select>
                             </div>
                             <div class="form-group">
                                 <label for="recipient-name" class="control-label">Lý do chuyển</label>
-                                <area type="text" class="form-control" ng-model="exportInfo.Position" row="3"></area >
+                                <textarea class="form-control" ng-model="exportInfo.Position" row="3"></textarea>
                             </div>
-                            
+
                         </form>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-default" data-dismiss="modal">Đóng</button>
-                        <button type="button" class="btn btn-primary" ng-click="exportFileDialog(this)">Xuất file</button>
+                        <button type="button" class="btn btn-primary" ng-click="changeGroup(this)" ng-disabled="currentState.ToGroupID==null">Chuyển nhóm </button>
                     </div>
                 </div>
             </div>
@@ -303,7 +304,7 @@
         </div>
 
 
-        <div class="modal-backdrop fade in" ng-if="isShowModal"></div>
+       
     </div>
 
 

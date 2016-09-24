@@ -46,3 +46,15 @@
     };
 })
 
+.filter('filterExcludeValue', function () {
+    return function (array, value) {
+        var tempArray = [];
+            angular.forEach(array, function (item, key) {
+                if (!angular.equals(item.Value, value)) {
+                    tempArray.push(item);
+                }
+            });
+           
+            return tempArray;
+    };
+})

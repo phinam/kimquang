@@ -20,7 +20,9 @@ function dataGridsCtrl(DTOptionsBuilder, DTColumnDefBuilder, DTColumnBuilder, $s
 
         data.Sys_ViewID = vm.gridInfo.sysViewID;
         data.length = vm.rowsPerPage;
-
+        if (typeof vm.gridInfo.param != 'undefined'){
+            angular.extend(data, vm.gridInfo.param);
+        }
         //        if (data.start > 0)
         //            data.start = data.start + 1;
 
@@ -33,14 +35,13 @@ function dataGridsCtrl(DTOptionsBuilder, DTColumnDefBuilder, DTColumnBuilder, $s
             //headers: { 'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8' },
             data: newRequest
         }).then(function successCallback(res) {
-
             var data = [], totalRow = 0;
             if (typeof res != 'undefined')
                 if (typeof res.data != 'undefined')
                     if (typeof res.data.d != 'undefined') {
                         var pData = res.data.d;
                         pData = pData.CSV2JSON2();
-                       // console.log('pData1', pData);
+                       
                         data = pData[1];
                         totalRow = pData[2][0].TotalRow;
 
