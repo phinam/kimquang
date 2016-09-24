@@ -1,4 +1,4 @@
-﻿<kq ng-controller="CustomerCtrl" ng-init="init()">
+﻿<kq ng-init="init()">
     <content-header title-name="Thêm mới khách hàng" ng-if="isNewHeader==true"></content-header>
     <content-header title-name="Hiệu chỉnh  khách hàng" ng-if="isNewHeader==false"></content-header>
     <!-- Main content -->
@@ -348,12 +348,12 @@
                                 </div>
                             </div>
                             <div class="col-sm-1 padding-left-0  text-right">
-                                <a type="button" class="btn btn-danger" ng-click="listCareNote=removeItemList(listCareNote,$index)" ng-if="!$last" ><i class=" fa fa-minus"></i></a>
+                                <a type="button" class="btn btn-danger" ng-click="listCareNote=removeItemList(listCareNote,$index)" ng-if="!$last"><i class=" fa fa-minus"></i></a>
                                 <a type="button" class="btn btn-primary" ng-click="listCareNote=addItemList(listCareNote)" ng-if="$last"><i class=" fa fa-plus"></i></a>
                             </div>
                         </div>
 
-                      
+
 
 
                         <div class="form-group" ng-repeat="item in listCustomerContact">
@@ -398,7 +398,7 @@
                         </div>
 
 
-                        
+
 
                         <div class="form-group">
                             <label for="PriceDescription" class="col-sm-3 control-label text-left-important">Ưu điểm</label>
@@ -439,9 +439,12 @@
                             </div>
                         </div>
                         <div class="form-group">
-                            <label for="PriceDescription" class="col-sm-3 control-label text-left-important">Chuyển đối tác</label>
+                            <label for="PriceDescription" class="col-sm-3 control-label text-left-important">
+                                Chuyển đối tác
+                            </label>
                             <div class="col-sm-5 ">
-                                <input type=" text" class="form-control" id="CompleteTime" name="CompleteTime" tabindex="45" ng-model="dataSelected.TransferPartner" ng-change="changeText()" />
+                                <select class="form-control" ng-model="dataSelected.TransferPartner" tabindex="17"
+                                        ng-options="item.Value as item.Name for item in areaGroupIDSelectList"></select>
                             </div>
                             <div class="col-sm-4">
                                 <div class="input-group calendar-right">
@@ -458,7 +461,7 @@
                         <div class="form-group">
                             <label for="PriceDescription" class="col-sm-3 control-label text-left-important">Lý do ngừng chăm sóc</label>
                             <div class="col-sm-9 ">
-                               
+
                                 <textarea name=" description" id="Description" class="form-control" rows="4" tabindex="53" placeholder="" ng-model="dataSelected.StopCareReason"></textarea>
                                 </select>
                             </div>
