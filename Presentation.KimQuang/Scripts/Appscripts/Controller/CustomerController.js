@@ -7,7 +7,7 @@
     $scope.listCareNote = [{ id: 0, name: '', text: '', date: '' }];
     $scope.listCustomerContact = [{ id: 0, name: '', text: '', date: '' }];
     $scope.listStrategyCare = [{ id: 0, name: '', text: '', date: '' }];
-
+    $scope.listContact = [{ ID: 0, Name: '', Position: '',Phone: '',Email:'' }];
     $scope.leasingAreaGroup = [];
     $scope.officeRankingSelectList = [];
     $scope.userList = [];
@@ -66,7 +66,7 @@
             { name: 'Action1', heading: 'THAO TÁC', width: '100px', className: 'text-center pd-0 break-word', type: controls.LIST_ICON, listAction: _listAction }
         ],
         data: [],
-        param:{State:"6"},
+        param:{State:"1"},
         sysViewID: 35,
         searchQuery: '',
         onActionClick: function (row, act, obj) {
@@ -256,6 +256,7 @@
 
             }
 
+            entry.Contacts = { Contact: $scope.listContact };
 
             entry.Action = act;
             entry.Sys_ViewID = 34; //$scope.gridInfo.sysViewID;
@@ -424,7 +425,7 @@
         return arr.splice(index, 1);
     }
     $scope.addItemList = function (arr) {
-        return arr.push({ name: '', text: '', date: '' });
+        return arr.push({ name: '', text: '', date: '', ID: 0, Name: '', Position: '', Phone: '', Email: '' });
     }
     $scope.filterGroup = function (group) {
         $scope.currentState = group;
