@@ -455,3 +455,12 @@ table.table-bordered.dataTable tbody th, table.table-bordered.dataTable tbody td
  }
 
 .padding-right-5{   padding-right: 5px!important;}
+
+multiselect button{
+    overflow:hidden
+}
+.tab-content>.active{
+    background:#fff;
+}
+
+
