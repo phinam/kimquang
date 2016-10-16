@@ -126,13 +126,13 @@
                             </div>
                             <div class="form-group">
                                 <!--<div for="PriceDescription" class="col-sm-3 text-right"><a type="button" class="btn btn-primary ng-scope"><i class=" fa fa-plus"></i></a></div>-->
-                                <div class="col-sm-1 col-sm-offset-2 ">
+                                <div class="col-sm-1 col-sm-offset-2 " >
 
-                                    <button type="button" class="btn btn-danger start col-xs-12 col-sm-12" tabindex=" 55" ng-click="removeItemList(item)" ng-if="!$last">
+                                    <button type="button" class="btn btn-danger start " tabindex=" 55" ng-click="removeItemList(item)" ng-if="$index>0">
                                         <i class=" fa fa-minus"></i>
 
                                     </button>
-                                    <button type="button" class="btn btn-primary start col-xs-12 col-sm-12" tabindex=" 55" ng-click="listContact=addItemList(listContact)" ng-if="$last">
+                                    <button type="button" class="btn btn-primary start " tabindex=" 55" ng-click="listContact=addItemList(listContact)" ng-if="$first">
                                         <i class=" fa fa-plus"></i>
                                     </button>
                                 </div>
@@ -356,9 +356,9 @@
 
 
                         <div class="form-group" ng-repeat="item in listCareNote| filter:{ Type: 'CAREDURATION',Status:0 }">
-                            <label for="PackingBikePosition" class="col-sm-3 control-label text-left-important"> <span ng-show="$first">QT chăm sóc </span> </label>
+                            <label for="PackingBikePosition" class="col-sm-3 control-label text-left-important" title="{{item.Note}}"> <span ng-show="$first">QT chăm sóc </span> </label>
                             <div class="col-sm-5 ">
-                                <input type=" text" class="form-control" name="PackingBikePosition" tabindex="35" ng-model="item.Note" placeholder="Quá trình chăm sóc " title="Quá trình chăm sóc" />
+                                <input type=" text" class="form-control" name="PackingBikePosition" tabindex="35" ng-model="item.Note" placeholder="Quá trình chăm sóc " title="{{item.Note}}" />
                             </div>
                             <div class="col-sm-3 padding-left-0 padding-right-0 ">
                                 <div class="input-group calendar-right">
@@ -370,8 +370,8 @@
                                 </div>
                             </div>
                             <div class="col-sm-1 padding-left-0  text-right">
-                                <a type="button" class="btn btn-danger" ng-click="removeItemList(item)" ng-if="!$last"><i class=" fa fa-minus"></i></a>
-                                <a type="button" class="btn btn-primary" ng-click="listCareNote=addItemList(listCareNote,'CAREDURATION')" ng-if="$last"><i class=" fa fa-plus"></i></a>
+                                <a type="button" class="btn btn-danger" ng-click="removeItemList(item)" ng-if="$index>0"><i class=" fa fa-minus"></i></a>
+                                <a type="button" class="btn btn-primary" ng-click="listCareNote=addItemList(listCareNote,'CAREDURATION')" ng-if="$first"><i class=" fa fa-plus"></i></a>
                             </div>
                         </div>
 
@@ -379,9 +379,9 @@
 
 
                         <div class="form-group" ng-repeat="item in listCareNote| filter:{ Type: 'CUSTOMERFEEDBACK',Status:0 }">
-                            <label for="PackingBikePosition" class="col-sm-3 control-label text-left-important"> <span ng-show="$first">Phản hồi KH </span> </label>
+                            <label for="PackingBikePosition" class="col-sm-3 control-label text-left-important" title="{{item.Note}}"> <span ng-show="$first">Phản hồi KH </span> </label>
                             <div class="col-sm-5 ">
-                                <input type=" text" class="form-control" name="PackingBikePosition" tabindex="35" ng-model="item.Note" placeholder="Phản hồi Khách hàng " title="Phản hồi Khách hàng" />
+                                <input type=" text" class="form-control" name="PackingBikePosition" tabindex="35" ng-model="item.Note" placeholder="Phản hồi Khách hàng " title="{{item.Note}}" />
                             </div>
                             <div class="col-sm-3 padding-left-0 padding-right-0 ">
                                 <div class="input-group calendar-right">
@@ -393,16 +393,16 @@
                                 </div>
                             </div>
                             <div class="col-sm-1 padding-left-0  text-right">
-                                <a type="button" class="btn btn-danger" ng-click="removeItemList(item)" ng-if="!$last"><i class=" fa fa-minus"></i></a>
-                                <a type="button" class="btn btn-primary" ng-click="listCareNote=addItemList(listCareNote,'CUSTOMERFEEDBACK')" ng-if="$last"><i class=" fa fa-plus"></i></a>
+                                <a type="button" class="btn btn-danger" ng-click="removeItemList(item)" ng-if="$index>0"><i class=" fa fa-minus"></i></a>
+                                <a type="button" class="btn btn-primary" ng-click="listCareNote=addItemList(listCareNote,'CUSTOMERFEEDBACK')" ng-if="$first"><i class=" fa fa-plus"></i></a>
                             </div>
                         </div>
 
 
                         <div class="form-group" ng-repeat="item in listCareNote| filter:{ Type: 'CARESTRATEGY',Status:0 }">
-                            <label for="PackingBikePosition" class="col-sm-3 control-label text-left-important"> <span ng-show="$first">Chiến lược chăm sóc </span> </label>
+                            <label for="PackingBikePosition" class="col-sm-3 control-label text-left-important" title="{{item.Note}}"> <span ng-show="$first">Chiến lược chăm sóc </span> </label>
                             <div class="col-sm-5 ">
-                                <input type=" text" class="form-control" name="PackingBikePosition" tabindex="35" ng-model="item.Note" placeholder="Chiến lược chăm sóc" title="Chiến lược chăm sóc " />
+                                <input type=" text" class="form-control" name="PackingBikePosition" tabindex="35" ng-model="item.Note" placeholder="Chiến lược chăm sóc" title="{{item.Note}}" />
                             </div>
                             <div class="col-sm-3 padding-left-0 padding-right-0 ">
                                 <div class="input-group calendar-right">
@@ -414,8 +414,8 @@
                                 </div>
                             </div>
                             <div class="col-sm-1 padding-left-0  text-right">
-                                <a type="button" class="btn btn-danger" ng-click="removeItemList(item)" ng-if="!$last"><i class=" fa fa-minus"></i></a>
-                                <a type="button" class="btn btn-primary" ng-click="listCareNote=addItemList(listCareNote,'CARESTRATEGY')" ng-if="$last"><i class=" fa fa-plus"></i></a>
+                                <a type="button" class="btn btn-danger" ng-click="removeItemList(item)" ng-if="$index>0"><i class=" fa fa-minus"></i></a>
+                                <a type="button" class="btn btn-primary" ng-click="listCareNote=addItemList(listCareNote,'CARESTRATEGY')" ng-if="$first"><i class=" fa fa-plus"></i></a>
                             </div>
                         </div>
 
