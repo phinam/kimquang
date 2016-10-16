@@ -4,10 +4,11 @@
 
     $scope.roleData = localStorageService.get('roleData');
     $scope.customerGroup = [];
-    $scope.listCareNote = [{ id: 0, name: '', text: '', date: '' }];
-    $scope.listCustomerContact = [{ id: 0, name: '', text: '', date: '' }];
-    $scope.listStrategyCare = [{ id: 0, name: '', text: '', date: '' }];
-    $scope.listContact = [{ ID: 0, Name: '', Position: '',Phone: '',Email:'' }];
+    $scope.ramdomId = -1;
+    $scope.listCareNote = [{ ID: $scope.ramdomId--, Type: 'CAREDURATION', Note: '', NoteDate: '', Status: 0 }, { ID: $scope.ramdomId--, Type: 'CUSTOMERFEEDBACK', Note: '', NoteDate: '', Status: 0 }, { ID: $scope.ramdomId--, Type: 'CARESTRATEGY', Note: '', NoteDate: '', Status: 0 }];
+    //$scope.listCustomerContact = [{ ID: 0, Type: 'CUSTOMERFEEDBACK', Note: '', NoteDate: '' }];
+    //$scope.listStrategyCare = [{ ID: 0, Type: 'CARESTRATEGY', Note: '', NoteDate: '' }];
+    $scope.listContact = [{ ID: $scope.ramdomId--, Name: '', Position: '', Phone: '', Email: '', Status: 0 }];
     $scope.leasingAreaGroup = [];
     $scope.officeRankingSelectList = [];
     $scope.userList = [];
@@ -17,7 +18,7 @@
     $scope.buildingDirectionIDSelectList = [];
     $scope.dataSelected = { ID: 0 };
     $scope.areaGroupIDSelectList = [];
-    $scope.searchEntry = { listleasingAreaGroupID: [], listUserID: [] };
+    $scope.searchEntry = { listleasingAreaGroupID: [], listUserID: [] ,cityID:0};
     $scope.currentState = { Name: '', ID: '' }
     var _listAction = [];
     if ($rootScope.searchEntryFilter)
@@ -66,7 +67,7 @@
             { name: 'Action1', heading: 'THAO TÁC', width: '100px', className: 'text-center pd-0 break-word', type: controls.LIST_ICON, listAction: _listAction }
         ],
         data: [],
-        param:{State:"1"},
+        param: { State: "1" },
         sysViewID: 35,
         searchQuery: '',
         onActionClick: function (row, act, obj) {
@@ -118,7 +119,7 @@
         }
     }
     $scope.reset = function () {
-
+        $scope.searchEntry = { listleasingAreaGroupID: [], listUserID: [], cityID: 0 };
     }
 
     coreService.getListEx({ Sys_ViewID: 7 }, function (data) {
@@ -138,6 +139,7 @@
         $scope.buildingDirectionIDSelectList = data[3];
         $scope.areaGroupIDSelectList = data[4];
     });
+    $scope.citySelectList = [{ 'ID': 0, Name: 'Hồ Chí Mình' }];
     $scope.districtSelectList = null;
     $scope.wardSelectList = null;
     coreService.getListEx({ CityID: 2, Sys_ViewID: 18 }, function (data) {
@@ -151,6 +153,41 @@
 
         $scope.tempWardSelectList = angular.copy($scope.wardSelectList);
     });
+
+    $scope.$watch('customerId', function (newVal, oldVal) {
+        if (typeof newVal != 'undefined') {
+            $rootScope.showModal = true;
+            coreService.getListEx({ ID: $scope.customerId, Sys_ViewID: 34 }, function (data) {
+                //       console.log('ProductID', data);
+                convertStringtoNumber(data[1], 'DistrictID');
+                convertStringtoNumber(data[1], 'WardID');
+                convertStringtoNumber(data[1], 'AreaPerFloor');
+                convertStringtoBoolean(data[1], 'IsGroundFloor');
+                convertStringtoBoolean(data[1], 'IsHiredWholeBuilding');
+
+                $scope.dataSelected = data[1][0];
+                $rootScope.showModal = false;
+                //if (typeof $scope.dataSelected.ModifyDateTime != 'undefined') {
+                //    if ($scope.dataSelected.ModifyDateTime != '')
+                //        $scope.dataSelected.ModifyDateTime = $filter('date')(new Date($scope.dataSelected.ModifyDateTime), 'dd-MM-yyyy')
+                //}
+                //if (typeof $scope.dataSelected.AvailableFrom != 'undefined') {
+                //    if ($scope.dataSelected.AvailableFrom != '')
+                //        $scope.dataSelected.AvailableFrom = $filter('date')(new Date($scope.dataSelected.AvailableFrom), 'dd-MM-yyyy')
+                //}
+                if (data[2].length > 0)
+                    $scope.listContact = data[2];
+                angular.forEach(data[3], function (item, key) {
+                    item.NoteDate = new Date(item.NoteDate)
+                });
+                $scope.listCareNote = data[3];
+                $scope.$apply();
+            });
+
+         
+
+        }
+    })
 
     $scope.init = function () {
         window.setTimeout(function () {
@@ -255,9 +292,23 @@
             catch (ex) {
 
             }
-
+            debugger;
             entry.Contacts = { Contact: $scope.listContact };
+            var listCareNote = angular.copy($scope.listCareNote);
+            angular.forEach(listCareNote, function (item, key) {
+                if (item.NoteDate != null) {
+                    item.NoteDate = $filter('date')(item.NoteDate, "yyyy-MM-dd");
+                    for (var property in item) {
+                        if (item.hasOwnProperty(property)) {
+                            if (item[property] == '') {
+                                delete item[property];
+                            }
+                        }
+                    }
+                }
+            });
 
+            entry.CareNotes = { Note: listCareNote };
             entry.Action = act;
             entry.Sys_ViewID = 34; //$scope.gridInfo.sysViewID;
 
@@ -288,9 +339,9 @@
                                 }
                             });
 
-                            $scope.UpdateProductDocumment(entry.ID);
+                          //  $scope.UpdateProductDocumment(entry.ID);
 
-                            $state.go('productlist', '', { reload: true });
+                            $state.go('customerlist', '', { reload: true });
                             break;
                         case 'DELETE':
                         case 'UPDATE::CHANGEGROUP':
@@ -330,11 +381,11 @@
     }
 
     function getParamSearch() {
-        var searchEntry = angular.copy( $scope.searchEntry);
+        var searchEntry = angular.copy($scope.searchEntry);
         searchEntry.UnAssignedName = tiengvietkhongdau(searchEntry.Name);
         searchEntry.UnBusinessArea = tiengvietkhongdau(searchEntry.BusinessArea); //coreService.toASCi(entry.Address);
         searchEntry.BuildingDirectionID = '';
-        searchEntry.State =$scope.currentState.Value;
+        searchEntry.State = $scope.currentState.Value;
         if (searchEntry.listleasingAreaGroupID.length > 0) {
             var listBD = new Array();
 
@@ -392,7 +443,7 @@
         if (typeof searchEntry.HavePackingCarUI != 'undefined')
             searchEntry.HavePackingCar = searchEntry.HavePackingCarUI * 1 - 100;
 
-        
+
 
         return searchEntry;
 
@@ -404,7 +455,7 @@
         //var searchEntry = angular.copy(entry);
         //console.log(searchEntry);
 
-        
+
         if ($rootScope.searchEntryFilter != null)
             searchEntry = $rootScope.searchEntryFilter;
         else
@@ -421,11 +472,15 @@
 
     }
 
-    $scope.removeItemList = function (arr, index) {
-        return arr.splice(index, 1);
+    $scope.removeItemList = function (item) {
+        //var index = _.findIndex(arr, function (o) { return o.ID == ID; });
+        //return arr
+        item.Status = -1;
     }
-    $scope.addItemList = function (arr) {
-        return arr.push({ name: '', text: '', date: '', ID: 0, Name: '', Position: '', Phone: '', Email: '' });
+    $scope.addItemList = function (arr, type) {
+       if (typeof type == 'undefined')
+            type = '';
+       return arr.push({ Note: '', Type: type, NoteDate: '', Name: '', Position: '', Phone: '', Email: '', ID: $scope.ramdomId--, Status: 0 });
     }
     $scope.filterGroup = function (group) {
         $scope.currentState = group;
@@ -447,7 +502,7 @@
             //                        console.log('no');
             $("#infoCustomerChangeGroupModel").modal('show');
         });
-       
+
 
 
     }
