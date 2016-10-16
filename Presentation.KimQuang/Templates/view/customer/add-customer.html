@@ -1,4 +1,4 @@
-﻿<kq ng-init="init()">
+﻿<kq ng-controller="CustomerCtrl" ng-init="init()">
     <content-header title-name="Thêm mới khách hàng" ng-if="isNewHeader==true"></content-header>
     <content-header title-name="Hiệu chỉnh  khách hàng" ng-if="isNewHeader==false"></content-header>
     <!-- Main content -->
@@ -113,7 +113,7 @@
                                 </select>
                             </div>
                         </div>
-                        <g ng-repeat="item in listContact">
+                        <g ng-repeat="item in listContact| filter:{ Status:0 }">
                             <div class="form-group">
                                 <label for="HirePrice" class="col-sm-3 control-label text-left-important"><span ng-show="$first">Thông tin liên hệ </span> </label>
                                 <div class="col-sm-5 ">
@@ -127,8 +127,8 @@
                             <div class="form-group">
                                 <!--<div for="PriceDescription" class="col-sm-3 text-right"><a type="button" class="btn btn-primary ng-scope"><i class=" fa fa-plus"></i></a></div>-->
                                 <div class="col-sm-1 col-sm-offset-2 ">
-                                   
-                                    <button type="button" class="btn btn-danger start col-xs-12 col-sm-12" tabindex=" 55" ng-click="listContact=removeItemList(listContact,$index)" ng-if="!$last">
+
+                                    <button type="button" class="btn btn-danger start col-xs-12 col-sm-12" tabindex=" 55" ng-click="removeItemList(item)" ng-if="!$last">
                                         <i class=" fa fa-minus"></i>
 
                                     </button>
@@ -174,7 +174,7 @@
                         <div class="form-group">
                             <label for="PriceDescription" class="col-sm-3 control-label text-left-important"></label>
                             <div class="col-sm-5 ">
-                                <input type=" text" class="form-control" id="HirePrice" placeholder="Số nhà" tabindex="13" ng-model="dataSelected.OtherInfo" />
+                                <input type=" text" class="form-control" id="HirePrice" placeholder="Số nhà" tabindex="13" ng-model="dataSelected.AddressNumber" />
                             </div>
                             <div class="col-sm-4 ">
                                 <input type=" text" class="form-control" id="HireManagermentFee" name="HireManagermentFee" tabindex="14" ng-model="dataSelected.HireManagermentFee" placeholder="Đường" />
@@ -228,15 +228,15 @@
                         <div class="form-group">
                             <label for="PriceDescription" class="col-sm-3 control-label text-left-important">&nbsp;</label>
                             <div class="col-sm-5 ">
-                                <select class="form-control" ng-model="dataSelected.DistrictID" tabindex="17"
+                                <select class="form-control" ng-model="dataSelected.NewHireDistrictID" tabindex="17"
                                         ng-options="item.ID as item.Name for item in districtSelectList"
                                         ng-change="changeDistrict(dataSelected.DistrictID)">
                                     <option value="">-- Chọn Quận/Huyện</option>
                                 </select>
                             </div>
                             <div class="col-sm-4 ">
-                                <select class=" form-control" ng-model="dataSelected.WardID" tabindex="18"
-                                        ng-options="item.ID as item.Name for item in wardSelectList | filterDistrictID:dataSelected.DistrictID"
+                                <select class=" form-control" ng-model="dataSelected.NewHireAddressWard" tabindex="18"
+                                        ng-options="item.ID as item.Name for item in wardSelectList | filterDistrictID:dataSelected.NewHireDistrictID"
                                         ng-disabled="dataSelected.DistrictID == null || dataSelected.DistrictID == ''">
                                     <option value="">
                                         -- Chọn Phường/Xã
@@ -247,7 +247,7 @@
                         <div class="form-group">
                             <label for="PriceDescription" class="col-sm-3 control-label text-left-important"></label>
                             <div class="col-sm-5 ">
-                                <input type=" text" class="form-control" id="HirePrice" placeholder="Số nhà" tabindex="13" ng-model="dataSelected.OtherInfo" />
+                                <input type=" text" class="form-control" id="HirePrice" placeholder="Số nhà" tabindex="13" ng-model="dataSelected.NewHireAddressNumber" />
                             </div>
                             <div class="col-sm-4 ">
                                 <input type=" text" class="form-control" id="HireManagermentFee" name="HireManagermentFee" tabindex="14" ng-model="dataSelected.HireManagermentFee" placeholder="Đường" />
@@ -264,10 +264,10 @@
                         <div class="form-group">
                             <label for="ContactOwnerNane" class="col-sm-3 control-label text-left-important">&nbsp;</label>
                             <div class="col-sm-5 ">
-                                <input type=" text" class="form-control" id="HirePrice" placeholder="Diện tích đã ký HĐ" tabindex="13" ng-model="dataSelected.OtherInfo" />
+                                <input type=" text" class="form-control" id="HirePrice" placeholder="Diện tích đã ký HĐ" tabindex="13" ng-model="dataSelected.AreaInContract" />
                             </div>
                             <div class="col-sm-4 ">
-                                <input type=" text" class="form-control" id="HireManagermentFee" name="HireManagermentFee" tabindex="14" ng-model="dataSelected.HireManagermentFee" placeholder="Giá Chốt" />
+                                <input type=" text" class="form-control" id="PriceInContract" name="PriceInContract" tabindex="14" ng-model="dataSelected.PriceInContract" placeholder="Giá Chốt" />
                             </div>
                         </div>
 
@@ -355,7 +355,7 @@
                     <div class="col-md-6 col-sm-6">
 
 
-                        <div class="form-group" ng-repeat="item in listCareNote| filter:{ Type: 'CAREDURATION' }">
+                        <div class="form-group" ng-repeat="item in listCareNote| filter:{ Type: 'CAREDURATION',Status:0 }">
                             <label for="PackingBikePosition" class="col-sm-3 control-label text-left-important"> <span ng-show="$first">QT chăm sóc </span> </label>
                             <div class="col-sm-5 ">
                                 <input type=" text" class="form-control" name="PackingBikePosition" tabindex="35" ng-model="item.Note" placeholder="Quá trình chăm sóc " title="Quá trình chăm sóc" />
@@ -370,7 +370,7 @@
                                 </div>
                             </div>
                             <div class="col-sm-1 padding-left-0  text-right">
-                                <a type="button" class="btn btn-danger" ng-click="listCareNote=removeItemList(listCareNote,$index)" ng-if="!$last"><i class=" fa fa-minus"></i></a>
+                                <a type="button" class="btn btn-danger" ng-click="removeItemList(item)" ng-if="!$last"><i class=" fa fa-minus"></i></a>
                                 <a type="button" class="btn btn-primary" ng-click="listCareNote=addItemList(listCareNote,'CAREDURATION')" ng-if="$last"><i class=" fa fa-plus"></i></a>
                             </div>
                         </div>
@@ -378,7 +378,7 @@
 
 
 
-                        <div class="form-group" ng-repeat="item in listCareNote| filter:{ Type: 'CUSTOMERFEEDBACK'">
+                        <div class="form-group" ng-repeat="item in listCareNote| filter:{ Type: 'CUSTOMERFEEDBACK',Status:0 }">
                             <label for="PackingBikePosition" class="col-sm-3 control-label text-left-important"> <span ng-show="$first">Phản hồi KH </span> </label>
                             <div class="col-sm-5 ">
                                 <input type=" text" class="form-control" name="PackingBikePosition" tabindex="35" ng-model="item.Note" placeholder="Phản hồi Khách hàng " title="Phản hồi Khách hàng" />
@@ -393,13 +393,13 @@
                                 </div>
                             </div>
                             <div class="col-sm-1 padding-left-0  text-right">
-                                <a type="button" class="btn btn-danger" ng-click="listCustomerContact=removeItemList(listCareNote,$index)" ng-if="!$last"><i class=" fa fa-minus"></i></a>
-                                <a type="button" class="btn btn-primary" ng-click="listCustomerContact=addItemList(listCareNote,'CUSTOMERFEEDBACK')" ng-if="$last"><i class=" fa fa-plus"></i></a>
+                                <a type="button" class="btn btn-danger" ng-click="removeItemList(item)" ng-if="!$last"><i class=" fa fa-minus"></i></a>
+                                <a type="button" class="btn btn-primary" ng-click="listCareNote=addItemList(listCareNote,'CUSTOMERFEEDBACK')" ng-if="$last"><i class=" fa fa-plus"></i></a>
                             </div>
                         </div>
 
 
-                        <div class="form-group" ng-repeat="item in listCareNote| filter:{ Type: 'CARESTRATEGY'">
+                        <div class="form-group" ng-repeat="item in listCareNote| filter:{ Type: 'CARESTRATEGY',Status:0 }">
                             <label for="PackingBikePosition" class="col-sm-3 control-label text-left-important"> <span ng-show="$first">Chiến lược chăm sóc </span> </label>
                             <div class="col-sm-5 ">
                                 <input type=" text" class="form-control" name="PackingBikePosition" tabindex="35" ng-model="item.Note" placeholder="Chiến lược chăm sóc" title="Chiến lược chăm sóc " />
@@ -414,8 +414,8 @@
                                 </div>
                             </div>
                             <div class="col-sm-1 padding-left-0  text-right">
-                                <a type="button" class="btn btn-danger" ng-click="listStrategyCare=removeItemList(listCareNote,$index)" ng-if="!$last"><i class=" fa fa-minus"></i></a>
-                                <a type="button" class="btn btn-primary" ng-click="listStrategyCare=addItemList(listCareNote,'CARESTRATEGY')" ng-if="$last"><i class=" fa fa-plus"></i></a>
+                                <a type="button" class="btn btn-danger" ng-click="removeItemList(item)" ng-if="!$last"><i class=" fa fa-minus"></i></a>
+                                <a type="button" class="btn btn-primary" ng-click="listCareNote=addItemList(listCareNote,'CARESTRATEGY')" ng-if="$last"><i class=" fa fa-plus"></i></a>
                             </div>
                         </div>
 
@@ -431,7 +431,7 @@
                         <div class="form-group">
                             <label for="PriceDescription" class="col-sm-3 control-label text-left-important">Nhược điểm</label>
                             <div class="col-sm-9 ">
-                                <input type=" text" class="form-control" id="ElectricityFee" name="ServiceWaterFee" tabindex="42" ng-model="dataSelected.Disadvantages" placeholder="Nhược điểm" />
+                                <input type=" text" class="form-control" id="ElectricityFee" name="Disadvantages" tabindex="42" ng-model="dataSelected.Disadvantages" placeholder="Nhược điểm" />
                             </div>
                         </div>
 
@@ -439,7 +439,7 @@
                             <label for="PriceDescription" class="col-sm-3 control-label text-left-important">Bài học kinh nghiệm</label>
                             <div class="col-sm-9 ">
                                 <!--<input type=" text" class="form-control" id="OfficeRank" name="OfficeRank" tabindex="43" ng-model="dataSelected.OfficeRank" ng-change="changeText()" />-->
-                                <textarea name=" description" id="Description" class="form-control" rows="4" tabindex="53" placeholder="" ng-model="dataSelected.Experience"></textarea>
+                                <textarea name=" description" id="Experience" class="form-control" rows="4" tabindex="53" placeholder="" ng-model="dataSelected.Experience"></textarea>
                                 </select>
 
                             </div>
@@ -457,7 +457,7 @@
                         <div class="form-group">
                             <label for="PriceDescription" class="col-sm-3 control-label text-left-important">Kênh khách hàng</label>
                             <div class="col-sm-9 ">
-                                <input type=" text" class="form-control" id="CeilingHeight" name="CeilingHeight" tabindex="44" ng-model="dataSelected.Chanel" ng-change="changeText()" />
+                                <input type=" text" class="form-control" id="Chanel" name="Chanel" tabindex="44" ng-model="dataSelected.Chanel" ng-change="changeText()" />
                             </div>
                         </div>
                         <div class="form-group">
