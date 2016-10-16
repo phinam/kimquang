@@ -475,12 +475,18 @@
     $scope.removeItemList = function (item) {
         //var index = _.findIndex(arr, function (o) { return o.ID == ID; });
         //return arr
-        item.Status = -1;
+        var dlg = dialogs.confirm('Confirmation', 'Confirmation required');
+        dlg.result.then(function (btn) {
+            item.Status = -1;
+        }, function (btn) {
+        });
     }
     $scope.addItemList = function (arr, type) {
        if (typeof type == 'undefined')
-            type = '';
-       return arr.push({ Note: '', Type: type, NoteDate: '', Name: '', Position: '', Phone: '', Email: '', ID: $scope.ramdomId--, Status: 0 });
+           type = '';
+       return arr.unshift({ Note: '', Type: type, NoteDate: '', Name: '', Position: '', Phone: '', Email: '', ID: $scope.ramdomId--, Status: 0 });
+
+     
     }
     $scope.filterGroup = function (group) {
         $scope.currentState = group;
