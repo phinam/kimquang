@@ -148,23 +148,24 @@
                         <div class="form-group">
                             <label for="PriceDescription" class="col-sm-3 control-label text-left-important">Địa chỉ</label>
                             <div class="col-sm-9 ">
-                                <input type=" text" class="form-control" id="HirePrice" placeholder="Tỉnh/thành phố" tabindex="20" ng-model="dataSelected.AddressProvince" />
+                                <select class="form-control" ng-model="dataSelected.AddressCity" tabindex="20" placeholder="Tỉnh/thành phố"
+                                        ng-options="item.ID as item.Name for item in citySelectList" disabled="disabled"></select>
                             </div>
 
                         </div>
                         <div class="form-group">
                             <label for="PriceDescription" class="col-sm-3 control-label text-left-important">&nbsp;</label>
                             <div class="col-sm-5 ">
-                                <select class="form-control" ng-model="dataSelected.DistrictID" tabindex="21"
+                                <select class="form-control" ng-model="dataSelected.AddressDistrict" tabindex="21"
                                         ng-options="item.ID as item.Name for item in districtSelectList"
                                         ng-change="changeDistrict(dataSelected.DistrictID)">
                                     <option value="">-- Chọn Quận/Huyện</option>
                                 </select>
                             </div>
                             <div class="col-sm-4 ">
-                                <select class=" form-control" ng-model="dataSelected.WardID" tabindex="22"
-                                        ng-options="item.ID as item.Name for item in wardSelectList | filterDistrictID:dataSelected.DistrictID"
-                                        ng-disabled="dataSelected.DistrictID == null || dataSelected.DistrictID == ''">
+                                <select class=" form-control" ng-model="dataSelected.AddressWard" tabindex="22"
+                                        ng-options="item.ID as item.Name for item in wardSelectList | filterDistrictID:dataSelected.AddressDistrict"
+                                        ng-disabled="dataSelected.AddressDistrict == null || dataSelected.AddressDistrict == ''">
                                     <option value="">
                                         -- Chọn Phường/Xã
                                     </option>
@@ -177,7 +178,7 @@
                                 <input type=" text" class="form-control" id="HirePrice" placeholder="Số nhà" tabindex="23" ng-model="dataSelected.AddressNumber" />
                             </div>
                             <div class="col-sm-4 ">
-                                <input type=" text" class="form-control" id="HireManagermentFee" name="HireManagermentFee" tabindex="24" ng-model="dataSelected.HireManagermentFee" placeholder="Đường" />
+                                <input type=" text" class="form-control" id="HireManagermentFee" name="HireManagermentFee" tabindex="24" ng-model="dataSelected.AddressStreet" placeholder="Đường" />
                             </div>
                         </div>
 
@@ -237,7 +238,7 @@
                             <div class="col-sm-4 ">
                                 <select class=" form-control" ng-model="dataSelected.NewHireAddressWard" tabindex="33"
                                         ng-options="item.ID as item.Name for item in wardSelectList | filterDistrictID:dataSelected.NewHireDistrictID"
-                                        ng-disabled="dataSelected.DistrictID == null || dataSelected.DistrictID == ''">
+                                        ng-disabled="dataSelected.NewHireDistrictID == null || dataSelected.DistrictID == ''">
                                     <option value="">
                                         -- Chọn Phường/Xã
                                     </option>
@@ -250,7 +251,7 @@
                                 <input type=" text" class="form-control" id="HirePrice" placeholder="Số nhà" tabindex="34" ng-model="dataSelected.NewHireAddressNumber" />
                             </div>
                             <div class="col-sm-4 ">
-                                <input type=" text" class="form-control" id="HireManagermentFee" name="HireManagermentFee" tabindex="35" ng-model="dataSelected.HireManagermentFee" placeholder="Đường" />
+                                <input type=" text" class="form-control" id="HireManagermentFee" name="HireManagermentFee" tabindex="35" ng-model="dataSelected.NewHireAddressStreet" placeholder="Đường" />
                             </div>
                         </div>
 
@@ -483,7 +484,6 @@
                         <div class="form-group">
                             <label for="PriceDescription" class="col-sm-3 control-label text-left-important">Lý do ngừng chăm sóc</label>
                             <div class="col-sm-9 ">
-                                58
                                 <textarea name=" description" id="Description" class="form-control" rows="4" tabindex="58" placeholder="" ng-model="dataSelected.StopCareReason"></textarea>
                                 </select>
                             </div>
