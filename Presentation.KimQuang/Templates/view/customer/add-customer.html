@@ -41,7 +41,7 @@
                         <div class="form-group">
                             <label for="inputPassword3" class="col-sm-3 control-label">Nhóm khách hàng</label>
                             <div class="col-sm-9">
-                                <select class="form-control" ng-model="dataSelected.State" tabindex="5"
+                                <select class="form-control" ng-model="dataSelected.customerGroupID" tabindex="5"
                                         ng-options="item.Value as item.Name for item in customerGroup">
                                     <option value="">-- Chọn nhóm</option>
                                 </select>
@@ -100,14 +100,14 @@
                         <div class="form-group">
                             <label for="PriceDescription" class="col-sm-3 control-label text-left-important">Hướng toà nhà</label>
                             <div class="col-sm-3 ">
-                                <select tabindex=" 21" ng-model="dataSelected.BuildingDirectionID" name="BuildingDirectionID" id="BuildingDirectionID" tabindex="46" class="form-control"
+                                <select tabindex=" 12" ng-model="dataSelected.BuildingDirectionID" name="BuildingDirectionID" id="BuildingDirectionID"  class="form-control"
                                         ng-options="option.Value as option.Name for option in buildingDirectionIDSelectList">
                                     <option value="">-- Chọn hướng </option>
                                 </select>
                             </div>
                             <label for="PriceDescription" class="col-sm-3 control-label text-left-important padding-left-0 padding-right-0">Hướng văn phòng</label>
                             <div class="col-sm-3 ">
-                                <select tabindex=" 21" ng-model="dataSelected.OfficeDirectionID" name="OfficeDirectionID" id="OfficeDirectionID" tabindex="47" class="form-control"
+                                <select tabindex=" 13" ng-model="dataSelected.OfficeDirectionID" name="OfficeDirectionID" id="OfficeDirectionID"  class="form-control"
                                         ng-options="option.Value as option.Name for option in buildingDirectionIDSelectList">
                                     <option value="">-- Chọn hướng </option>
                                 </select>
@@ -117,10 +117,10 @@
                             <div class="form-group">
                                 <label for="HirePrice" class="col-sm-3 control-label text-left-important"><span ng-show="$first">Thông tin liên hệ </span> </label>
                                 <div class="col-sm-5 ">
-                                    <input type=" text" class="form-control" placeholder="Tên" tabindex="13" ng-model="item.Name" />
+                                    <input type=" text" class="form-control" placeholder="Tên" tabindex="14" ng-model="item.Name" />
                                 </div>
                                 <div class="col-sm-4 ">
-                                    <input type=" text" class="form-control" tabindex="14" ng-model="item.Phone" placeholder="Điện thoại" />
+                                    <input type=" text" class="form-control" tabindex="15" ng-model="item.Phone" placeholder="Điện thoại" />
                                 </div>
 
                             </div>
@@ -128,19 +128,19 @@
                                 <!--<div for="PriceDescription" class="col-sm-3 text-right"><a type="button" class="btn btn-primary ng-scope"><i class=" fa fa-plus"></i></a></div>-->
                                 <div class="col-sm-1 col-sm-offset-2 " >
 
-                                    <button type="button" class="btn btn-danger start " tabindex=" 55" ng-click="removeItemList(item)" ng-if="$index>0">
+                                    <button type="button" class="btn btn-danger start " tabindex=" 16" ng-click="removeItemList(item)" ng-if="$index>0">
                                         <i class=" fa fa-minus"></i>
 
                                     </button>
-                                    <button type="button" class="btn btn-primary start " tabindex=" 55" ng-click="listContact=addItemList(listContact)" ng-if="$first">
+                                    <button type="button" class="btn btn-primary start " tabindex=" 17" ng-click="listContact=addItemList(listContact)" ng-if="$first">
                                         <i class=" fa fa-plus"></i>
                                     </button>
                                 </div>
                                 <div class="col-sm-5 ">
-                                    <input type=" text" class="form-control" placeholder="Chức vụ" tabindex="13" ng-model="item.Position" />
+                                    <input type=" text" class="form-control" placeholder="Chức vụ" tabindex="18" ng-model="item.Position" />
                                 </div>
                                 <div class="col-sm-4 ">
-                                    <input type=" text" class="form-control" tabindex="14" ng-model="item.Email" placeholder="Email" />
+                                    <input type=" text" class="form-control" tabindex="19" ng-model="item.Email" placeholder="Email" />
                                 </div>
                             </div>
                         </g>
@@ -148,21 +148,21 @@
                         <div class="form-group">
                             <label for="PriceDescription" class="col-sm-3 control-label text-left-important">Địa chỉ</label>
                             <div class="col-sm-9 ">
-                                <input type=" text" class="form-control" id="HirePrice" placeholder="Tỉnh/thành phố" tabindex="13" ng-model="dataSelected.AddressProvince" />
+                                <input type=" text" class="form-control" id="HirePrice" placeholder="Tỉnh/thành phố" tabindex="20" ng-model="dataSelected.AddressProvince" />
                             </div>
 
                         </div>
                         <div class="form-group">
                             <label for="PriceDescription" class="col-sm-3 control-label text-left-important">&nbsp;</label>
                             <div class="col-sm-5 ">
-                                <select class="form-control" ng-model="dataSelected.DistrictID" tabindex="17"
+                                <select class="form-control" ng-model="dataSelected.DistrictID" tabindex="21"
                                         ng-options="item.ID as item.Name for item in districtSelectList"
                                         ng-change="changeDistrict(dataSelected.DistrictID)">
                                     <option value="">-- Chọn Quận/Huyện</option>
                                 </select>
                             </div>
                             <div class="col-sm-4 ">
-                                <select class=" form-control" ng-model="dataSelected.WardID" tabindex="18"
+                                <select class=" form-control" ng-model="dataSelected.WardID" tabindex="22"
                                         ng-options="item.ID as item.Name for item in wardSelectList | filterDistrictID:dataSelected.DistrictID"
                                         ng-disabled="dataSelected.DistrictID == null || dataSelected.DistrictID == ''">
                                     <option value="">
@@ -174,10 +174,10 @@
                         <div class="form-group">
                             <label for="PriceDescription" class="col-sm-3 control-label text-left-important"></label>
                             <div class="col-sm-5 ">
-                                <input type=" text" class="form-control" id="HirePrice" placeholder="Số nhà" tabindex="13" ng-model="dataSelected.AddressNumber" />
+                                <input type=" text" class="form-control" id="HirePrice" placeholder="Số nhà" tabindex="23" ng-model="dataSelected.AddressNumber" />
                             </div>
                             <div class="col-sm-4 ">
-                                <input type=" text" class="form-control" id="HireManagermentFee" name="HireManagermentFee" tabindex="14" ng-model="dataSelected.HireManagermentFee" placeholder="Đường" />
+                                <input type=" text" class="form-control" id="HireManagermentFee" name="HireManagermentFee" tabindex="24" ng-model="dataSelected.HireManagermentFee" placeholder="Đường" />
                             </div>
                         </div>
 
@@ -185,14 +185,14 @@
                         <div class="form-group">
                             <label for="inputPassword3" class="col-sm-3 control-label">Thông tin khác</label>
                             <div class="col-sm-9">
-                                <input type="text" class="form-control" ng-model="dataSelected.OtherInfo" tabindex="19" placeholder="OtherInfo">
+                                <input type="text" class="form-control" ng-model="dataSelected.OtherInfo" tabindex="25" placeholder="OtherInfo">
                             </div>
                         </div>
                         <div class="form-group">
                             <label for="inputPassword3" class="col-sm-3 control-label">Ngày thuê</label>
                             <div class="col-sm-5">
                                 <div class="input-group ">
-                                    <input type="text" class="form-control text-center col-sm-10" tabindex="10" datepicker-popup="{{'dd-MM-yyyy'}}" placeholder="Thời gian thuê" ng-model="dataSelected.HireDate" is-open="openedHireDate" close-text="Close" id="txtopenedHireDate" ng-click="openedHireDate=true" />
+                                    <input type="text" class="form-control text-center col-sm-10" tabindex="27" datepicker-popup="{{'dd-MM-yyyy'}}" placeholder="Thời gian thuê" ng-model="dataSelected.HireDate" is-open="openedHireDate" close-text="Close" id="txtopenedHireDate" ng-click="openedHireDate=true" />
                                     <span class="input-group-btn">
                                         <button type="button" class="btn btn-default" ng-click="openedHireDate=true"><i class="glyphicon glyphicon-calendar"></i></button>
                                     </span>
@@ -201,7 +201,7 @@
 
                             <div class="col-sm-4">
                                 <div class="input-group ">
-                                    <input type="text" class="form-control text-center col-sm-10" tabindex="10" datepicker-popup="{{'dd-MM-yyyy'}}" ng-model="dataSelected.HireExpireDate" is-open="openedHireExpireDate" close-text="Close" id="txtHireExpireDate" ng-click="openedHireExpireDate=true" placeholder="Ngày hết HĐ" />
+                                    <input type="text" class="form-control text-center col-sm-10" tabindex="28" datepicker-popup="{{'dd-MM-yyyy'}}" ng-model="dataSelected.HireExpireDate" is-open="openedHireExpireDate" close-text="Close" id="txtHireExpireDate" ng-click="openedHireExpireDate=true" placeholder="Ngày hết HĐ" />
                                     <span class="input-group-btn">
                                         <button type="button" class="btn btn-default" ng-click="openedHireExpireDate=true"><i class="glyphicon glyphicon-calendar"></i></button>
                                     </span>
@@ -212,30 +212,30 @@
                         <div class="form-group">
                             <label for="PriceDescription" class="col-sm-3 control-label text-left-important">Địa chỉ thuê mới</label>
                             <div class="col-sm-5 ">
-                                <input type=" text" class="form-control" id="ContactPhone" name="ContactPhone" tabindex="21" ng-model="dataSelected.NewHireAddressBuilding" placeholder="Tên toà nhà" />
+                                <input type=" text" class="form-control" id="ContactPhone" name="ContactPhone" tabindex="29" ng-model="dataSelected.NewHireAddressBuilding" placeholder="Tên toà nhà" />
                             </div>
                             <div class="col-sm-4 ">
-                                <input type=" text" class="form-control" id="NewHireAddressFloor" name="ContactPhone" tabindex="21" ng-model="dataSelected.NewHireAddressFloor" placeholder="Tầng" />
+                                <input type=" text" class="form-control" id="NewHireAddressFloor" name="ContactPhone" tabindex="30" ng-model="dataSelected.NewHireAddressFloor" placeholder="Tầng" />
                             </div>
                         </div>
                         <div class="form-group">
                             <label for="PriceDescription" class="col-sm-3 control-label text-left-important">Địa chỉ</label>
                             <div class="col-sm-9 ">
-                                <input type=" text" class="form-control" id="HirePrice" placeholder="Tỉnh/thành phố" tabindex="13" ng-model="dataSelected.AddressProvince" />
+                                <input type=" text" class="form-control" id="HirePrice" placeholder="Tỉnh/thành phố" tabindex="31" ng-model="dataSelected.AddressProvince" />
                             </div>
 
                         </div>
                         <div class="form-group">
                             <label for="PriceDescription" class="col-sm-3 control-label text-left-important">&nbsp;</label>
                             <div class="col-sm-5 ">
-                                <select class="form-control" ng-model="dataSelected.NewHireDistrictID" tabindex="17"
+                                <select class="form-control" ng-model="dataSelected.NewHireDistrictID" tabindex="32"
                                         ng-options="item.ID as item.Name for item in districtSelectList"
                                         ng-change="changeDistrict(dataSelected.DistrictID)">
                                     <option value="">-- Chọn Quận/Huyện</option>
                                 </select>
                             </div>
                             <div class="col-sm-4 ">
-                                <select class=" form-control" ng-model="dataSelected.NewHireAddressWard" tabindex="18"
+                                <select class=" form-control" ng-model="dataSelected.NewHireAddressWard" tabindex="33"
                                         ng-options="item.ID as item.Name for item in wardSelectList | filterDistrictID:dataSelected.NewHireDistrictID"
                                         ng-disabled="dataSelected.DistrictID == null || dataSelected.DistrictID == ''">
                                     <option value="">
@@ -247,27 +247,27 @@
                         <div class="form-group">
                             <label for="PriceDescription" class="col-sm-3 control-label text-left-important"></label>
                             <div class="col-sm-5 ">
-                                <input type=" text" class="form-control" id="HirePrice" placeholder="Số nhà" tabindex="13" ng-model="dataSelected.NewHireAddressNumber" />
+                                <input type=" text" class="form-control" id="HirePrice" placeholder="Số nhà" tabindex="34" ng-model="dataSelected.NewHireAddressNumber" />
                             </div>
                             <div class="col-sm-4 ">
-                                <input type=" text" class="form-control" id="HireManagermentFee" name="HireManagermentFee" tabindex="14" ng-model="dataSelected.HireManagermentFee" placeholder="Đường" />
+                                <input type=" text" class="form-control" id="HireManagermentFee" name="HireManagermentFee" tabindex="35" ng-model="dataSelected.HireManagermentFee" placeholder="Đường" />
                             </div>
                         </div>
 
                         <div class="form-group">
                             <label for="ContactMgntName" class="col-sm-3 control-label text-left-important">HH xúc tiến HĐ</label>
                             <div class="col-sm-9 ">
-                                <input type=" text" class="form-control" id="ContactMgntName" name="ContactMgntName" tabindex="22" ng-model="dataSelected.ContactMgntName" placeholder="HH xúc tiến HĐ" />
+                                <input type=" text" class="form-control" id="ContactMgntName" name="ContactMgntName" tabindex="36" ng-model="dataSelected.ContactMgntName" placeholder="HH xúc tiến HĐ" />
                             </div>
                         </div>
 
                         <div class="form-group">
                             <label for="ContactOwnerNane" class="col-sm-3 control-label text-left-important">&nbsp;</label>
                             <div class="col-sm-5 ">
-                                <input type=" text" class="form-control" id="HirePrice" placeholder="Diện tích đã ký HĐ" tabindex="13" ng-model="dataSelected.AreaInContract" />
+                                <input type=" text" class="form-control" id="HirePrice" placeholder="Diện tích đã ký HĐ" tabindex="37" ng-model="dataSelected.AreaInContract" />
                             </div>
                             <div class="col-sm-4 ">
-                                <input type=" text" class="form-control" id="PriceInContract" name="PriceInContract" tabindex="14" ng-model="dataSelected.PriceInContract" placeholder="Giá Chốt" />
+                                <input type=" text" class="form-control" id="PriceInContract" name="PriceInContract" tabindex="38" ng-model="dataSelected.PriceInContract" placeholder="Giá Chốt" />
                             </div>
                         </div>
 
@@ -275,7 +275,7 @@
                             <label for="LeasingCapabilities" class="col-sm-3 control-label text-left-important">Thời gian đặt cọc</label>
                             <div class="col-sm-5">
                                 <div class="input-group ">
-                                    <input type="text" class="form-control text-center col-sm-10" tabindex="10" datepicker-popup="{{'dd-MM-yyyy'}}" ng-model="dataSelected.DepositDate" is-open="openedDepositDate" close-text="Close" id="txtDepositDate" ng-click="openedDepositDate=true" placeholder="Ngày đặt cọc" />
+                                    <input type="text" class="form-control text-center col-sm-10" tabindex="39" datepicker-popup="{{'dd-MM-yyyy'}}" ng-model="dataSelected.DepositDate" is-open="openedDepositDate" close-text="Close" id="txtDepositDate" ng-click="openedDepositDate=true" placeholder="Ngày đặt cọc" />
                                     <span class="input-group-btn">
                                         <button type="button" class="btn btn-default" ng-click="openedDepositDate=true"><i class="glyphicon glyphicon-calendar"></i></button>
                                     </span>
@@ -287,7 +287,7 @@
                             <label for="Elevator" class="col-sm-3 control-label text-left-important">Thời gian ký HĐ</label>
                             <div class="col-sm-5">
                                 <div class="input-group ">
-                                    <input type="text" class="form-control text-center col-sm-10" tabindex="10" datepicker-popup="{{'dd-MM-yyyy'}}" ng-model="dataSelected.SignContractDate" is-open="openedSignContractDate" close-text="Close" id="txtSignContractDate" ng-click="openedSignContractDate=true" placeholder="Thời gian ký HĐ" />
+                                    <input type="text" class="form-control text-center col-sm-10" tabindex="40" datepicker-popup="{{'dd-MM-yyyy'}}" ng-model="dataSelected.SignContractDate" is-open="openedSignContractDate" close-text="Close" id="txtSignContractDate" ng-click="openedSignContractDate=true" placeholder="Thời gian ký HĐ" />
                                     <span class="input-group-btn">
                                         <button type="button" class="btn btn-default" ng-click="openedSignContractDate=true"><i class="glyphicon glyphicon-calendar"></i></button>
                                     </span>
@@ -295,7 +295,7 @@
                             </div>
                             <div class="col-sm-4">
                                 <div class="input-group ">
-                                    <input type="text" class="form-control text-center col-sm-10" tabindex="10" datepicker-popup="{{'dd-MM-yyyy'}}" ng-model="dataSelected.OutContractDate" is-open="openedOutContractDate" close-text="Close" id="txtOutContractDate" ng-click="openedOutContractDate=true" placeholder="Thời gian xuất HĐ" />
+                                    <input type="text" class="form-control text-center col-sm-10" tabindex="41" datepicker-popup="{{'dd-MM-yyyy'}}" ng-model="dataSelected.OutContractDate" is-open="openedOutContractDate" close-text="Close" id="txtOutContractDate" ng-click="openedOutContractDate=true" placeholder="Thời gian xuất HĐ" />
                                     <span class="input-group-btn">
                                         <button type="button" class="btn btn-default" ng-click="openedOutContractDate=true"><i class="glyphicon glyphicon-calendar"></i></button>
                                     </span>
@@ -307,14 +307,14 @@
                             <label for="PowerBackup" class="col-sm-3 control-label text-left-important">Thời gian nhận tiền HH</label>
                             <div class="col-sm-5">
                                 <div class="input-group ">
-                                    <input type="text" class="form-control text-center col-sm-10" tabindex="10" datepicker-popup="{{'dd-MM-yyyy'}}" ng-model="dataSelected.ReceiveBonus" is-open="openedReceiveBonus" close-text="Close" id="txtReceiveBonus" ng-click="openedReceiveBonus=true" placeholder="Thời gian ký HĐ" />
+                                    <input type="text" class="form-control text-center col-sm-10" tabindex="42" datepicker-popup="{{'dd-MM-yyyy'}}" ng-model="dataSelected.ReceiveBonus" is-open="openedReceiveBonus" close-text="Close" id="txtReceiveBonus" ng-click="openedReceiveBonus=true" placeholder="Thời gian ký HĐ" />
                                     <span class="input-group-btn">
                                         <button type="button" class="btn btn-default" ng-click="openedReceiveBonus=true"><i class="glyphicon glyphicon-calendar"></i></button>
                                     </span>
                                 </div>
                             </div>
                             <div class="col-sm-4 ">
-                                <select class=" form-control" ng-model="dataSelected.IsReceiveBonus" tabindex="18">
+                                <select class=" form-control" ng-model="dataSelected.IsReceiveBonus" tabindex="43">
                                     <option value="2">
                                         -- Đã nhận / chưa nhận
                                     </option>
@@ -333,20 +333,20 @@
                         <div class="form-group">
                             <label for="CoolerSystem" class="col-sm-3 control-label text-left-important">HH đã có VAT</label>
                             <div class="col-sm-9 ">
-                                <input type=" text" class="form-control" id="CoolerSystem" name="BonusWithVAT" tabindex="31" ng-model="dataSelected.BonusWithVAT ">
+                                <input type=" text" class="form-control" id="CoolerSystem" name="BonusWithVAT" tabindex="44" ng-model="dataSelected.BonusWithVAT ">
                             </div>
                         </div>
 
                         <div class="form-group">
                             <label for="TimeToSetup" class="col-sm-3 control-label text-left-important">HH chưa VAT</label>
                             <div class="col-sm-9 ">
-                                <input type=" text" class="form-control" id="BonusWithoutVAT" name="BonusWithoutVAT" tabindex="32" ng-model="dataSelected.BonusWithoutVAT ">
+                                <input type=" text" class="form-control" id="BonusWithoutVAT" name="BonusWithoutVAT" tabindex="45" ng-model="dataSelected.BonusWithoutVAT ">
                             </div>
                         </div>
                         <div class="form-group">
                             <label for="TimeWork" class="col-sm-3 control-label text-left-important">Doanh thu thực</label>
                             <div class="col-sm-9 ">
-                                <input type=" text" class="form-control" id="Income" name="Income" tabindex="34" ng-model="dataSelected.Income">
+                                <input type=" text" class="form-control" id="Income" name="Income" tabindex="46" ng-model="dataSelected.Income">
                             </div>
                         </div>
 
@@ -358,11 +358,11 @@
                         <div class="form-group" ng-repeat="item in listCareNote| filter:{ Type: 'CAREDURATION',Status:0 }">
                             <label for="PackingBikePosition" class="col-sm-3 control-label text-left-important" title="{{item.Note}}"> <span ng-show="$first">QT chăm sóc </span> </label>
                             <div class="col-sm-5 ">
-                                <input type=" text" class="form-control" name="PackingBikePosition" tabindex="35" ng-model="item.Note" placeholder="Quá trình chăm sóc " title="{{item.Note}}" />
+                                <input type=" text" class="form-control" name="PackingBikePosition" tabindex="47" ng-model="item.Note" placeholder="Quá trình chăm sóc " title="{{item.Note}}" />
                             </div>
                             <div class="col-sm-3 padding-left-0 padding-right-0 ">
                                 <div class="input-group calendar-right">
-                                    <input type="text" class="form-control text-center col-sm-10" tabindex="10" datepicker-popup="{{'dd-MM-yyyy'}}" ng-model="item.NoteDate" is-open="openedCareNote$index" close-text="Close" id="txtHireExpireDate" ng-click="openedCareNote$index=true" placeholder="Thời gian ký HĐ" />
+                                    <input type="text" class="form-control text-center col-sm-10" tabindex="47" datepicker-popup="{{'dd-MM-yyyy'}}" ng-model="item.NoteDate" is-open="openedCareNote$index" close-text="Close" id="txtHireExpireDate" ng-click="openedCareNote$index=true" placeholder="Thời gian ký HĐ" />
                                     <span class="input-group-btn">
                                         <button type="button" class="btn btn-default" ng-click="openedCareNote$index=true"><i class="glyphicon glyphicon-calendar"></i></button>
                                     </span>
@@ -370,8 +370,8 @@
                                 </div>
                             </div>
                             <div class="col-sm-1 padding-left-0  text-right">
-                                <a type="button" class="btn btn-danger" ng-click="removeItemList(item)" ng-if="$index>0"><i class=" fa fa-minus"></i></a>
-                                <a type="button" class="btn btn-primary" ng-click="listCareNote=addItemList(listCareNote,'CAREDURATION')" ng-if="$first"><i class=" fa fa-plus"></i></a>
+                                <a type="button" class="btn btn-danger" ng-click="removeItemList(item)" ng-if="$index>0" tabindex="47"><i class=" fa fa-minus"></i></a>
+                                <a type="button" class="btn btn-primary" ng-click="listCareNote=addItemList(listCareNote,'CAREDURATION')" ng-if="$first" tabindex="47"><i class=" fa fa-plus"></i></a>
                             </div>
                         </div>
 
@@ -381,11 +381,11 @@
                         <div class="form-group" ng-repeat="item in listCareNote| filter:{ Type: 'CUSTOMERFEEDBACK',Status:0 }">
                             <label for="PackingBikePosition" class="col-sm-3 control-label text-left-important" title="{{item.Note}}"> <span ng-show="$first">Phản hồi KH </span> </label>
                             <div class="col-sm-5 ">
-                                <input type=" text" class="form-control" name="PackingBikePosition" tabindex="35" ng-model="item.Note" placeholder="Phản hồi Khách hàng " title="{{item.Note}}" />
+                                <input type=" text" class="form-control" name="PackingBikePosition" tabindex="48" ng-model="item.Note" placeholder="Phản hồi Khách hàng " title="{{item.Note}}" />
                             </div>
                             <div class="col-sm-3 padding-left-0 padding-right-0 ">
                                 <div class="input-group calendar-right">
-                                    <input type="text" class="form-control text-center col-sm-10" tabindex="10" datepicker-popup="{{'dd-MM-yyyy'}}" ng-model="item.NoteDate" is-open="openedCustomerContact$index" close-text="Close" ng-click="openedCustomerContact$index=true" placeholder="Thời gian phản hồi" />
+                                    <input type="text" class="form-control text-center col-sm-10" tabindex="48" datepicker-popup="{{'dd-MM-yyyy'}}" ng-model="item.NoteDate" is-open="openedCustomerContact$index" close-text="Close" ng-click="openedCustomerContact$index=true" placeholder="Thời gian phản hồi" />
                                     <span class="input-group-btn">
                                         <button type="button" class="btn btn-default" ng-click="openedCustomerContact$index=true"><i class="glyphicon glyphicon-calendar"></i></button>
                                     </span>
@@ -393,8 +393,8 @@
                                 </div>
                             </div>
                             <div class="col-sm-1 padding-left-0  text-right">
-                                <a type="button" class="btn btn-danger" ng-click="removeItemList(item)" ng-if="$index>0"><i class=" fa fa-minus"></i></a>
-                                <a type="button" class="btn btn-primary" ng-click="listCareNote=addItemList(listCareNote,'CUSTOMERFEEDBACK')" ng-if="$first"><i class=" fa fa-plus"></i></a>
+                                <a type="button" class="btn btn-danger" ng-click="removeItemList(item)" ng-if="$index>0" tabindex="48"><i class=" fa fa-minus"></i></a>
+                                <a type="button" class="btn btn-primary" ng-click="listCareNote=addItemList(listCareNote,'CUSTOMERFEEDBACK')" ng-if="$first" tabindex="48"><i class=" fa fa-plus"></i></a>
                             </div>
                         </div>
 
@@ -402,11 +402,11 @@
                         <div class="form-group" ng-repeat="item in listCareNote| filter:{ Type: 'CARESTRATEGY',Status:0 }">
                             <label for="PackingBikePosition" class="col-sm-3 control-label text-left-important" title="{{item.Note}}"> <span ng-show="$first">Chiến lược chăm sóc </span> </label>
                             <div class="col-sm-5 ">
-                                <input type=" text" class="form-control" name="PackingBikePosition" tabindex="35" ng-model="item.Note" placeholder="Chiến lược chăm sóc" title="{{item.Note}}" />
+                                <input type=" text" class="form-control" name="PackingBikePosition" tabindex="49" ng-model="item.Note" placeholder="Chiến lược chăm sóc" title="{{item.Note}}" />
                             </div>
                             <div class="col-sm-3 padding-left-0 padding-right-0 ">
                                 <div class="input-group calendar-right">
-                                    <input type="text" class="form-control text-center col-sm-10" tabindex="10" datepicker-popup="{{'dd-MM-yyyy'}}" ng-model="item.NoteDate" is-open="openedlistStrategyCare$index" close-text="Close" ng-click="openedlistStrategyCare$index=true" placeholder="Thời gian" />
+                                    <input type="text" class="form-control text-center col-sm-10" tabindex="49" datepicker-popup="{{'dd-MM-yyyy'}}" ng-model="item.NoteDate" is-open="openedlistStrategyCare$index" close-text="Close" ng-click="openedlistStrategyCare$index=true" placeholder="Thời gian" />
                                     <span class="input-group-btn">
                                         <button type="button" class="btn btn-default" ng-click="openedlistStrategyCare$index=true"><i class="glyphicon glyphicon-calendar"></i></button>
                                     </span>
@@ -414,8 +414,8 @@
                                 </div>
                             </div>
                             <div class="col-sm-1 padding-left-0  text-right">
-                                <a type="button" class="btn btn-danger" ng-click="removeItemList(item)" ng-if="$index>0"><i class=" fa fa-minus"></i></a>
-                                <a type="button" class="btn btn-primary" ng-click="listCareNote=addItemList(listCareNote,'CARESTRATEGY')" ng-if="$first"><i class=" fa fa-plus"></i></a>
+                                <a type="button" class="btn btn-danger" ng-click="removeItemList(item)" ng-if="$index>0" tabindex="49"><i class=" fa fa-minus"></i></a>
+                                <a type="button" class="btn btn-primary" ng-click="listCareNote=addItemList(listCareNote,'CARESTRATEGY')" ng-if="$first" tabindex="49"><i class=" fa fa-plus"></i></a>
                             </div>
                         </div>
 
@@ -425,13 +425,13 @@
                         <div class="form-group">
                             <label for="PriceDescription" class="col-sm-3 control-label text-left-important">Ưu điểm</label>
                             <div class="col-sm-9 ">
-                                <input type=" text" class="form-control" id="ElectricityFee" name="ElectricityFee" tabindex="41" ng-model="dataSelected.Advantages" placeholder="Ưu điểm" />
+                                <input type=" text" class="form-control" id="ElectricityFee" name="ElectricityFee" tabindex="50" ng-model="dataSelected.Advantages" placeholder="Ưu điểm" />
                             </div>
                         </div>
                         <div class="form-group">
                             <label for="PriceDescription" class="col-sm-3 control-label text-left-important">Nhược điểm</label>
                             <div class="col-sm-9 ">
-                                <input type=" text" class="form-control" id="ElectricityFee" name="Disadvantages" tabindex="42" ng-model="dataSelected.Disadvantages" placeholder="Nhược điểm" />
+                                <input type=" text" class="form-control" id="ElectricityFee" name="Disadvantages" tabindex="51" ng-model="dataSelected.Disadvantages" placeholder="Nhược điểm" />
                             </div>
                         </div>
 
@@ -439,7 +439,7 @@
                             <label for="PriceDescription" class="col-sm-3 control-label text-left-important">Bài học kinh nghiệm</label>
                             <div class="col-sm-9 ">
                                 <!--<input type=" text" class="form-control" id="OfficeRank" name="OfficeRank" tabindex="43" ng-model="dataSelected.OfficeRank" ng-change="changeText()" />-->
-                                <textarea name=" description" id="Experience" class="form-control" rows="4" tabindex="53" placeholder="" ng-model="dataSelected.Experience"></textarea>
+                                <textarea name=" description" id="Experience" class="form-control" rows="4" tabindex="52" placeholder="" ng-model="dataSelected.Experience"></textarea>
                                 </select>
 
                             </div>
@@ -457,7 +457,7 @@
                         <div class="form-group">
                             <label for="PriceDescription" class="col-sm-3 control-label text-left-important">Kênh khách hàng</label>
                             <div class="col-sm-9 ">
-                                <input type=" text" class="form-control" id="Chanel" name="Chanel" tabindex="44" ng-model="dataSelected.Chanel" ng-change="changeText()" />
+                                <input type=" text" class="form-control" id="Chanel" name="Chanel" tabindex="54" ng-model="dataSelected.Chanel" ng-change="changeText()" />
                             </div>
                         </div>
                         <div class="form-group">
@@ -465,12 +465,12 @@
                                 Chuyển đối tác
                             </label>
                             <div class="col-sm-5 ">
-                                <select class="form-control" ng-model="dataSelected.TransferPartner" tabindex="17"
+                                <select class="form-control" ng-model="dataSelected.TransferPartner" tabindex="55"
                                         ng-options="item.Value as item.Name for item in areaGroupIDSelectList"></select>
                             </div>
                             <div class="col-sm-4">
                                 <div class="input-group calendar-right">
-                                    <input type="text" class="form-control text-center col-sm-10" tabindex="10" datepicker-popup="{{'dd-MM-yyyy'}}" ng-model="dataSelected.TransferPartnerDateTime" is-open="openedTransferPartnerDateTime" close-text="Close" id="txtTransferPartnerDateTime" ng-click="openedTransferPartnerDateTime=true" placeholder="Thời gian chuyển đối tác" />
+                                    <input type="text" class="form-control text-center col-sm-10" tabindex="56" datepicker-popup="{{'dd-MM-yyyy'}}" ng-model="dataSelected.TransferPartnerDateTime" is-open="openedTransferPartnerDateTime" close-text="Close" id="txtTransferPartnerDateTime" ng-click="openedTransferPartnerDateTime=true" placeholder="Thời gian chuyển đối tác" />
                                     <span class="input-group-btn">
                                         <button type="button" class="btn btn-default" ng-click="openedTransferPartnerDateTime=true"><i class="glyphicon glyphicon-calendar"></i></button>
                                     </span>
@@ -483,8 +483,8 @@
                         <div class="form-group">
                             <label for="PriceDescription" class="col-sm-3 control-label text-left-important">Lý do ngừng chăm sóc</label>
                             <div class="col-sm-9 ">
-
-                                <textarea name=" description" id="Description" class="form-control" rows="4" tabindex="53" placeholder="" ng-model="dataSelected.StopCareReason"></textarea>
+                                58
+                                <textarea name=" description" id="Description" class="form-control" rows="4" tabindex="58" placeholder="" ng-model="dataSelected.StopCareReason"></textarea>
                                 </select>
                             </div>
                         </div>
@@ -493,7 +493,7 @@
                         <div class="form-group">
                             <label for="Status" class="col-sm-3 control-label text-left-important">Tài liệu</label>
                             <div class="col-sm-5">
-                                <button type="button" class="btn btn-primary start col-xs-12 col-sm-12" " ng-disabled=" !dataselected.filetype" tabindex=" 55">
+                                <button type="button" class="btn btn-primary start col-xs-12 col-sm-12"  ng-disabled=" !dataselected.filetype" tabindex=" 59">
                                     <i class="glyphicon glyphicon-upload"></i>
                                     <span>Thêm tài liệu</span>
                                 </button>
@@ -547,7 +547,7 @@
                     <div class="col-sm-12 col-md-8 col-md-offset-2">
                         <div class="row">
                             <div class="col-md-4 col-md-offset-2 pull-left" ng-show="dataSelected.ID==0||actType=='copy'">
-                                <button class="btn col-xs-12 btn-primary" tabindex="30"
+                                <button class="btn col-xs-12 btn-primary" tabindex="300"
                                         ng-disabled="addProductForm.Name.$error.required"
                                         ng-click="actionConfirm('INSERT')">
                                     <span class="glyphicon glyphicon-plus"></span>
@@ -555,14 +555,14 @@
                                 </button>
                             </div>
                             <div class="col-md-4 col-md-offset-2 pull-left" ng-show="dataSelected.ID!=0&&actType!='copy'" ng-if="isEditsRole=='1'">
-                                <button class="btn col-xs-12 btn-danger" tabindex="31"
+                                <button class="btn col-xs-12 btn-danger" tabindex="301"
                                         ng-click="actionConfirm('UPDATE')">
                                     <span class="glyphicon glyphicon-plus"></span>
                                     Lưu thay đổi
                                 </button>
                             </div>
                             <div class="col-md-4 pull-left">
-                                <button class="btn col-xs-12" tabindex="32"
+                                <button class="btn col-xs-12" tabindex="302"
                                         ui-sref="productlist">
                                     <span class="glyphicon glyphicon-plus"></span>
                                     Trở về
