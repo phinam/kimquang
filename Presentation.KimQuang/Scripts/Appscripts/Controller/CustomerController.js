@@ -16,9 +16,9 @@
     $scope.isShowModal = false;
     $scope.leasingCapabilitiesList = [];
     $scope.buildingDirectionIDSelectList = [];
-    $scope.dataSelected = { ID: 0 };
+    $scope.dataSelected = { ID: 0 ,AddressCity:2};
     $scope.areaGroupIDSelectList = [];
-    $scope.searchEntry = { listleasingAreaGroupID: [], listUserID: [] ,cityID:0};
+    $scope.searchEntry = { listleasingAreaGroupID: [], listUserID: [] ,CityID:2};
     $scope.currentState = { Name: '', ID: '' }
     var _listAction = [];
     if ($rootScope.searchEntryFilter)
@@ -119,7 +119,7 @@
         }
     }
     $scope.reset = function () {
-        $scope.searchEntry = { listleasingAreaGroupID: [], listUserID: [], cityID: 0 };
+        $scope.searchEntry = { listleasingAreaGroupID: [], listUserID: [], CityID: 2 };
     }
 
     coreService.getListEx({ Sys_ViewID: 7 }, function (data) {
@@ -139,18 +139,18 @@
         $scope.buildingDirectionIDSelectList = data[3];
         $scope.areaGroupIDSelectList = data[4];
     });
-    $scope.citySelectList = [{ 'ID': 0, Name: 'Hồ Chí Mình' }];
+    $scope.citySelectList = null;
     $scope.districtSelectList = null;
     $scope.wardSelectList = null;
     coreService.getListEx({ CityID: 2, Sys_ViewID: 18 }, function (data) {
         //console.log('District--ward', data);
         $scope.districtSelectList = data[1];
         $scope.wardSelectList = data[2];
-
+        $scope.citySelectList = data[3];
         convertStringtoNumber($scope.districtSelectList, 'ID');
         convertStringtoNumber($scope.wardSelectList, 'DistrictID');
         convertStringtoNumber($scope.wardSelectList, 'ID');
-
+        convertStringtoNumber($scope.citySelectList, 'ID');
         $scope.tempWardSelectList = angular.copy($scope.wardSelectList);
     });
 
@@ -166,6 +166,7 @@
                 convertStringtoBoolean(data[1], 'IsHiredWholeBuilding');
 
                 $scope.dataSelected = data[1][0];
+                $scope.dataSelected.AddressCity = 2;
                 $rootScope.showModal = false;
                 //if (typeof $scope.dataSelected.ModifyDateTime != 'undefined') {
                 //    if ($scope.dataSelected.ModifyDateTime != '')
