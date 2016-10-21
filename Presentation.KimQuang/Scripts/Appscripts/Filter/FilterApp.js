@@ -12,8 +12,19 @@
   })
   .filter('parseDateFromDB', function () {
       return function (d) {
-          if (d == '') return null;
+          if (typeof d == 'undefined' || d == '') return null;
           return new Date(d);
+      };
+  })
+  .filter('parseDateToDB', function ($filter) {
+      return function (d) {
+          if (typeof d == 'undefined' || d == "")
+              return "";
+          if (typeof d != 'object') {
+              var from = d.split("-");
+              d = new Date(from[2], from[1] - 1, from[0]);
+          }
+          return $filter('date')(d, "yyyy-MM-dd");
       };
   })
 .filter('getMinDate', function () {
@@ -49,12 +60,12 @@
 .filter('filterExcludeValue', function () {
     return function (array, value) {
         var tempArray = [];
-            angular.forEach(array, function (item, key) {
-                if (!angular.equals(item.Value, value)) {
-                    tempArray.push(item);
-                }
-            });
-           
-            return tempArray;
+        angular.forEach(array, function (item, key) {
+            if (!angular.equals(item.Value, value)) {
+                tempArray.push(item);
+            }
+        });
+
+        return tempArray;
     };
 })

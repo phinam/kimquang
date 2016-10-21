@@ -155,31 +155,43 @@
     });
 
     $scope.$watch('customerId', function (newVal, oldVal) {
+        // newVal = 2;
+        //console.log('newVal', newVal)
+        //newVal = 2;
+
+        //$scope.customerId = 2;
+        //console.log('newVal', newVal)
         if (typeof newVal != 'undefined') {
             $rootScope.showModal = true;
             coreService.getListEx({ ID: $scope.customerId, Sys_ViewID: 34 }, function (data) {
                 //       console.log('ProductID', data);
-                convertStringtoNumber(data[1], 'DistrictID');
-                convertStringtoNumber(data[1], 'WardID');
+                convertStringtoNumber(data[1], 'AddressDistrict');
+                convertStringtoNumber(data[1], 'AddressWard');
+                convertStringtoNumber(data[1], 'NewHireAddressDistrict');
+                convertStringtoNumber(data[1], 'NewHireAddressWard');                
                 convertStringtoNumber(data[1], 'AreaPerFloor');
                 convertStringtoBoolean(data[1], 'IsGroundFloor');
                 convertStringtoBoolean(data[1], 'IsHiredWholeBuilding');
 
                 $scope.dataSelected = data[1][0];
+                console.log(' $scope.dataSelected', $scope.dataSelected);
                 $scope.dataSelected.AddressCity = 2;
-                $rootScope.showModal = false;
-                //if (typeof $scope.dataSelected.ModifyDateTime != 'undefined') {
-                //    if ($scope.dataSelected.ModifyDateTime != '')
-                //        $scope.dataSelected.ModifyDateTime = $filter('date')(new Date($scope.dataSelected.ModifyDateTime), 'dd-MM-yyyy')
-                //}
-                //if (typeof $scope.dataSelected.AvailableFrom != 'undefined') {
-                //    if ($scope.dataSelected.AvailableFrom != '')
-                //        $scope.dataSelected.AvailableFrom = $filter('date')(new Date($scope.dataSelected.AvailableFrom), 'dd-MM-yyyy')
-                //}
+                $rootScope.showModal = false;              
+                $scope.dataSelected.ReceiveDate = $filter('parseDateFromDB')($scope.dataSelected.ReceiveDate);
+                $scope.dataSelected.HireDate = $filter('parseDateFromDB')($scope.dataSelected.HireDate);
+                $scope.dataSelected.HireExpireDate = $filter('parseDateFromDB')($scope.dataSelected.HireExpireDate);
+                $scope.dataSelected.DepositDate = $filter('parseDateFromDB')($scope.dataSelected.DepositDate);
+                $scope.dataSelected.SignContractDate = $filter('parseDateFromDB')($scope.dataSelected.SignContractDate);
+                $scope.dataSelected.OutContractDate = $filter('parseDateFromDB')($scope.dataSelected.OutContractDate);
+                $scope.dataSelected.ReceiveBonusDate = $filter('parseDateFromDB')($scope.dataSelected.ReceiveBonusDate);
+                $scope.dataSelected.TransferPartnerDateTime = $filter('parseDateFromDB')($scope.dataSelected.TransferPartnerDateTime);                
+                if ($scope.dataSelected.IsReceiveBonus == "True") $scope.dataSelected.IsReceiveBonus = 1;
+                else $scope.dataSelected.IsReceiveBonus = 0;
+
                 if (data[2].length > 0)
                     $scope.listContact = data[2];
                 angular.forEach(data[3], function (item, key) {
-                    item.NoteDate = new Date(item.NoteDate)
+                    item.NoteDate = $filter('parseDateFromDB')(item.NoteDate);
                 });
                 $scope.listCareNote = data[3];
                 $scope.$apply();
@@ -266,39 +278,25 @@
             var entry = angular.copy($scope.dataSelected);
             entry.UnAssignedName = tiengvietkhongdau(entry.Name); //coreService.toASCi(entry.Name);
             //  entry.UnAssignedStreet = tiengvietkhongdau(entry.StreetName); //coreService.toASCi(entry.Address);
-            try {
-                if (typeof entry.ReceiveDate != 'undefined')
-                    if (entry.ReceiveDate != '')
-                        entry.ReceiveDate = $filter('date')(entry.ReceiveDate, "yyyy-MM-dd");
-                if (typeof entry.HireDate != 'undefined')
-                    if (entry.HireDate != '')
-                        entry.HireDate = $filter('date')(entry.HireDate, "yyyy-MM-dd");
-                if (typeof entry.AvailableTo != 'undefined')
-                    if (entry.HireExpireDate != '')
-                        entry.HireExpireDate = $filter('date')(entry.HireExpireDate, "yyyy-MM-dd");
-                if (typeof entry.YearFrom != 'undefined')
-                    if (entry.YearFrom != '')
-                        entry.YearFrom = $filter('date')(entry.YearFrom, "yyyy-MM-dd");
-                if (typeof entry.YearTo != 'undefined')
-                    if (entry.YearTo != '')
-                        entry.YearTo = $filter('date')(entry.YearTo, "yyyy-MM-dd");
-                if (typeof entry.LastUpdatedDateTimeFrom != 'undefined')
-                    if (entry.LastUpdatedDateTimeFrom != '')
-                        entry.LastUpdatedDateTimeFrom = $filter('date')(entry.LastUpdatedDateTimeFrom, "yyyy-MM-dd");
-                if (typeof entry.LastUpdatedDateTimeTo != 'undefined')
-                    if (entry.LastUpdatedDateTimeTo != '')
-                        entry.LastUpdatedDateTimeTo = $filter('date')(entry.LastUpdatedDateTimeTo, "yyyy-MM-dd");
-
+            try {              
+                entry.ReceiveDate = $filter('parseDateToDB')(entry.ReceiveDate);
+                entry.HireDate = $filter('parseDateToDB')(entry.HireDate);
+                entry.HireExpireDate = $filter('parseDateToDB')(entry.HireExpireDate);
+                entry.DepositDate = $filter('parseDateToDB')(entry.DepositDate);
+                entry.SignContractDate = $filter('parseDateToDB')(entry.SignContractDate);
+                entry.OutContractDate = $filter('parseDateToDB')(entry.OutContractDate);
+                entry.ReceiveBonusDate = $filter('parseDateToDB')(entry.ReceiveBonusDate);
+                entry.TransferPartnerDateTime = $filter('parseDateToDB')(entry.TransferPartnerDateTime);
+                
             }
             catch (ex) {
 
             }
-            debugger;
             entry.Contacts = { Contact: $scope.listContact };
             var listCareNote = angular.copy($scope.listCareNote);
             angular.forEach(listCareNote, function (item, key) {
                 if (item.NoteDate != null) {
-                    item.NoteDate = $filter('date')(item.NoteDate, "yyyy-MM-dd");
+                    item.NoteDate = $filter('parseDateToDB')(item.NoteDate); 
                     for (var property in item) {
                         if (item.hasOwnProperty(property)) {
                             if (item[property] == '') {
