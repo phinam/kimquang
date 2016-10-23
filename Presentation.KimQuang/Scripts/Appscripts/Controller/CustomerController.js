@@ -1,7 +1,7 @@
 ﻿angular.module('indexApp')
 .controller('CustomerCtrl', function ($scope, $rootScope, coreService, FileUploader, authoritiesService, alertFactory, dialogs, $filter, $state, $timeout, modalUtils, localStorageService) {
     $rootScope.showModal = false;
-
+    $scope.arrFiles = [];
     $scope.roleData = localStorageService.get('roleData');
     $scope.customerGroup = [];
     $scope.ramdomId = -1;
@@ -234,12 +234,8 @@
         uploader.uploadAll();
     };
     uploader.onSuccessItem = function (fileItem, response, status, headers) {
-        var fileType = "";
-        for (var i = 0; i < $scope.FileTypeSelectList.length; i++)
-            if ($scope.FileTypeSelectList[i].Value == $scope.dataSelected.FileType)
-                fileType = $scope.FileTypeSelectList[i].Name;
-
-        var item = { name: fileItem._file.name, fileType: fileType, fileName: response };
+        var fileType = "";     
+        var item = { name: fileItem._file.name, fileType: "", fileName: response };
         $scope.arrFiles.unshift(item);
 
     };

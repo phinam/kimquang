@@ -4,6 +4,7 @@ angular.module('indexApp')
     .controller('BodyController', function ($scope, toaster, coreService, accessFac, localStorageService, authoritiesService, dialogs) {
         $scope.navigation = $adminCMS.data.navigation;
         $scope.currentUser = $adminCMS.data.user;
+        $scope.currentUser.notification = [];
         $scope.skin = layoutConfig.skin;
         // $scope.sidebarNavigation = $adminCMS.data.navigation.sidebarNav;
         $scope.sidebarNavigation = [];
@@ -24,7 +25,15 @@ angular.module('indexApp')
             }, 100);
         });
 
+        coreService.getListEx({ UserID: coreService.userID, Sys_ViewID: 37 }, function (data) {
+            var arr = new Array();
+            _.each(data[1], function (index, item) {
+                arr.push(index);
+                console.log(index,item);
+            })
+            $scope.currentUser.notification = arr;
 
+        });
 
         $scope.server = $adminCMS.data.server;
         $scope.serverList = $adminCMS.data.serverList;

@@ -24,7 +24,7 @@ $adminCMS.data = {
                 "dropdownClass": "dropdown notifications-menu",
                 "type": 2,
                 "footerMessage": {
-                    "text": "View All",
+                    "text": "Xem tất cả",
                     "url": "#"
                 }
             },

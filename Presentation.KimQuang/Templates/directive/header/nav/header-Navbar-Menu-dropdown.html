@@ -1,6 +1,6 @@
 ﻿<ul class="dropdown-menu">
     <!--Email type=1-->
-    <li class="header" ng-if="nav.type == 1">You have {{currentUser.email.length}} messages</li>
+    <li class="header" ng-if="nav.type == 1">Bạn có {{currentUser.email.length}} email</li>
     <li ng-if="nav.type == 1">
         <ul class="menu">
             <li ng-repeat="dropdown in currentUser.email">
@@ -23,12 +23,12 @@
     <li class="footer" ng-if="nav.type == 1"><a ng-href="{{nav.footerMessage.url}}">{{nav.footerMessage.text}}</a></li>
 
     <!--Notifications type=2-->
-    <li class="header" ng-if="nav.type == 2">You have {{currentUser.notification.length}} notifications</li>
+    <li class="header" ng-if="nav.type == 2">Bạn có {{currentUser.notification.length}} thông báo</li>
     <li ng-if="nav.type == 2">
         <ul class="menu">
             <li ng-repeat="dropdown in currentUser.notification">
                 <a ng-href="{{dropdown.url}}">
-                    <i class="{{dropdown.cssIcon}}"></i> {{dropdown.message}}
+                    <i class="{{dropdown.cssIcon}}"></i> {{dropdown.Message}}
                 </a>
             </li>
         </ul>
