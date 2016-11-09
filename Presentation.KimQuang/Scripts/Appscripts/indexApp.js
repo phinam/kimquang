@@ -24,12 +24,24 @@ angular.module('indexApp')
                 $(window).trigger("resize");
             }, 100);
         });
+        $scope.processMessage = function (note, $event) {
+            if (note.Type == 'GENERAL') {
+                coreService.actionEntry2({ ID: note.ID, Sys_ViewID: 37, Action: 'UPDATE::PROCESSED' }, function (data) {
+                    $scope.currentUser.notification = _.without($scope.currentUser.notification, _.findWhere($scope.currentUser.notification, {
+                        ID: note.ID
+                    }));
 
+                });
+            }
+
+            $event.preventDefault();
+            $event.stopPropagation();
+            return;
+        }
         coreService.getListEx({ UserID: coreService.userID, Sys_ViewID: 37 }, function (data) {
             var arr = new Array();
             _.each(data[1], function (index, item) {
                 arr.push(index);
-                console.log(index,item);
             })
             $scope.currentUser.notification = arr;
 
@@ -135,7 +147,8 @@ angular.module('indexApp')
             replace: true,
             scope: {
                 navigation: '=',
-                currentUser: '='
+                currentUser: '=',
+                processMessage: '='
             },
             controller: function ($scope, md5) {
                 $scope.signOut = function () {
